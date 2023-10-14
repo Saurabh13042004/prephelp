@@ -10,6 +10,12 @@ export default {
     },
     extend: {},
   },
-  plugins: [require("daisyui")],
+// tailwind.config.js
+plugins: [
+  require("@tailwindcss/forms")({
+    strategy: 'base', // only generate global styles
+    strategy: 'class', // only generate classes
+  }),
+],
 }
 
