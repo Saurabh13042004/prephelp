@@ -9,7 +9,16 @@ function classNames(...classes) {
 
 export default function Form() {
   const [agreed, setAgreed] = useState(false)
+  const [technicalQuestions, setTechnicalQuestions] = useState(['']);
+  const addTechnicalQuestion = () => {
+    setTechnicalQuestions([...technicalQuestions, '']);
+  };
 
+  const handleTechnicalQuestionChange = (index, event) => {
+    const newQuestions = [...technicalQuestions];
+    newQuestions[index] = event.target.value;
+    setTechnicalQuestions(newQuestions);
+  };
   return (
     <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div
@@ -41,6 +50,7 @@ export default function Form() {
                 type="text"
                 name="first-name"
                 id="first-name"
+                required
                 autoComplete="given-name"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -55,6 +65,7 @@ export default function Form() {
                 type="text"
                 name="last-name"
                 id="last-name"
+                required
                 autoComplete="family-name"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -69,6 +80,7 @@ export default function Form() {
                 type="text"
                 name="company"
                 id="company"
+                required
                 autoComplete="organization"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -82,6 +94,7 @@ export default function Form() {
               <input
                 type="email"
                 name="email"
+                required
                 id="email"
                 autoComplete="email"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -106,9 +119,10 @@ export default function Form() {
                 
               </div>
               <input
-                type="tel"
+                type="number"
                 name="phone-number"
                 id="phone-number"
+                required
                 autoComplete="tel"
                 className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -128,7 +142,7 @@ export default function Form() {
               />
             </div>
           </div>
-          <div className="sm:col-span-2">
+          {/* <div className="sm:col-span-2">
             <label htmlFor="message" className="block text-sm font-semibold leading-6 text-gray-900">
               Technical Questions Asked
             </label>
@@ -142,6 +156,34 @@ export default function Form() {
               />
             </div>
           </div>
+          <button type="button" onClick={addTechnicalQuestion}>
+            Add Question
+          </button> */}
+          <div className='sm:col-span-2'>
+          <label htmlFor="message" className="block text-sm font-semibold leading-6 text-gray-900">
+              Technical Questions Asked
+            </label>
+            
+            {technicalQuestions.map((question,index)=>(
+
+                <div className="mt-2.5" key={index}>
+                <textarea
+                  type="text"
+                  placeholder={`Question ${index + 1}`}
+                  value={question}
+                  required
+                  rows={4}
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(event) => handleTechnicalQuestionChange(index, event)}
+                />
+              </div>
+            ))
+
+            }
+            </div>
+            <button type="button" onClick={addTechnicalQuestion}>
+            Add Question
+          </button>
 
           <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">
             <div className="flex h-6 items-center">
