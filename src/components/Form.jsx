@@ -2,12 +2,34 @@
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Switch } from '@headlessui/react'
+import {getFirestore, collection, addDoc} from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import { db } from '../firebase';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Form() {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = {
+      firstName: event.target['first-name'].value,
+      lastName: event.target['last-name'].value,
+      company: event.target.company.value,
+      email: event.target.email.value,
+      phoneNumber: event.target['phone-number'].value,
+      experience: event.target.message.value,
+      technicalQuestions: technicalQuestions,
+    }
+    try{
+      const docRef = await addDoc(collection(db,"formResponses"),formData);
+      console.log("Document written with ID: ", docRef.id);
+    }
+    catch(e){
+      console.error("Error adding document: ", e);
+    }
+  };
   const [agreed, setAgreed] = useState(false)
   const [technicalQuestions, setTechnicalQuestions] = useState(['']);
   const addTechnicalQuestion = () => {
@@ -34,12 +56,12 @@ export default function Form() {
         />
       </div>
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">uPrep On-Campus Placement Interview Experience Form</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">PrepHelp On-Campus Placement Interview Experience Form</h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
         Share your insights and experience with uPrep's on-campus placement interviews
         </p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+      <form action="#" onSubmit={handleSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div>
             <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900">
@@ -181,7 +203,7 @@ export default function Form() {
 
             }
             </div>
-            <button type="button" onClick={addTechnicalQuestion}>
+            <button type="button" onClick={addTechnicalQuestion} className='block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
             Add Question
           </button>
 
