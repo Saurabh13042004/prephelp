@@ -21,6 +21,7 @@ export default function Form() {
       phoneNumber: event.target['phone-number'].value,
       experience: event.target.message.value,
       technicalQuestions: technicalQuestions,
+      isApproved: false,
     }
     try{
       const docRef = await addDoc(collection(db,"formResponses"),formData);
