@@ -36,7 +36,14 @@ export default function Form() {
   const addTechnicalQuestion = () => {
     setTechnicalQuestions([...technicalQuestions, '']);
   };
-
+  const [showOtherInput, setShowOtherInput] = useState(false);
+  const handleCompanyChange = (event) => {
+    if (event.target.value === "Other") {
+      setShowOtherInput(true);
+    } else {
+      setShowOtherInput(false);
+    }
+  };
   const handleTechnicalQuestionChange = (index, event) => {
     const newQuestions = [...technicalQuestions];
     newQuestions[index] = event.target.value;
@@ -80,6 +87,7 @@ export default function Form() {
             </div>
           </div>
           <div>
+            
             <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900">
               Last name
             </label>
@@ -95,20 +103,59 @@ export default function Form() {
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="company" className="block text-sm font-semibold leading-6 text-gray-900">
-              Company
+            <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
+              University ID.
             </label>
             <div className="mt-2.5">
               <input
                 type="text"
-                name="company"
-                id="company"
+                name="Roll_No"
                 required
-                autoComplete="organization"
+                id="email"
+                autoComplete="email"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
+          <div>
+      <label htmlFor="company" className="block text-sm font-semibold leading-6 text-gray-900">
+        Company
+      </label>
+      <div className="mt-2.5 col-span-2">
+        <select
+          name="company"
+          id="company"
+          required
+          autoComplete="organization"
+          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          onChange={handleCompanyChange}
+        >
+          <option value="" disabled selected hidden>
+            Select a company
+          </option>
+          <option value="Google">Google</option>
+          <option value="Apple">Apple</option>
+          <option value="Microsoft">Microsoft</option>
+          <option value="Amazon">Amazon</option>
+          <option value="Facebook">Facebook</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      {showOtherInput && (
+        <div>
+          <label htmlFor="otherCompany" className="block text-sm font-semibold leading-6 text-gray-900">
+            Other Company
+          </label>
+          <input
+            type="text"
+            id="otherCompany"
+            name="otherCompany"
+            className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      )}
+    </div>
+
           <div className="sm:col-span-2">
             <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
               Email
@@ -204,10 +251,34 @@ export default function Form() {
 
             }
             </div>
-            <button type="button" onClick={addTechnicalQuestion} className='block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
+            <button type="button" onClick={addTechnicalQuestion} className='block  my-8 w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
             Add Question
           </button>
+          <div className='sm:col-span-2'>
+          <label htmlFor="message" className="block text-sm font-semibold leading-6 text-gray-900">
+              HR Questions Asked
+            </label>
+            
+            {technicalQuestions.map((question,index)=>(
 
+                <div className="mt-2.5" key={index}>
+                <textarea
+                  type="text"
+                  placeholder={`Question ${index + 1}`}
+                  value={question}
+                  required
+                  rows={4}
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(event) => handleTechnicalQuestionChange(index, event)}
+                />
+              </div>
+            ))
+
+            }
+            </div>
+            <button type="button" onClick={addTechnicalQuestion} className='block my-8 w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
+            Add Question
+          </button>
           <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">
             <div className="flex h-6 items-center">
               <Switch
