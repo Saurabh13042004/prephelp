@@ -56,12 +56,12 @@ function Login() {
               <label className="label">
                 <span className="label-text">Login as</span>
               </label>
-              <div className="select select-bordered">
+              
                 <select value={userType} onChange={(e) => setUserType(e.target.value)}>
                   <option value="student">Student</option>
                   <option value="admin">Admin</option>
                 </select>
-              </div>
+              
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-primary" type="submit">
