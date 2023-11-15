@@ -34,6 +34,7 @@ export default function Form() {
   const [agreed, setAgreed] = useState(false)
   const [technicalQuestions, setTechnicalQuestions] = useState(['']);
   const [hrQuestions,setHrQuestions]=useState(['']);
+
   
   const addTechnicalQuestion = () => {
     setTechnicalQuestions([...technicalQuestions, '']);
