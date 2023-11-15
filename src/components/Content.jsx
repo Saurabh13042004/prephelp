@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function Content() {
   const [commentsVisible, setCommentsVisible] = useState(false);
-  const [likes, setLikes] = useState(0); // Track the number of likes for the post
+  const [likes, setLikes] = useState(0); 
 
   const [comments, setComments] = useState([
     {
@@ -34,7 +34,7 @@ function Content() {
           text: newComment.text,
         },
       ]);
-      // Reset the input fields after adding a new comment
+      
       setNewComment({
         name: '',
         text: '',
@@ -65,7 +65,7 @@ function Content() {
           </div>
         </div>
 
-        {/* Like Button */}
+  
         <div className="p-4">
           <button
             onClick={handleLike}
@@ -75,7 +75,7 @@ function Content() {
           </button>
         </div>
 
-        {/* Comment Section */}
+        
         <div className="p-4">
           <h2 className="text-lg font-semibold mb-2">Comments:</h2>
 
@@ -99,7 +99,7 @@ function Content() {
             </div>
           )}
 
-          {/* Add New Comment Form */}
+ 
           <div className="flex items-center mt-4">
             <input
               type="text"
@@ -125,7 +125,7 @@ function Content() {
             </button>
           </div>
 
-          {/* Show/Hide Comments Button */}
+         
           <button
             onClick={() => setCommentsVisible(!commentsVisible)}
             className="mt-4 bg-gray-200 text-gray-800 px-4 py-2 rounded"
