@@ -10,7 +10,6 @@ function Home() {
       <Navbar/>
       <Top/>
       <Content/>
-      <Content/>
     </>
   )
 }

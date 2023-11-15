@@ -5,11 +5,7 @@ function Content() {
   const [likes, setLikes] = useState(0); 
 
   const [comments, setComments] = useState([
-    {
-      id: 1,
-      name: 'Commenter Name',
-      text: 'This is a sample comment. Lorem ipsum dolor sit amet.',
-    },
+    
   ]);
 
   const [newComment, setNewComment] = useState({
