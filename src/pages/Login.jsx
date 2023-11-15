@@ -30,9 +30,9 @@ function Login() {
           <form className="card-body" onSubmit={handleLogin}>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Username</span>
+                <span className="label-text">Email</span>
               </label>
-              <input type="email" placeholder="username" className="input input-bordered" required value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input type="email" placeholder="email" className="input input-bordered" required value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="form-control">
               <label className="label">
