@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function Content() {
   const [commentsVisible, setCommentsVisible] = useState(false);
-  const [likes, setLikes] = useState(0); 
+  
 
   const [comments, setComments] = useState([
     
@@ -38,9 +38,7 @@ function Content() {
     }
   };
 
-  const handleLike = () => {
-    setLikes((prevLikes) => prevLikes + 1);
-  };
+
 
   return (
     <div className='py-5 my-5'>
@@ -62,14 +60,6 @@ function Content() {
         </div>
 
   
-        <div className="p-4">
-          <button
-            onClick={handleLike}
-            className="text-sm text-blue-500 focus:outline-none"
-          >
-            Like ({likes})
-          </button>
-        </div>
 
         
         <div className="p-4">

@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Submitted from './pages/Submitted'
 import Login from './pages/Login'
 import Home from './pages/Home'
+import MainContent from './components/MainContent'
+import Form1 from './ExpForm.jsx/Form1'
 function App() {
 
   return (
@@ -17,7 +19,9 @@ function App() {
         <Route path="/admin" element={<Admin/>} />
         <Route path="/formSubmitted" element={<Submitted/>}/>
         <Route path = "/login" element={<Login/>}/>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/Home" element={<Home/>}/>
+        <Route path="/" element={<Form1/>}/>
+        <Route path='/MainContent' element={<MainContent/>}/>
       </Routes>
     </Router>
   )
