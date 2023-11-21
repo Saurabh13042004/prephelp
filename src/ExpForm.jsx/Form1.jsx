@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-import { useSubmit } from 'react-router-dom';
+import Submitted from '../pages/Submitted';
+import { Link } from 'react-router-dom';
 
 function Form1() {
   const [company, setCompany] = useState('');
@@ -316,13 +317,11 @@ function Form1() {
             >
               Previous
             </button>
-            <button
-              onClick={useSubmit}
-              type='submit'
-              className='bg-orange-500 float-right hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'
-            >
+            <Link to="/formSubmitted" className='bg-orange-500 float-right hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'>
               SUBMIT
-            </button>
+            </Link>
+            
+            
             
             </div>
            

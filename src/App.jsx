@@ -15,12 +15,12 @@ function App() {
     <Router>
       {/* <Navbar/> */}
       <Routes>
-        <Route path="/Form" element={<Form />} />
+        
         <Route path="/admin" element={<Admin/>} />
         <Route path="/formSubmitted" element={<Submitted/>}/>
-        <Route path = "/login" element={<Login/>}/>
+        <Route path = "/" element={<Login/>}/>
         <Route path="/Home" element={<Home/>}/>
-        <Route path="/" element={<Form1/>}/>
+        <Route path="/form" element={<Form1/>}/>
         <Route path='/MainContent' element={<MainContent/>}/>
       </Routes>
     </Router>
