@@ -8,7 +8,6 @@ import Submitted from './pages/Submitted'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import MainContent from './components/MainContent'
-import Form1 from './ExpForm.jsx/Form1'
 function App() {
 
   return (
@@ -20,7 +19,7 @@ function App() {
         <Route path="/formSubmitted" element={<Submitted/>}/>
         <Route path = "/" element={<Login/>}/>
         <Route path="/Home" element={<Home/>}/>
-        <Route path="/form" element={<Form1/>}/>
+        <Route path="/form" element={<Form/>}/>
         <Route path='/MainContent' element={<MainContent/>}/>
       </Routes>
     </Router>
