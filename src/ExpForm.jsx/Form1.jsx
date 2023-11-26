@@ -9,7 +9,7 @@ function Form1() {
   const [gotOffer, setGotOffer] = useState('');
   const [location, setLocation] = useState('');
   const [rounds, setRounds] = useState('');
-
+  const [batch,setBatch]=useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [universityID, setUniversityID] = useState('');
@@ -20,6 +20,7 @@ function Form1() {
   const [eligibility,setEligibility]=useState('');
   const [preparationTips,setPreparationTips]=useState('');
   const [hrQuestions, setHRQuestions] = useState([]);
+  const [mistakes,setmistakes]=useState('')
   const [techQuestions, setTechQuestions] = useState([]);
   const addHRQuestion = () => {
     setHRQuestions([...hrQuestions, '']);
@@ -129,6 +130,7 @@ function Form1() {
                 />
               </div>
             </div>
+            <div className='flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52'>
             <div className='w-80'>
               <label className='block font-semibold mt-8 mb-5'>No. of Rounds*</label>
               <input
@@ -137,6 +139,17 @@ function Form1() {
                 value={rounds}
                 className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
               />
+            </div>
+            <div className='w-80'>
+              <label className='block font-semibold mt-8 mb-5'>Batch*</label>
+              <input
+                type='number'
+                onChange={(e) => setBatch(e.target.value)}
+                placeholder='Eg. 2021'
+                value={batch}
+                className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+              />
+            </div>
             </div>
             <button
               onClick={handleNextClick1}
@@ -252,6 +265,13 @@ function Form1() {
             placeholder='Eg. CGPA Above 7 or No in case there is No Eligibility Criteria'
             className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[65%]'
             onChange={(e)=>setEligibility(e.target.value)}
+            />
+              <label className='block font-semibold mt-8 mb-5'>What did you do wrong or what did you do right?</label>
+            <textarea 
+            value={mistakes}
+            placeholder='Please Share some preparation tips if there is any.'
+            className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[65%]'
+            onChange={(e)=>setmistakes(e.target.value)}
             />
             <label className='block font-semibold mt-8 mb-5'>Preparation Tips</label>
             <textarea 

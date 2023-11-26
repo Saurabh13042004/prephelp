@@ -1,37 +1,72 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
+    const [hoveredOption, setHoveredOption] = useState(null);
+
+    const handleHover = (option) => {
+        setHoveredOption(option);
+    };
+
+    const handleLeave = () => {
+        setHoveredOption(null);
+    };
+
     return (
-        <>
-            <div className="navbar bg-base-100">
-                <div className="flex-1">
-                    <a className="btn btn-ghost normal-case text-xl">PrepHelp</a>
+        <div className="bg-orange-400 p-4 flex lg:flex-row md:flext-row flex-col items-center justify-between">
+            {/* Brand */}
+            <div className="text-white">
+                <Link to='/'>
+                <p className="text-2xl font-bold">PrepHelp</p>
+                </Link>
+            </div>
+
+            {/* Options */}
+            <div className="flex lg:flex-row md:flex-row flex-col items-center space-x-4">
+                {/* Home */}
+                <div className="relative group">
+                    <Link
+                        to="/"
+                        className="text-white hover:text-gray-200 px-3 py-2 rounded-md font-semibold"
+                    >
+                        Home
+                    </Link>
                 </div>
-                <div className="flex-none gap-2">
-                    <div className="form-control">
-                        <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
-                    </div>
-                    <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                                <img src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg" />
-                            </div>
-                        </label>
-                        <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                            <li>
-                                <a className="justify-between">
-                                    Profile
-                                    <span className="badge">New</span>
-                                </a>
-                            </li>
-                            <li><a>Settings</a></li>
-                            <li><a>Logout</a></li>
-                        </ul>
-                    </div>
+
+                {/* Questions */}
+                <div className="relative group" onMouseEnter={() => handleHover('questions')} onMouseLeave={handleLeave}>
+                    <p
+                        className="text-white hover:text-gray-200 px-3 py-2 rounded-md font-semibold"
+                    >
+                        Questions
+                    </p>
+                    {hoveredOption === 'questions' && (
+                        <div className="absolute top-full left-0 bg-white border border-gray-300 rounded-md p-2">
+                            <Link to="/tech-questions" className="block px-4 py-2 text-gray-700">Tech. Questions</Link>
+                            <Link to="/non-tech-questions" className="block px-4 py-2 text-gray-700">Non Tech. Questions</Link>
+                        </div>
+                    )}
+                </div>
+
+                {/* Experience Form */}
+                <div className="relative group" onMouseEnter={() => handleHover('experience')} onMouseLeave={handleLeave}>
+                   <Link to='/Form' className=' text-white font-semibold'>
+                        Experience Form
+                   </Link>
+                </div>
+
+                {/* Admin Login */}
+                <div className="relative group" onMouseEnter={() => handleHover('admin')} onMouseLeave={handleLeave}>
+                    <Link
+                        to="/Login"
+                        className="text-white hover:text-gray-200 px-3 py-2 rounded-md font-semibold"
+                    >
+                        Admin Login
+                    </Link>
                 </div>
             </div>
-        </>
-    )
+        </div>
+    );
 }
 
-export default Navbar
+export default Navbar;

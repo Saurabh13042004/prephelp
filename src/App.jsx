@@ -18,8 +18,8 @@ function App() {
         
         <Route path="/admin" element={<Admin/>} />
         <Route path="/formSubmitted" element={<Submitted/>}/>
-        <Route path = "/" element={<Login/>}/>
-        <Route path="/Home" element={<Home/>}/>
+        <Route path = "/Login" element={<Login/>}/>
+        <Route path="/" element={<Home/>}/>
         <Route path="/form" element={<Form1/>}/>
         <Route path='/MainContent' element={<MainContent/>}/>
       </Routes>
