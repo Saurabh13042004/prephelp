@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import Loader from '../components/Loader';
 
 function Admin() {
   const [posts, setPosts] = useState([]);
@@ -69,11 +70,7 @@ function Admin() {
           </thead>
           <tbody>
             {loading ? (
-              <tr>
-                <td colSpan="5" className="text-center">
-                  Loading...
-                </td>
-              </tr>
+              <Loader/>
             ) : (
               posts.map((entry) => (
                 <tr key={entry.id}>
@@ -89,7 +86,7 @@ function Admin() {
                       </div>
                       <div>
                         <div className="font-bold">
-                          {entry.firstName} {entry.lastName}
+                          {entry.name}
                         </div>
                         <div className="text-sm opacity-50">{entry.company}</div>
                       </div>
@@ -125,7 +122,7 @@ function Admin() {
         </table>
       </div>
       <dialog id="editModal" className="modal">
-        <div className="modal-box">
+        <div className="modal-box p-8">
           <form method="dialog">
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -139,85 +136,178 @@ function Admin() {
             {selectedPost && (
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">First Name</span>
+                  <span className="label-text font-semibold">Name</span>
                 </label>
                 <textarea
                   type="text"
                   placeholder="First Name"
-                  className="textarea h-10 textarea-bordered"
-                  value={selectedPost.firstName}
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.name}
                   onChange={(e) => setSelectedPost({ ...selectedPost, firstName: e.target.value })}
                 />
-                <label className="label">
-                  <span className="label-text">Last Name</span>
+                 <label className="label">
+                  <span className="label-text font-semibold">CGPA</span>
                 </label>
                 <textarea
                   type="text"
-                  placeholder="Last Name"
-                  className="textarea h-10 textarea-bordered"
-                  value={selectedPost.lastName}
-                  onChange={(e) => setSelectedPost({ ...selectedPost, lastName: e.target.value })}
+                  placeholder="CGPA"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.cgpa}
+                  onChange={(e) => setSelectedPost({ ...selectedPost, cgpa: e.target.value })}
                 />
-                <label className="label">
-                  <span className="label-text">Company</span>
+                   <label className="label">
+                  <span className="label-text font-semibold">Got Offer</span>
                 </label>
                 <textarea
                   type="text"
-                  placeholder="Company"
-                  className="textarea h-10 textarea-bordered"
-                  value={selectedPost.company}
-                  onChange={(e) => setSelectedPost({ ...selectedPost, company: e.target.value })}
-                />
+                  placeholder="Got Offered Yes/No"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.gotOffer}
+                  onChange={(e) => setSelectedPost({ ...selectedPost, gotOffer: e.target.value })}
+                /> 
+              
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text font-semibold">Email</span>
                 </label>
                 <textarea
                   type="text"
                   placeholder="Email"
-                  className="textarea h-10 textarea-bordered"
+                  className="textarea h-10 textarea-bordered mb-3"
                   value={selectedPost.email}
                   onChange={(e) => setSelectedPost({ ...selectedPost, email: e.target.value })}
                 />
                 <label className="label">
-                  <span className="label-text">Phone</span>
+                  <span className="label-text font-semibold">Phone</span>
                 </label>
                 <textarea
                   type="text"
                   placeholder="Phone"
-                  className="textarea h-10 textarea-bordered"
-                  value={selectedPost.phone}
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.mobileNo}
                   onChange={(e) => setSelectedPost({ ...selectedPost, phone: e.target.value })}
                 />
-                <label className="label">
-                  <span className="label-text">Experience</span>
+                 <label className="label">
+                  <span className="label-text font-semibold">LinkedIn Profile Link</span>
                 </label>
                 <textarea
                   type="text"
-                  placeholder="Experience"
-                  className="textarea h-24 textarea-bordered"
-                  value={selectedPost.experience}
-                  onChange={(e) => setSelectedPost({ ...selectedPost, experience: e.target.value })}
+                  placeholder="LinkedIn"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.linkedin}
+                  onChange={(e) => setSelectedPost({ ...selectedPost, linkedin: e.target.value })}
                 />
-                {selectedPost.technicalQuestions &&
-                  selectedPost.technicalQuestions.map((question, index) => (
-                    <div className="form-control" key={index}>
-                      <label className="label">
-                        <span className="label-text">{`Technical Question ${index + 1}`}</span>
-                      </label>
-                      <textarea
-                        type="text"
-                        placeholder={`Technical Question ${index + 1}`}
-                        className="textarea h-10 textarea-bordered"
-                        value={selectedPost.technicalQuestions[index]}
-                        onChange={(e) => {
-                          const updatedQuestions = [...selectedPost.technicalQuestions];
-                          updatedQuestions[index] = e.target.value;
-                          setSelectedPost({ ...selectedPost, technicalQuestions: updatedQuestions });
-                        }}
-                      />
-                    </div>
-                  ))
-                }
+
+                  <label className="label">
+                  <span className="label-text font-semibold">Company</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Company"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.company}
+                  onChange={(e) => setSelectedPost({ ...selectedPost, company: e.target.value })}
+                />
+                <label className="label">
+                  <span className="label-text font-semibold">Job Role</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Job Role"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.role}
+                  onChange={(e) => setSelectedPost({ ...selectedPost, role: e.target.value })}
+                />
+                 <label className="label">
+                  <span className="label-text font-semibold">Interview Rounds</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Interview Rounds"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.rounds}
+                  onChange={(e) => setSelectedPost({ ...selectedPost, rounds: e.target.value })}
+                />
+                   <label className="label">
+                  <span className="label-text font-semibold">Eligibility</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Eligibility"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.eligibility}
+                  onChange={(e) => setSelectedPost({ ...selectedPost, eligibility: e.target.value })}
+                />
+                   <label className="label">
+                  <span className="label-text font-semibold">Preparation Tips</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Preparation Tips"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.preparationTips}
+                  onChange={(e) => setSelectedPost({ ...selectedPost, preparationTips: e.target.value })}
+                />
+                {/*Add Code Here*/}
+                {selectedPost && (
+                  <div className="form-control">
+                    {/* ... (existing code) */}
+
+                    <label className="label">
+                      <span className="label-text font-semibold">Technical Questions</span>
+                    </label>
+                    {selectedPost.techQuestions &&
+                      selectedPost.techQuestions.map((question, index) => (
+                        <div className="form-control" key={index}>
+                          <label className="label">
+                            <span className="label-text">{`Technical Question ${index + 1}`}</span>
+                          </label>
+                          <textarea
+                            type="text"
+                            placeholder={`Technical Question ${index + 1}`}
+                            className="textarea h-10 textarea-bordered mb-3"
+                            value={selectedPost.techQuestions[index]}
+                            onChange={(e) => {
+                              const updatedQuestions = [...selectedPost.techQuestions];
+                              updatedQuestions[index] = e.target.value;
+                              setSelectedPost({ ...selectedPost, techQuestions: updatedQuestions });
+                            }}
+                          />
+                        </div>
+                      ))
+                    }
+
+                  </div>
+                )}
+                {selectedPost && (
+                  <div className="form-control">
+                    {/* ... (existing code) */}
+
+                    <label className="label">
+                      <span className="label-text font-semibold">HR Questions</span>
+                    </label>
+                    {selectedPost.hrQuestions &&
+                      selectedPost.hrQuestions.map((question, index) => (
+                        <div className="form-control" key={index}>
+                          <label className="label">
+                            <span className="label-text">{`HR Question ${index + 1}`}</span>
+                          </label>
+                          <textarea
+                            type="text"
+                            placeholder={`HR Question ${index + 1}`}
+                            className="textarea h-10 textarea-bordered mb-3"
+                            value={selectedPost.hrQuestions[index]}
+                            onChange={(e) => {
+                              const updatedQuestions = [...selectedPost.hrQuestions];
+                              updatedQuestions[index] = e.target.value;
+                              setSelectedPost({ ...selectedPost, hrQuestions: updatedQuestions });
+                            }}
+                          />
+                        </div>
+                      ))
+                    }
+
+                  </div>
+                )}
               </div>
             )}
           </form>
