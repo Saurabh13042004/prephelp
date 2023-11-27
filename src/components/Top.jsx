@@ -3,7 +3,7 @@ import '../index.css'
 
 function Top() {
   return (
-    <div className='justify-center'>
+    <div className="justify-center  py-4">
       <div className='text-center justify-center'>
         <div className=' lg:w-[45%] lg:mx-[28%]  my-[72px] rounded-3xl font-semibold px-10 py-3 hover_change'>An Exclusive Platform For Chitkara University!! </div>
         </div>
@@ -15,7 +15,6 @@ function Top() {
 
        
       </div>
-      <h4 className='lg:mx-[10%] top-[50px] text-xl font-medium'>Interview Expieriences.</h4>
     </div>
   )
 }

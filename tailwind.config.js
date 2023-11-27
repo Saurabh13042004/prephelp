@@ -8,7 +8,13 @@ export default {
     fontFamily: {
       'sans' : ['"Montserrat"', 'sans-serif']
     },
-    extend: {},
+    extend: {
+
+
+      backgroundImage: {
+        'hero-pattern': "url('https://www.pexels.com/photo/silver-apple-keyboard-and-magic-mouse-on-a-pink-surface-399161/')",
+      }
+    },
   },
 // tailwind.config.js
 plugins: [

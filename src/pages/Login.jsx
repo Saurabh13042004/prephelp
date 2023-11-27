@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import Loader from '../components/Loader';
+
 
 function Login() {
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('student'); // Default to student
+  const [userType, setUserType] = useState('admin'); // Default to student
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle login logic based on email, password, and userType
-    if (userType === 'student') {
-      // Perform student login
-      console.log('Logging in as a student');
-    } else if (userType === 'admin') {
-      // Perform admin login
-      console.log('Logging in as an admin');
+    const auth = getAuth();
+  
+    try {
+      // Sign in with email and password
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  
+      // Check if the user is an admin
+      if (userCredential) {
+        navigate('/admin');
+      } else {
+        // Handle login for other user types (students, etc.)
+      }
+    } catch (error) {
+      console.error('Login error:', error.message);
     }
   };
 
@@ -58,8 +70,9 @@ function Login() {
               </label>
               
                 <select value={userType} onChange={(e) => setUserType(e.target.value)}>
+                <option value="admin" defaultChecked>Admin</option>
                   <option value="student">Student</option>
-                  <option value="admin">Admin</option>
+             
                 </select>
               
             </div>

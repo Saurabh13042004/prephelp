@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import Loader from '../components/Loader';
+import Navbar from '../components/Navbar';
 
 function Admin() {
   const [posts, setPosts] = useState([]);
@@ -57,7 +58,8 @@ function Admin() {
 
   return (
     <div>
-      <div className="overflow-x-auto m-auto p-4">
+      <Navbar/>
+      <div className="overflow-x-auto m-auto p-4 m-5">
         <table className="table">
           <thead>
             <tr>
@@ -143,7 +145,7 @@ function Admin() {
                   placeholder="First Name"
                   className="textarea h-10 textarea-bordered mb-3"
                   value={selectedPost.name}
-                  onChange={(e) => setSelectedPost({ ...selectedPost, firstName: e.target.value })}
+                  onChange={(e) => setSelectedPost({ ...selectedPost, name: e.target.value })}
                 />
                  <label className="label">
                   <span className="label-text font-semibold">CGPA</span>

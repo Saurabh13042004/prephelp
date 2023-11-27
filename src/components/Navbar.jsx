@@ -13,9 +13,9 @@ function Navbar() {
     };
 
     return (
-        <div className="bg-orange-400 p-4 flex lg:flex-row md:flext-row flex-col items-center justify-between">
+        <div className="bg-white shadow-lg p-4  px-9 flex lg:flex-row md:flext-row flex-col items-center justify-between">
             {/* Brand */}
-            <div className="text-white">
+            <div className="text-black">
                 <Link to='/'>
                 <p className="text-2xl font-bold">PrepHelp</p>
                 </Link>
@@ -27,7 +27,7 @@ function Navbar() {
                 <div className="relative group">
                     <Link
                         to="/"
-                        className="text-white hover:text-gray-200 px-3 py-2 rounded-md font-semibold"
+                        className="text-black hover:text-gray-200 px-3 py-2 rounded-md font-semibold"
                     >
                         Home
                     </Link>
@@ -36,7 +36,7 @@ function Navbar() {
                 {/* Questions */}
                 <div className="relative group" onMouseEnter={() => handleHover('questions')} onMouseLeave={handleLeave}>
                     <p
-                        className="text-white hover:text-gray-200 px-3 py-2 rounded-md font-semibold"
+                        className="text-black hover:text-gray-200 px-3 py-2 rounded-md font-semibold"
                     >
                         Questions
                     </p>
@@ -50,7 +50,7 @@ function Navbar() {
 
                 {/* Experience Form */}
                 <div className="relative group" onMouseEnter={() => handleHover('experience')} onMouseLeave={handleLeave}>
-                   <Link to='/Form' className=' text-white font-semibold'>
+                   <Link to='/Form' className=' text-black font-semibold'>
                         Experience Form
                    </Link>
                 </div>
@@ -59,7 +59,7 @@ function Navbar() {
                 <div className="relative group" onMouseEnter={() => handleHover('admin')} onMouseLeave={handleLeave}>
                     <Link
                         to="/Login"
-                        className="text-white hover:text-gray-200 px-3 py-2 rounded-md font-semibold"
+                        className="text-black hover:text-gray-200 px-3 py-2 rounded-md font-semibold"
                     >
                         Admin Login
                     </Link>
