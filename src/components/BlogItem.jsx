@@ -33,7 +33,7 @@ function BlogItem() {
       posts.map((post) => post.isApproved ? (
         <div className='py-3' key={post.id}>
           <Link to={`/post/${post.id}`}>
-        <div className="max-w-[85%] mx-auto bg-white rounded-lg overflow-hidden shadow-lg mt-8 p-2 ">
+        <div className="max-w-[85%] mx-auto bg-white rounded-lg overflow-hidden hover:shadow-xl transition-shadow mt-8 p-2 ">
   
           {/* Title block */}
           <div className="p-4 flex items-center">
@@ -76,7 +76,7 @@ function BlogItem() {
                 src="https://img1.pnghut.com/20/24/13/AUYaPbGumU/brand-logo-text-green-leaf.jpg"
                 alt="Selected"
               /> */}
-              <p className='text-red-900 font-bold'>{post.gotOffer ? 'Selected' : 'Rejected'}</p>
+              <p className='text-red-900 font-bold'>{post.gotOffer === 'yes' ? 'Selected' : 'Rejected'}</p>
             </div>
           </div>
   
