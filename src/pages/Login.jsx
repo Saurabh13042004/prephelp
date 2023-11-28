@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Loader from '../components/Loader';
@@ -9,7 +9,8 @@ function Login() {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('admin'); // Default to student
-
+  const auth = getAuth();
+  const user = auth.user;
   const handleLogin = async (e) => {
     e.preventDefault();
     const auth = getAuth();
@@ -28,7 +29,6 @@ function Login() {
       console.error('Login error:', error.message);
     }
   };
-
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">

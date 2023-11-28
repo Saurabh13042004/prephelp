@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import {getAuth} from 'firebase/auth';
 import Loader from '../components/Loader';
 import Navbar from '../components/Navbar';
 
@@ -9,6 +10,10 @@ function Admin() {
   const [loading, setLoading] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [editMode, setEditMode] = useState(false);
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  console.log(user);
 
   const fetchData = async () => {
     setLoading(true);
@@ -58,8 +63,9 @@ function Admin() {
 
   return (
     <div>
+
       <Navbar/>
-      <div className="overflow-x-auto m-auto p-4 m-5">
+        <div className="overflow-x-auto m-auto p-4 m-5">
         <table className="table">
           <thead>
             <tr>

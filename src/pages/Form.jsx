@@ -85,6 +85,8 @@ function Form() {
       hrQuestions,
       techQuestions,
       isApproved,
+      mistakes,
+      batch,
 
 
     };
@@ -309,7 +311,7 @@ function Form() {
             className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[65%]'
             onChange={(e)=>setEligibility(e.target.value)}
             />
-              <label className='block font-semibold mt-8 mb-5'>What did you do wrong or what did you do right?</label>
+              <label className='block font-semibold mt-8 mb-5'> Share your Interview Experience  ?</label>
             <textarea 
             value={mistakes}
             placeholder='Please Share some preparation tips if there is any.'
@@ -380,7 +382,7 @@ function Form() {
             >
               Previous
             </button>
-            <Link to="/formSubmitted" className='bg-orange-500 float-right hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'>
+            <Link to="/formSubmitted" onClick={handleSubmit} className='bg-orange-500 float-right hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'>
               SUBMIT
             </Link>
             
