@@ -11,9 +11,9 @@ function Home() {
    <div className="bg-[#FDE5D4]">
       <Navbar/>
       <Top/>
-      <Link to= '/MainContent' className=' hover:cursor-pointer'>
+      
       <BlogItem/>
-      </Link>
+      
     </div>
   )
 }

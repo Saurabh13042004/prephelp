@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Form from './pages/Form'
 import BlogPost from './components/BlogPost'
+import Questions from './pages/Questions'
 function App() {
 
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path = "/Login" element={<Login/>}/>
         <Route path="/" element={<Home/>}/>
         <Route path="/form" element={<Form/>}/>
+        <Route path='/questions' element={<Questions/>}/>
         <Route path='/post/:id' element={<BlogPost/>}/>
       </Routes>
     </Router>

@@ -8,7 +8,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('admin'); // Default to student
+  const [userType, setUserType] = useState('admin');
 
   const handleLogin = async (e) => {
     e.preventDefault();

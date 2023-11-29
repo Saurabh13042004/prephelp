@@ -31,8 +31,6 @@ function Admin() {
     fetchData();
   };
 
-
-
   const handleEditClick = (entry) => {
     setSelectedPost(entry);
     setEditMode(true);
@@ -58,7 +56,7 @@ function Admin() {
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="overflow-x-auto m-auto p-4 m-5">
         <table className="table">
           <thead>
@@ -72,7 +70,7 @@ function Admin() {
           </thead>
           <tbody>
             {loading ? (
-              <Loader/>
+              <Loader />
             ) : (
               posts.map((entry) => (
                 <tr key={entry.id}>
@@ -87,9 +85,7 @@ function Admin() {
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">
-                          {entry.name}
-                        </div>
+                        <div className="font-bold">{entry.name}</div>
                         <div className="text-sm opacity-50">{entry.company}</div>
                       </div>
                     </div>
@@ -249,11 +245,9 @@ function Admin() {
                   value={selectedPost.preparationTips}
                   onChange={(e) => setSelectedPost({ ...selectedPost, preparationTips: e.target.value })}
                 />
-                {/*Add Code Here*/}
+
                 {selectedPost && (
                   <div className="form-control">
-                    {/* ... (existing code) */}
-
                     <label className="label">
                       <span className="label-text font-semibold">Technical Questions</span>
                     </label>
@@ -277,13 +271,11 @@ function Admin() {
                         </div>
                       ))
                     }
-
                   </div>
                 )}
+
                 {selectedPost && (
                   <div className="form-control">
-                    {/* ... (existing code) */}
-
                     <label className="label">
                       <span className="label-text font-semibold">HR Questions</span>
                     </label>
@@ -307,7 +299,6 @@ function Admin() {
                         </div>
                       ))
                     }
-
                   </div>
                 )}
               </div>
