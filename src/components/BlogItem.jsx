@@ -107,7 +107,7 @@ function BlogItem() {
                     </div>
                     <div className="ml-auto flex">
                       <p className="text-red-900 font-bold">
-                        {post.gotOffer === 'yes' ? 'Selected' : 'Rejected'}
+                        {post.gotOffer === 'yes' ? 'Selected' : 'Not-Selected'}
                       </p>
                     </div>
                   </div>
