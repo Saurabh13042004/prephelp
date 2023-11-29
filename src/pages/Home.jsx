@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function Home() {
   return (
    
-   <div className="bg-[#FDE5D4]">
+   <div className="bg-[#FDE5D4] ">
       <Navbar/>
       <Top/>
       

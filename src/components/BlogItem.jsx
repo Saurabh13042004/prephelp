@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import Loader from './Loader';
@@ -18,11 +17,14 @@ const getCompanyLogo = (company) => {
   }
 };
 
+const popularCompanies = ['Microsoft', 'Google', 'Adobe','Gojek'];
+
 function BlogItem() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchedPosts, setSearchedPosts] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState('');
 
   const fetchData = async () => {
     setLoading(true);
@@ -42,23 +44,35 @@ function BlogItem() {
   }, []);
 
   const handleSearch = () => {
-    const filteredPosts = posts.filter((post) =>
+    let filteredPosts = posts;
+
+    if (selectedCompany) {
+      filteredPosts = filteredPosts.filter((post) => post.company === selectedCompany);
+    }
+
+    filteredPosts = filteredPosts.filter((post) =>
       post.company.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
     setSearchedPosts(filteredPosts);
   };
 
   return (
     <>
       <div className="flex items-center mb-4 ml-[8%]">
-        <input
-          type="text"
-          placeholder="Search by company name"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+        <select
+          value={selectedCompany}
+          onChange={(e) => setSelectedCompany(e.target.value)}
           className="p-2 border border-gray-300 rounded-md mr-2"
-        />
-        <button onClick={handleSearch} className="bg-slate-900 text-white p-2 rounded-md ml-10 px-2">
+        >
+          <option value="">All Companies</option>
+          {popularCompanies.map((company) => (
+            <option key={company} value={company}>
+              {company}
+            </option>
+          ))}
+        </select>
+        <button onClick={handleSearch} className="bg-slate-900 text-white p-2 rounded-md ml-2 px-2">
           Search
         </button>
       </div>
@@ -106,7 +120,7 @@ function BlogItem() {
                       </p>
                     </div>
                     <div className="ml-auto flex">
-                      <p className="text-red-900 font-bold">
+                      <p className={`font-bold ${post.gotOffer === 'yes' ? 'text-green-500' : 'text-red-900'}`}>
                         {post.gotOffer === 'yes' ? 'Selected' : 'Not-Selected'}
                       </p>
                     </div>
