@@ -39,10 +39,10 @@ const BlogPost = () => {
       {loading ? (<Loader/>) : (
 
 <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
-<div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6 lg:gap-x-12">
+<div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6 ">
   {/* Content */}
   <div className="lg:col-span-2">
-    <div className="py-8 lg:pe-4 lg:pe-8">
+    <div className="py-8 lg:pe-4 ">
       <div className="space-y-5 lg:space-y-8">
         <Link
           to="/"

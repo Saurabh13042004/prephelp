@@ -1,36 +1,33 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-import Submitted from '../pages/Submitted';
-import { Link , useNavigate} from 'react-router-dom';
-import { Firestore, addDoc, collection, doc, setDoc } from "firebase/firestore";
-
+import { Link, useNavigate } from 'react-router-dom';
+import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Form() {
-  const Navigate  = useNavigate();
-  const isApproved = false;
+  const navigate = useNavigate();
   const [company, setCompany] = useState('');
   const [role, setRole] = useState('');
   const [gotOffer, setGotOffer] = useState('');
   const [location, setLocation] = useState('');
   const [rounds, setRounds] = useState('');
-  const [batch,setBatch]=useState('');
+  const [batch, setBatch] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [universityID, setUniversityID] = useState('');
   const [mobileNo, setMobileNo] = useState('');
   const [linkedin, setLinkedin] = useState('');
   const [cgpa, setCgpa] = useState('');
-  const [questions, Setquestion] = useState(0);
-  const [eligibility,setEligibility]=useState('');
-  const [preparationTips,setPreparationTips]=useState('');
-  const [hrQuestions, setHRQuestions] = useState([]);
-  const [mistakes,setmistakes]=useState('')
-  const [techQuestions, setTechQuestions] = useState([]);
+  const [questions, setQuestions] = useState(0);
+  const [eligibility, setEligibility] = useState('');
+  const [preparationTips, setPreparationTips] = useState('');
+  const [hrQuestions, setHRQuestions] = useState(['']);
+  const [mistakes, setMistakes] = useState('');
+  const [techQuestions, setTechQuestions] = useState(['']);
+  const [otherCompany, setOtherCompany] = useState('');
+
   const addHRQuestion = () => {
     setHRQuestions([...hrQuestions, '']);
   };
@@ -40,40 +37,37 @@ function Form() {
   };
 
   const handleNextClick1 = () => {
-    
     if (company.trim() !== '' && role.trim() !== '') {
-      Setquestion(1);
+      setQuestions(1);
     } else {
       alert('Please fill in all required fields.');
-      
     }
   };
 
   const handlePrevClick1 = () => {
-    Setquestion(0);
+    setQuestions(0);
   };
+
   const handlePrevClick2 = () => {
-    Setquestion(1);
+    setQuestions(1);
   };
 
   const handleNextClick2 = () => {
- 
     if (name.trim() !== '' && email.trim() !== '') {
-      Setquestion(2);
+      setQuestions(2);
     } else {
-    
       alert('Please fill in all required fields.');
     }
   };
 
-  const handleSubmit = async (event) => {
-
+  const handleSubmit = async () => {
     const formData = {
       company,
       role,
       gotOffer,
       location,
       rounds,
+      batch,
       name,
       email,
       universityID,
@@ -84,44 +78,56 @@ function Form() {
       preparationTips,
       hrQuestions,
       techQuestions,
-      isApproved,
       mistakes,
+      isApproved,
       batch,
-
-
     };
-    try{
-      const docRef = await addDoc(collection(db,"formResponses"),formData);
-      console.log("Document written with ID: ", docRef.id);
-      toast.success("Form Submitted Successfully");
-    }
-    catch(e){
-      console.error("Error adding document: ", e);
-    }
 
-
-  }
+    try {
+      await addDoc(collection(db, 'formResponses'), formData);
+      toast.success('Form Submitted Successfully');
+      navigate('/formSubmitted');
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+  };
 
   return (
     <>
-    {questions === 0 && (
+      {questions === 0 && (
         <div>
           <Navbar />
-          <div className='lg:mx-[12%] my-12'>
-            <p className='font-bold text-3xl'>Interview Experience</p>
-            <p className='font-semibold text-xl mt-10 font-sans'>ROLE INFO.</p>
-            <div className='flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52'>
-              <div className='w-80'>
-                <label className='block font-semibold mt-8 mb-5'>Company you Applied to?*</label>
-                <input
-                  type='text'
-                  placeholder='Eg. Microsoft,Google,Amazon etc.'
-                  required
-                  onChange={(e) => setCompany(e.target.value)}
+          <div className="lg:mx-[12%] my-12">
+            <p className="font-bold text-3xl">Interview Experience</p>
+            <p className="font-semibold text-xl mt-10 font-sans">ROLE INFO.</p>
+            <div className="flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52">
+              <div className="w-80">
+                <label className="block font-semibold mt-8 mb-5">Company you Applied to?*</label>
+                <select
                   value={company}
-                  className='border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
-                />
+                  onChange={(e) => setCompany(e.target.value)}
+                  className="border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80"
+                >
+                  <option value="" disabled>Select a company</option>
+                  <option value="Microsoft">Microsoft</option>
+                  <option value="Google">Google</option>
+                  <option value="Amazon">Amazon</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
+              {company === 'Other' && (
+                <div className="w-80">
+                  <label className="block font-semibold mt-8 mb-5">Other Company*</label>
+                  <input
+                    type="text"
+                    required
+                    onChange={(e) => setOtherCompany(e.target.value)}
+                    value={otherCompany}
+                    className="border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80"
+                  />
+                </div>
+              )}
+            </div>
               <div className='w-80'>
                 <label className='block font-semibold mt-8 mb-5'>Role for Which you applied*</label>
                 <input
@@ -132,7 +138,7 @@ function Form() {
                   value={role}
                   className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
-              </div>
+              
             </div>
             <div className='flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52'>
               <div className='w-80'>

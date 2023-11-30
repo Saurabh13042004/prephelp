@@ -1,5 +1,6 @@
 import React from 'react'
 import '../index.css'
+import { Link } from 'react-router-dom'
 
 function Top() {
   return (
@@ -9,9 +10,9 @@ function Top() {
         </div>
         <p className=' text-[56px] text-center font-bold p-6 '>ACE YOUR INTERVIEWS WITH <br/><span className='Text-change'>PREPHELP</span></p>
          <div className="flex justify-center">
-        <button className="bg-black text-white px-8 py-3 my-4 rounded-full hover:bg-gray-800">
+        <Link to='/questions' className="bg-black text-white px-8 py-3 my-4 rounded-full hover:bg-gray-800">
           Solve Questions
-        </button>
+        </Link>
 
        
       </div>
