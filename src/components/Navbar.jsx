@@ -9,7 +9,7 @@ function Navbar() {
     };
 
     return (
-        <div className="bg-white shadow-lg p-4 px-9 flex lg:flex-row md:flext-row flex-col items-center justify-between">
+        <nav className="bg-gray-100 shadow-lg p-4 px-9 flex lg:flex-row md:flext-row flex-col items-center justify-between sticky top-0 z-50">
             {/* Brand */}
             <div className="text-black">
                 <Link to='/'>
@@ -36,7 +36,7 @@ function Navbar() {
             </div>
 
             {/* Options for Large Screens */}
-            <div className={`lg:flex md:flex ${isOpen ? 'flex' : 'hidden'} lg:flex-row md:flex-row flex-col items-center space-x-4`}>
+            <div className={`lg:flex md:flex ${isOpen ? 'flex' : 'hidden'} lg:flex-row md:flex-row flex-col items-center space-x-4 transition-all duration-300 ease-in-out`}>
                 {/* Home */}
                 <div className="relative group">
                     <Link
@@ -74,7 +74,7 @@ function Navbar() {
                     </Link>
                 </div>
             </div>
-        </div>
+        </nav>
     );
 }
 
