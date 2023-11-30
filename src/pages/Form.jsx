@@ -27,6 +27,7 @@ function Form() {
   const [mistakes, setMistakes] = useState('');
   const [techQuestions, setTechQuestions] = useState(['']);
   const [otherCompany, setOtherCompany] = useState('');
+  const isApproved = false;
 
   const addHRQuestion = () => {
     setHRQuestions([...hrQuestions, '']);
@@ -80,7 +81,6 @@ function Form() {
       techQuestions,
       mistakes,
       isApproved,
-      batch,
     };
 
     try {
@@ -121,7 +121,7 @@ function Form() {
                   <input
                     type="text"
                     required
-                    onChange={(e) => setOtherCompany(e.target.value)}
+                    onChange={(e) => setCompany(e.target.value)}
                     value={otherCompany}
                     className="border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80"
                   />
@@ -255,10 +255,9 @@ function Form() {
                 />
               </div>
               <div className='w-80'>
-                <label className='block font-semibold mt-8 mb-5'>Your Mobile No.*</label>
+                <label className='block font-semibold mt-8 mb-5'>Your Mobile No.</label>
                 <input
                   type='number'
-                  required
                   onChange={(e) => setMobileNo(e.target.value)}
                   value={mobileNo}
                   className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
@@ -322,7 +321,7 @@ function Form() {
             value={mistakes}
             placeholder='Please Share some preparation tips if there is any.'
             className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[65%]'
-            onChange={(e)=>setmistakes(e.target.value)}
+            onChange={(e)=>setMistakes(e.target.value)}
             />
             <label className='block font-semibold mt-8 mb-5'>Preparation Tips</label>
             <textarea 

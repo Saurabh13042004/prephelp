@@ -60,6 +60,7 @@ function BlogItem() {
   return (
     <>
       <div className="flex items-center mb-4 ml-[8%]">
+        <p className='me-4'>Sort By Companies : </p>
         <select
           value={selectedCompany}
           onChange={(e) => setSelectedCompany(e.target.value)}
@@ -72,7 +73,7 @@ function BlogItem() {
             </option>
           ))}
         </select>
-        <button onClick={handleSearch} className="bg-slate-900 text-white p-2 rounded-md ml-2 px-2">
+        <button onClick={handleSearch} className="bg-slate-900 text-white p-2 rounded-full ml-2 px-4">
           Search
         </button>
       </div>

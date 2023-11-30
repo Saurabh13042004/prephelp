@@ -4,12 +4,18 @@ import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import {getAuth} from 'firebase/auth';
 import Loader from '../components/Loader';
 import Navbar from '../components/Navbar';
+import { MdDeleteForever } from "react-icons/md";
+
+import { TiTick } from "react-icons/ti";
+
 
 function Admin() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [editMode, setEditMode] = useState(false);
+  const [approvedTechQuestions, setApprovedTechQuestions] = useState([]);
+  const [approvedHRQuestions, setApprovedHRQuestions] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -42,6 +48,12 @@ function Admin() {
     document.getElementById('editModal').showModal();
   };
 
+  const handleDeleteQuestion = (questionIndex, questionType) => {
+    const updatedQuestions = [...selectedPost[`${questionType}Questions`]];
+    updatedQuestions.splice(questionIndex, 1);
+    setSelectedPost({ ...selectedPost, [`${questionType}Questions`]: updatedQuestions });
+  };
+
   const handleSaveEdit = async () => {
     const docRef = doc(db, 'formResponses', selectedPost.id);
     await setDoc(docRef, selectedPost);
@@ -52,6 +64,18 @@ function Admin() {
 
   const handleCloseModal = () => {
     document.getElementById('editModal').close();
+  };
+
+  const handleApproveTechQuestion = (index) => {
+    const updatedQuestions = [...approvedTechQuestions];
+    updatedQuestions[index] = !updatedQuestions[index];
+    setApprovedTechQuestions(updatedQuestions);
+  };
+
+  const handleApproveHRQuestion = (index) => {
+    const updatedQuestions = [...approvedHRQuestions];
+    updatedQuestions[index] = !updatedQuestions[index];
+    setApprovedHRQuestions(updatedQuestions);
   };
 
   useEffect(() => {
@@ -125,7 +149,7 @@ function Admin() {
         </table>
       </div>
       <dialog id="editModal" className="modal">
-        <div className="modal-box p-8">
+        <div className="modal-box px-10">
           <form method="dialog">
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -251,61 +275,89 @@ function Admin() {
                   onChange={(e) => setSelectedPost({ ...selectedPost, preparationTips: e.target.value })}
                 />
 
-                {selectedPost && (
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text font-semibold">Technical Questions</span>
-                    </label>
-                    {selectedPost.techQuestions &&
-                      selectedPost.techQuestions.map((question, index) => (
-                        <div className="form-control" key={index}>
-                          <label className="label">
-                            <span className="label-text">{`Technical Question ${index + 1}`}</span>
-                          </label>
-                          <textarea
-                            type="text"
-                            placeholder={`Technical Question ${index + 1}`}
-                            className="textarea h-10 textarea-bordered mb-3"
-                            value={selectedPost.techQuestions[index]}
-                            onChange={(e) => {
-                              const updatedQuestions = [...selectedPost.techQuestions];
-                              updatedQuestions[index] = e.target.value;
-                              setSelectedPost({ ...selectedPost, techQuestions: updatedQuestions });
-                            }}
-                          />
-                        </div>
-                      ))
-                    }
-                  </div>
-                )}
+{selectedPost && (
+  <div className="form-control">
+    <label className="label">
+      <span className="label-text font-semibold">Technical Questions</span>
+    </label>
+    {selectedPost.techQuestions &&
+      selectedPost.techQuestions.map((question, index) => (
+        <div className="form-control" key={index}>
+          <label className="label">
+            <span className="label-text">{`Technical Question ${index + 1}`}</span>
+          </label>
+          <div className="flex items-center">
+            <textarea
+              type="text"
+              placeholder={`Technical Question ${index + 1}`}
+              className="textarea h-10 textarea-bordered mb-3 w-full"
+              value={selectedPost.techQuestions[index]}
+              onChange={(e) => {
+                const updatedQuestions = [...selectedPost.techQuestions];
+                updatedQuestions[index] = e.target.value;
+                setSelectedPost({ ...selectedPost, techQuestions: updatedQuestions });
+              }}
+            />
+            <div className="flex items-center">
+              <MdDeleteForever
+                onClick={() => handleDeleteQuestion(index, 'tech')}
+                className="text-red-500 cursor-pointer mx-2"
+                size={20}
+              />
+              {/* <TiTick
+                onClick={() => handleApproveTechQuestion(index)}
+                className={`text-green-500 cursor-pointer mx-2 ${
+                  approvedTechQuestions[index] ? 'opacity-100' : 'opacity-30'
+                }`}
+              /> */}
+            </div>
+          </div>
+        </div>
+      ))}
+  </div>
+)}
 
-                {selectedPost && (
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text font-semibold">HR Questions</span>
-                    </label>
-                    {selectedPost.hrQuestions &&
-                      selectedPost.hrQuestions.map((question, index) => (
-                        <div className="form-control" key={index}>
-                          <label className="label">
-                            <span className="label-text">{`HR Question ${index + 1}`}</span>
-                          </label>
-                          <textarea
-                            type="text"
-                            placeholder={`HR Question ${index + 1}`}
-                            className="textarea h-10 textarea-bordered mb-3"
-                            value={selectedPost.hrQuestions[index]}
-                            onChange={(e) => {
-                              const updatedQuestions = [...selectedPost.hrQuestions];
-                              updatedQuestions[index] = e.target.value;
-                              setSelectedPost({ ...selectedPost, hrQuestions: updatedQuestions });
-                            }}
-                          />
-                        </div>
-                      ))
-                    }
-                  </div>
-                )}
+{selectedPost && (
+  <div className="form-control">
+    <label className="label">
+      <span className="label-text font-semibold">HR Questions</span>
+    </label>
+    {selectedPost.hrQuestions &&
+      selectedPost.hrQuestions.map((question, index) => (
+        <div className="form-control" key={index}>
+          <label className="label">
+            <span className="label-text">{`HR Question ${index + 1}`}</span>
+          </label>
+          <div className="flex items-center">
+            <textarea
+              type="text"
+              placeholder={`HR Question ${index + 1}`}
+              className="textarea h-10 textarea-bordered mb-3 w-full"
+              value={selectedPost.hrQuestions[index]}
+              onChange={(e) => {
+                const updatedQuestions = [...selectedPost.hrQuestions];
+                updatedQuestions[index] = e.target.value;
+                setSelectedPost({ ...selectedPost, hrQuestions: updatedQuestions });
+              }}
+            />
+            <div className="flex items-center">
+              <MdDeleteForever
+                onClick={() => handleDeleteQuestion(index, 'hr')}
+                className="text-red-500 cursor-pointer mx-2"
+                size={20}
+              />
+              {/* <TiTick
+                onClick={() => handleApproveHRQuestion(index)}
+                className={`text-green-500 cursor-pointer mx-2 ${
+                  approvedHRQuestions[index] ? 'opacity-100' : 'opacity-30'
+                }`}
+              /> */}
+            </div>
+          </div>
+        </div>
+      ))}
+  </div>
+)}
               </div>
             )}
           </form>
