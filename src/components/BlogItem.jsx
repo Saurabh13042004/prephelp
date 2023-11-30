@@ -32,7 +32,7 @@ function BlogItem() {
       const response = await getDocs(collection(db, 'formResponses'));
       const data = response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setPosts(data);
-      setSearchedPosts(data); // Set the initial state for searchedPosts
+      setSearchedPosts(data); 
     } catch (error) {
       console.error(error);
     }

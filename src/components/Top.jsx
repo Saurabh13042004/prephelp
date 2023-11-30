@@ -1,3 +1,8 @@
+import { GoDiscussionClosed } from "react-icons/go";
+import { IoSpeedometerOutline } from "react-icons/io5";
+import { GiSmart, GiSpeedBoat, GiSpeedometer } from "react-icons/gi";
+import { TypeAnimation } from 'react-type-animation';
+
 function Top(){
   return (
     <div className="mb-16">
@@ -9,9 +14,8 @@ function Top(){
                 Brand new
               </p>
             </div>
-            <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
-              <span className="relative inline-block">
-                <svg
+            <p className="max-w-xl mb-6 font-sans text-4xl capitalize font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
+                {/* <svg
                   viewBox="0 0 52 24"
                   fill="currentColor"
                   className="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-gray-400 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block"
@@ -32,11 +36,28 @@ function Top(){
                     width="52"
                     height="24"
                   />
-                </svg>
-                <span className="relative">Ace</span>
-              </span>{' '}
-                your next interview with PrepHelp
-            </h2>
+                </svg> */}
+                <TypeAnimation
+      sequence={[
+        // Same substring at the start will only be typed out once, initially
+        'Ace your next interview with PrepHelp',
+        2000, // wait 1s before replacing "Mice" with "Hamsters"
+        'Prepare for your next interview with PrepHelp',
+        2000,
+        'Crack your next interview with PrepHelp',
+        2000,
+        'Get ready for your next interview with PrepHelp',
+        2000
+      ]}
+      wrapper="span"
+      speed={40}
+      style={{ display: 'inline-block' }}
+      repeat={Infinity}
+      cursor = {false}
+      className="text-transparent bg-clip-text bg-gradient-to-r text-4xl from-green-400 via-pink-500 to-purple-500"
+    />
+             
+            </p>
             <p className="text-base text-gray-700 md:text-lg">
               PrepHelp is a community of students who share their placement interview experiences and help each other to excel in their career journey.
             </p>
@@ -63,62 +84,26 @@ function Top(){
         <div className="relative grid mx-auto overflow-hidden bg-white divide-y rounded shadow sm:divide-y-0 sm:divide-x sm:max-w-screen-sm sm:grid-cols-3 lg:max-w-screen-md">
           <div className="inline-block p-8 text-center">
             <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-indigo-50">
-              <svg
-                className="w-10 h-10 text-deep-purple-accent-400"
-                stroke="currentColor"
-                viewBox="0 0 52 52"
-              >
-                <polygon
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                  points="29 13 14 29 25 29 23 39 38 23 27 23"
-                />
-              </svg>
+              <GoDiscussionClosed size={20} />
             </div>
             <p className="font-bold tracking-wide text-gray-800">
-              Make it better
+            Ace interviews 
             </p>
           </div>
           <div className="inline-block p-8 text-center">
             <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-indigo-50">
-              <svg
-                className="w-10 h-10 text-deep-purple-accent-400"
-                stroke="currentColor"
-                viewBox="0 0 52 52"
-              >
-                <polygon
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                  points="29 13 14 29 25 29 23 39 38 23 27 23"
-                />
-              </svg>
+              <GiSpeedometer size={20} />
             </div>
             <p className="font-bold tracking-wide text-gray-800">
-              Do it faster
+            Speed up career growth
             </p>
           </div>
           <div className="inline-block p-8 text-center">
             <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-indigo-50">
-              <svg
-                className="w-10 h-10 text-deep-purple-accent-400"
-                stroke="currentColor"
-                viewBox="0 0 52 52"
-              >
-                <polygon
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                  points="29 13 14 29 25 29 23 39 38 23 27 23"
-                />
-              </svg>
+              <GiSmart size={20}/>
             </div>
             <p className="font-bold tracking-wide text-gray-800">
-              Working harder
+            Work smarter 
             </p>
           </div>
         </div>

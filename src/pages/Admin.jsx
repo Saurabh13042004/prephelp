@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import { MdDeleteForever } from "react-icons/md";
 
 import { TiTick } from "react-icons/ti";
+import AdminNavbar from '../components/AdminNavbar';
 
 
 function Admin() {
@@ -78,6 +79,10 @@ function Admin() {
     setApprovedHRQuestions(updatedQuestions);
   };
 
+
+
+
+
   useEffect(() => {
     document.title = 'Admin Panel';
     fetchData();
@@ -85,7 +90,11 @@ function Admin() {
 
   return (
     <div>
-      <Navbar />
+      <AdminNavbar/>
+      {user === null ? (<Loader/>) :
+        (
+          <>
+          
       <div className="overflow-x-auto m-auto p-4 m-5">
         <table className="table">
           <thead>
@@ -366,6 +375,11 @@ function Admin() {
           </button>
         </div>
       </dialog>
+      </>
+        )
+      
+      }
+      
     </div>
   );
 }
