@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Form() {
@@ -41,7 +41,7 @@ function Form() {
     if (company.trim() !== '' && role.trim() !== '') {
       setQuestions(1);
     } else {
-      alert('Please fill in all required fields.');
+      toast.error('Please fill in all required fields.');
     }
   };
 
@@ -57,7 +57,7 @@ function Form() {
     if (name.trim() !== '' && email.trim() !== '') {
       setQuestions(2);
     } else {
-      alert('Please fill in all required fields.');
+      toast.error('Please fill in all required fields.');
     }
   };
 
@@ -82,7 +82,6 @@ function Form() {
       mistakes,
       isApproved,
     };
-
     try {
       await addDoc(collection(db, 'formResponses'), formData);
       toast.success('Form Submitted Successfully');
@@ -93,40 +92,28 @@ function Form() {
   };
 
   return (
-    <>
+    <div>
+    <Navbar />
+    <ToastContainer/>
+    
       {questions === 0 && (
         <div>
-          <Navbar />
-          <div className="lg:mx-[12%] my-12">
+          
+          <div className="lg:mx-[12%] my-16 p-10">
             <p className="font-bold text-3xl">Interview Experience</p>
             <p className="font-semibold text-xl mt-10 font-sans">ROLE INFO.</p>
             <div className="flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52">
               <div className="w-80">
                 <label className="block font-semibold mt-8 mb-5">Company you Applied to?*</label>
-                <select
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  className="border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80"
-                >
-                  <option value="" disabled>Select a company</option>
-                  <option value="Microsoft">Microsoft</option>
-                  <option value="Google">Google</option>
-                  <option value="Amazon">Amazon</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              {company === 'Other' && (
-                <div className="w-80">
-                  <label className="block font-semibold mt-8 mb-5">Other Company*</label>
-                  <input
+                <input
                     type="text"
                     required
                     onChange={(e) => setCompany(e.target.value)}
-                    value={otherCompany}
+                    value={company}
+                    placeholder='Eg. Amazon,Google etc.'
                     className="border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80"
                   />
-                </div>
-              )}
+              </div>
             </div>
               <div className='w-80'>
                 <label className='block font-semibold mt-8 mb-5'>Role for Which you applied*</label>
@@ -215,7 +202,6 @@ function Form() {
 
       {questions === 1 && (
         <div>
-          <Navbar />
           <div className='lg:mx-[12%] my-12'>
             <p className='font-bold text-3xl'>Interview Experience</p>
             <p className='font-semibold text-xl mt-10 font-sans'>YOUR PROFILE</p>
@@ -305,7 +291,7 @@ function Form() {
 {
   questions==2 &&(
     <div>
-         <Navbar />
+    
           <div className='lg:mx-[12%] my-12'>
             <p className='font-bold text-3xl'>Interview Experience</p>
             <label className='block font-semibold mt-8 mb-5'>Any eligibility Criteria?*</label>
@@ -399,7 +385,7 @@ function Form() {
   )
 };
 
-    </>
+    </div>
   );
 }
 

@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import Form from './pages/Form'
 import BlogPost from './components/BlogPost'
 import Questions from './pages/Questions'
+import InterviewForm from './pages/InterviewForm'
 function App() {
 
   return (

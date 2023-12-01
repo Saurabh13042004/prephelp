@@ -17,7 +17,7 @@ const getCompanyLogo = (company) => {
   }
 };
 
-const popularCompanies = ['Microsoft', 'Google', 'Adobe','Gojek'];
+const popularCompanies = ['Microsoft', 'Google', 'Adobe', 'Gojek'];
 
 function BlogItem() {
   const [posts, setPosts] = useState([]);
@@ -32,7 +32,7 @@ function BlogItem() {
       const response = await getDocs(collection(db, 'formResponses'));
       const data = response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setPosts(data);
-      setSearchedPosts(data); 
+      setSearchedPosts(data);
     } catch (error) {
       console.error(error);
     }
@@ -60,7 +60,7 @@ function BlogItem() {
   return (
     <>
       <div className="flex items-center mb-4 ml-[8%]">
-        <p className='me-4'>Sort By Companies : </p>
+        <p className="me-4">Sort By Companies : </p>
         <select
           value={selectedCompany}
           onChange={(e) => setSelectedCompany(e.target.value)}
@@ -73,7 +73,10 @@ function BlogItem() {
             </option>
           ))}
         </select>
-        <button onClick={handleSearch} className="bg-slate-900 text-white p-2 rounded-full ml-2 px-4">
+        <button
+          onClick={handleSearch}
+          className="bg-blue-700 text-white p-2 rounded-full ml-2 px-4 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-all"
+        >
           Search
         </button>
       </div>
@@ -81,56 +84,61 @@ function BlogItem() {
       {loading ? (
         <Loader />
       ) : (
-        searchedPosts.map((post) => (
-          post.isApproved && (
-            <div className="py-3" key={post.id}>
-              <Link to={`/post/${post.id}`}>
-                <div className="max-w-[85%] mx-auto bg-white rounded-lg overflow-hidden hover:shadow-xl transition-shadow mt-8 p-2 ">
-                  {/* Title block */}
-                  <div className="p-4 flex items-center">
-                    <div className="w-14 h-14 rounded overflow-hidden">
-                      <img
-                        className="w-full h-full object-cover "
-                        src={getCompanyLogo(post.company)}
-                        alt="Company Logo"
-                      />
+        searchedPosts.map(
+          (post) =>
+            post.isApproved && (
+              <div className="py-3" key={post.id}>
+                <Link to={`/post/${post.id}`}>
+                  <div className="max-w-[85%] mx-auto bg-white rounded-lg overflow-hidden hover:shadow-xl transition-shadow mt-8 p-2">
+                    {/* Title block */}
+                    <div className="p-4 flex items-center">
+                      <div className="w-14 h-14 rounded overflow-hidden">
+                        <img
+                          className="w-full h-full object-cover "
+                          src={getCompanyLogo(post.company)}
+                          alt="Company Logo"
+                        />
+                      </div>
+                      <div className="ml-4">
+                        <p className="text-xl font-semibold">
+                          {post.company} | {post.role} | Fresher
+                        </p>
+                        <p className="text-gray-600 font-bold">
+                          {post.rounds} Rounds | 6 Coding Problems
+                        </p>
+                      </div>
                     </div>
-                    <div className="ml-4">
-                      <p className="text-xl font-semibold">
-                        {post.company} | {post.role} | Fresher
-                      </p>
-                      <p className="text-gray-600 font-bold">
-                        {post.rounds} Rounds | 6 Coding Problems
-                      </p>
+                    <div className="border-t border-gray-200 my-2"></div>
+                    {/* Profile block */}
+                    <div className="px-4 py-2 flex items-center">
+                      <div className="bg-gray-300 w-12 mx-2 h-12 rounded-full overflow-hidden">
+                        <img
+                          className="w-full  h-full object-cover"
+                          src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+                          alt="Profile"
+                        />
+                      </div>
+                      <div className="ml-4 px-1">
+                        <p className="text-">{post.name}</p>
+                        <p className="text-gray-600 text-sm">
+                          {post.batch} Batch | Chitkara University
+                        </p>
+                      </div>
+                      <div className="ml-auto flex">
+                        <p
+                          className={`font-bold ${
+                            post.gotOffer === 'yes' ? 'text-green-500' : 'text-red-900'
+                          }`}
+                        >
+                          {post.gotOffer === 'yes' ? 'Selected' : 'Not-Selected'}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div className="border-t border-gray-200 my-2"></div>
-                  {/* Profile block */}
-                  <div className="px-4 py-2 flex items-center">
-                    <div className="bg-gray-300 w-12 mx-2 h-12 rounded-full overflow-hidden">
-                      <img
-                        className="w-full  h-full object-cover"
-                        src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
-                        alt="Profile"
-                      />
-                    </div>
-                    <div className="ml-4 px-1">
-                      <p className="text-">{post.name}</p>
-                      <p className="text-gray-600 text-sm">
-                        {post.batch} Batch | Chitkara University
-                      </p>
-                    </div>
-                    <div className="ml-auto flex">
-                      <p className={`font-bold ${post.gotOffer === 'yes' ? 'text-green-500' : 'text-red-900'}`}>
-                        {post.gotOffer === 'yes' ? 'Selected' : 'Not-Selected'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          )
-        ))
+                </Link>
+              </div>
+            )
+        )
       )}
     </>
   );
