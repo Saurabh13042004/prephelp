@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,7 +13,7 @@ function Form() {
   const [role, setRole] = useState('');
   const [gotOffer, setGotOffer] = useState('');
   const [location, setLocation] = useState('');
-  const [rounds, setRounds] = useState('');
+  const [rounds, setRounds] = useState(1);
   const [batch, setBatch] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -407,5 +408,4 @@ function Form() {
     </>
   );
 }
-
 export default Form;

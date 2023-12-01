@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Top from '../components/Top';
 import BlogItem from '../components/BlogItem';
 import { Link } from 'react-router-dom';
+import FooterPage from './FooterPage';
 
 
 function Home() {
@@ -13,7 +14,7 @@ function Home() {
       <Top/>
       
       <BlogItem/>
-      
+      <FooterPage/>
     </div>
   )
 }

@@ -59,24 +59,27 @@ function BlogItem() {
 
   return (
     <>
-      <div className="flex items-center mb-4 ml-[8%]">
-        <p className='me-4'>Sort By Companies : </p>
-        <select
-          value={selectedCompany}
-          onChange={(e) => setSelectedCompany(e.target.value)}
-          className="p-2 border border-gray-300 rounded-md mr-2"
-        >
-          <option value="">All Companies</option>
-          {popularCompanies.map((company) => (
-            <option key={company} value={company}>
-              {company}
-            </option>
-          ))}
-        </select>
-        <button onClick={handleSearch} className="bg-slate-900 text-white p-2 rounded-full ml-2 px-4">
-          Search
-        </button>
-      </div>
+    <div className="flex items-center mb-4 ml-[8%]">
+  <p className="me-4 font-semibold">Sort By Companies:</p>
+  <select
+    value={selectedCompany}
+    onChange={(e) => setSelectedCompany(e.target.value)}
+    className="p-2 border border-gray-300 rounded-md mr-2 focus:outline-none"
+  >
+    <option value="">All Companies</option>
+    {popularCompanies.map((company) => (
+      <option key={company} value={company}>
+        {company}
+      </option>
+    ))}
+  </select>
+  <button
+    onClick={handleSearch}
+    className="bg-slate-900 text-white p-2 rounded-full ml-2 px-4 hover:bg-slate-800 transition duration-300"
+  >
+    Search
+  </button>
+</div>
 
       {loading ? (
         <Loader />

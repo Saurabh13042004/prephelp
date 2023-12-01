@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Question from '../components/Question';
+import FooterPage from './FooterPage';
 
 const questionsData = [
   {
@@ -49,7 +50,7 @@ function Questions() {
         onSelectCategory={(category) => setSelectedCategory(category)}
         selectedCategory={selectedCategory}
       />
-      <div className="bg-[#FDE5D4] min-h-screen flex flex-col items-center ">
+      <div className="bg-[#e5e7eb] min-h-screen flex flex-col items-center ">
         <div className="container mx-auto p-6">
           <h1 className="text-3xl font-bold mb-8">Questions</h1>
           <div className="mb-4">
@@ -86,7 +87,9 @@ function Questions() {
             <p>No questions found for the specified filters.</p>
           )}
         </div>
+        <FooterPage/>
       </div>
+      
     </>
   );
 }
