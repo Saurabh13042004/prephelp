@@ -12,7 +12,7 @@ import Footer from '../components/Footer';
 function Home() {
   return (
    
-   <div className="bg-gray-200 ">
+   <div className="">
       <Navbar/>
       <Top/>
       

@@ -88,11 +88,11 @@ function BlogItem() {
         searchedPosts.map(
           (post) =>
             post.isApproved && (
-              <div className="py-3" key={post.id}>
+              <div className="py-3 " key={post.id}>
                 <Link to={`/post/${post.id}`}>
-                  <div className="max-w-[85%] mx-auto bg-white rounded-lg overflow-hidden hover:shadow-xl transition-shadow mt-8 p-2">
+                  <div className="max-w-[85%] mx-auto bg-white rounded-lg overflow-hidden hover:shadow-xl transition-shadow mt-8 p-2 shadow">
                     {/* Title block */}
-                    <div className="p-4 flex items-center">
+                    <div className="p-4 flex items-center ">
                       <div className="w-14 h-14 rounded overflow-hidden">
                         <img
                           className="w-full h-full object-cover "
