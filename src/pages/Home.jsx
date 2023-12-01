@@ -3,7 +3,10 @@ import Navbar from '../components/Navbar';
 import Top from '../components/Top';
 import BlogItem from '../components/BlogItem';
 import { Link } from 'react-router-dom';
+
 import Footer from '../components/Footer';
+
+
 
 
 function Home() {
@@ -16,6 +19,8 @@ function Home() {
       <BlogItem/>
 
       <Footer/>
+      
+
       
     </div>
   )

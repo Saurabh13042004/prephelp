@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,7 +13,7 @@ function Form() {
   const [role, setRole] = useState('');
   const [gotOffer, setGotOffer] = useState('');
   const [location, setLocation] = useState('');
-  const [rounds, setRounds] = useState('');
+  const [rounds, setRounds] = useState(1);
   const [batch, setBatch] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -115,6 +116,18 @@ function Form() {
                   />
               </div>
             </div>
+            <div className='flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52'>
+              <div className='w-80'>
+            <label className='block font-semibold mt-8 mb-5'>Any eligibility Criteria?*</label>
+            <input
+            value={eligibility}
+            required
+            placeholder='Eg. CGPA Above 7 or No in case there is No Eligibility Criteria'
+            className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4  appearance-none leading-5 text-gray-700 w-80'
+            onChange={(e)=>setEligibility(e.target.value)}
+            />
+            </div>
+            
               <div className='w-80'>
                 <label className='block font-semibold mt-8 mb-5'>Role for Which you applied*</label>
                 <input
@@ -126,6 +139,7 @@ function Form() {
                   className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
               
+            </div>
             </div>
             <div className='flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52'>
               <div className='w-80'>
@@ -294,14 +308,6 @@ function Form() {
     
           <div className='lg:mx-[12%] my-12'>
             <p className='font-bold text-3xl'>Interview Experience</p>
-            <label className='block font-semibold mt-8 mb-5'>Any eligibility Criteria?*</label>
-            <input
-            value={eligibility}
-            required
-            placeholder='Eg. CGPA Above 7 or No in case there is No Eligibility Criteria'
-            className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[65%]'
-            onChange={(e)=>setEligibility(e.target.value)}
-            />
               <label className='block font-semibold mt-8 mb-5'> Share your Interview Experience  ?</label>
             <textarea 
             value={mistakes}
@@ -388,5 +394,4 @@ function Form() {
     </div>
   );
 }
-
 export default Form;
