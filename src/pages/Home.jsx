@@ -18,7 +18,7 @@ function Home() {
       
       <BlogItem/>
 
-      <Footer/>
+      <Footer />
       
 
       

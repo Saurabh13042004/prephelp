@@ -12,10 +12,10 @@ function Navbar() {
     <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow fixed w-full top-0 z-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {/* Brand */}
-        <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PrepHelp</span>
-        </a>
+        </Link>
 
         {/* Buttons for Small Screens */}
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -42,10 +42,7 @@ function Navbar() {
               <Link to="/" className="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500" aria-current="page">Home</Link>
             </li>
             <li>
-              <Link to="/about" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</Link>
-            </li>
-            <li>
-              <Link to="/services" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 d:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+              <Link to="/questions" className="block py-2 px-3 md:p-0 text-gray-900 rounded  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 d:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                 Questions
               </Link>
             </li>
@@ -53,6 +50,9 @@ function Navbar() {
               <Link to="/form" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                 Experience Sharing
               </Link>
+            </li>
+            <li>
+              <Link to="/Contact" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</Link>
             </li>
           </ul>
         </div>
@@ -67,7 +67,7 @@ function Navbar() {
               <Link to="/about" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">About</Link>
             </li>
             <li>
-              <Link to="/services" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">Questions</Link>
+              <Link to="/questions" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">Questions</Link>
             </li>
             <li>
               <Link to="/contact" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">

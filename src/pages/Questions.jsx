@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Question from '../components/Question';
 import FooterPage from './FooterPage';
+import Footer from '../components/Footer';
 
 const questionsData = [
   {
@@ -87,7 +88,7 @@ function Questions() {
             <p>No questions found for the specified filters.</p>
           )}
         </div>
-        <FooterPage/>
+        <Footer className="w-full"/>
       </div>
       
     </>

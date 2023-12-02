@@ -112,7 +112,7 @@ function Form() {
                     onChange={(e) => setCompany(e.target.value)}
                     value={company}
                     placeholder='Eg. Amazon,Google etc.'
-                    className="border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80"
+                    className="border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80"
                   />
               </div>
             </div>
@@ -123,7 +123,7 @@ function Form() {
             value={eligibility}
             required
             placeholder='Eg. CGPA Above 7 or No in case there is No Eligibility Criteria'
-            className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4  appearance-none leading-5 text-gray-700 w-80'
+            className='border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4  appearance-none leading-5 text-gray-700 w-80'
             onChange={(e)=>setEligibility(e.target.value)}
             />
             </div>
@@ -136,14 +136,14 @@ function Form() {
                   placeholder='Eg. Sde,Analyst etc'
                   onChange={(e) => setRole(e.target.value)}
                   value={role}
-                  className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                  className='border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
               
             </div>
             </div>
             <div className='flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52'>
               <div className='w-80'>
-                <label className='block font-semibold my-8'>Did you get an offer?</label>
+                <label className='block font-semibold my-12'>Did you get an offer?</label>
                 <div className='flex items-center space-x-4'>
                   <label className='inline-flex items-center'>
                     <input
@@ -171,14 +171,14 @@ function Form() {
                 </div>
               </div>
               <div className='w-80'>
-                <label className='block font-semibold my-8'>Location Of company?</label>
+                <label className='block font-semibold my-12'>Location Of company?</label>
                 <input
                   type='text'
                   placeholder='Eg. Hyedrabad,Pune,Delhi etc.'
                   required
                   onChange={(e) => setLocation(e.target.value)}
                   value={location}
-                  className='border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                  className='border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
               </div>
             </div>
@@ -189,7 +189,7 @@ function Form() {
                 type='number'
                 onChange={(e) => setRounds(e.target.value)}
                 value={rounds}
-                className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                className='border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
               />
             </div>
             <div className='w-80'>
@@ -199,14 +199,14 @@ function Form() {
                 onChange={(e) => setBatch(e.target.value)}
                 placeholder='Eg. 2021'
                 value={batch}
-                className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                className='border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
               />
             </div>
             </div>
             <button
               onClick={handleNextClick1}
               type='button'
-              className='bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'
+              className='bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-10 transition duration-300 transform hover:scale-105 my-12'
             >
               Next
             </button>
@@ -216,7 +216,7 @@ function Form() {
 
       {questions === 1 && (
         <div>
-          <div className='lg:mx-[12%] my-12'>
+          <div className='lg:mx-[12%] my-16 p-10'>
             <p className='font-bold text-3xl'>Interview Experience</p>
             <p className='font-semibold text-xl mt-10 font-sans'>YOUR PROFILE</p>
             <div className='flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52'>
@@ -227,7 +227,7 @@ function Form() {
                   required
                   onChange={(e) => setName(e.target.value)}
                   value={name}
-                  className='border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                  className='border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
               </div>
               <div className='w-80'>
@@ -238,7 +238,7 @@ function Form() {
                   placeholder='Eg. ABC@xyz.com'
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
-                  className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                  className='border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
               </div>
             </div>
@@ -251,7 +251,7 @@ function Form() {
                   required
                   onChange={(e) => setUniversityID(e.target.value)}
                   value={universityID}
-                  className='border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                  className='border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
               </div>
               <div className='w-80'>
@@ -260,7 +260,7 @@ function Form() {
                   type='number'
                   onChange={(e) => setMobileNo(e.target.value)}
                   value={mobileNo}
-                  className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                  className='border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
               </div>
             </div>
@@ -271,7 +271,7 @@ function Form() {
                   type='url'
                   onChange={(e) => setLinkedin(e.target.value)}
                   value={linkedin}
-                  className='border-2 border-gray-300 focus:outline-none focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                  className='border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
               </div>
               <div className='w-80'>
@@ -280,21 +280,21 @@ function Form() {
                   type='number'
                   onChange={(e) => setCgpa(e.target.value)}
                   value={cgpa}
-                  className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
+                  className='border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block w-full appearance-none leading-5 text-gray-700 w-80'
                 />
               </div>
             </div>
             <button
               onClick={handlePrevClick1}
               type='button'
-              className='bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'
+              className='bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12'
             >
               Previous
             </button>
             <button
               onClick={handleNextClick2}
               type='button'
-              className='bg-orange-500 float-right hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'
+              className='bg-blue-600 float-right hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12'
             >
               Next
             </button>
@@ -306,20 +306,20 @@ function Form() {
   questions==2 &&(
     <div>
     
-          <div className='lg:mx-[12%] my-12'>
+          <div className='lg:mx-[12%] my-16 p-10'>
             <p className='font-bold text-3xl'>Interview Experience</p>
               <label className='block font-semibold mt-8 mb-5'> Share your Interview Experience  ?</label>
             <textarea 
             value={mistakes}
             placeholder='Please Share some preparation tips if there is any.'
-            className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[65%]'
+            className='border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] '
             onChange={(e)=>setMistakes(e.target.value)}
             />
             <label className='block font-semibold mt-8 mb-5'>Preparation Tips</label>
             <textarea 
             value={preparationTips}
             placeholder='Please Share some preparation tips if there is any.'
-            className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[65%]'
+            className='border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] '
             onChange={(e)=>setPreparationTips(e.target.value)}
             />
             <div>
@@ -335,14 +335,14 @@ function Form() {
                       updatedHRQuestions[index] = e.target.value;
                       setHRQuestions(updatedHRQuestions);
                     }}
-                    className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[65%]'
+                    className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]'
                   />
                 </div>
               ))}
               <button
                 onClick={addHRQuestion}
                 type='button'
-                className='bg-orange-500  hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'
+                className='bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12'
               >
                 ADD HR QUESTION
               </button>
@@ -360,14 +360,14 @@ function Form() {
                       updatedTechQuestions[index] = e.target.value;
                       setTechQuestions(updatedTechQuestions);
                     }}
-                    className='border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[65%]'
+                    className='border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]'
                   />
                 </div>
               ))}
               <button
                 onClick={addTechQuestion}
                 type='button'
-                className='bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'
+                className='bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12'
               >
                 ADD TECH QUESTIONS
               </button>
@@ -375,11 +375,11 @@ function Form() {
             <button
               onClick={handlePrevClick2}
               type='button'
-              className='bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'
+              className='bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12'
             >
               Previous
             </button>
-            <Link to="/formSubmitted" onClick={handleSubmit} className='bg-orange-500 float-right hover:bg-orange-600 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-8'>
+            <Link to="/formSubmitted" onClick={handleSubmit} className='bg-blue-600 float-right hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12'>
               SUBMIT
             </Link>
             

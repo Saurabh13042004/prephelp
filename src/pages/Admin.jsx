@@ -95,7 +95,7 @@ function Admin() {
         (
           <>
           
-      <div className="overflow-x-auto m-auto p-4 m-5">
+      <div className="overflow-x-auto m-auto mt-14 p-8">
         <table className="table">
           <thead>
             <tr>
