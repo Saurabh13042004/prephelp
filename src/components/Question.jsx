@@ -1,6 +1,8 @@
 import React from 'react';
+import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
-const Question = ({ question }) => {
+function Question({ question}) {
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow mb-4">
       <div className="p-6">

@@ -2,9 +2,10 @@
 
 import React from 'react';
 
+
 function Footer() {
   return (
-    <footer className="bg-gray-100 min-w-full dark:bg-gray-900 mt-20">
+    <footer className="bg-gray-100 min-w-full dark:bg-gray-900 mt-20 p-5">
       <div className="mx-auto w-full min-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
