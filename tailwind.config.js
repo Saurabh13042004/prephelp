@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
+    'node_modules/preline/dist/*.js',
     "./node_modules/flowbite/**/*.js",
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -19,6 +20,7 @@ export default {
   },
 // tailwind.config.js
 plugins: [
+  require('preline/plugin'),
   require("daisyui"),
   require('flowbite/plugin'),
   require("@tailwindcss/forms")({

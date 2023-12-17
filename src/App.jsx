@@ -9,10 +9,8 @@ import Home from './pages/Home'
 import Form from './pages/Form'
 import BlogPost from './components/BlogPost'
 import Questions from './pages/Questions'
-import Error404 from './pages/Error404'
-import LandingPage from './pages/LandingPage'
-import SignIn from './pages/SignIn'
-import SignUp from './pages/SignUp'
+import InterviewForm from './pages/InterviewForm'
+import LandingPage from './components/LandingPage'
 function App() {
 
   return (
@@ -22,10 +20,9 @@ function App() {
         
         <Route path="/admin" element={<Admin/>} />
         <Route path="/formSubmitted" element={<Submitted/>}/>
-        <Route path = "/login" element={<Login/>}/>
-        <Route path='/signin' element={<SignIn/>}/>
-        <Route path="/" element={<LandingPage/>}/>
-        <Route path='/Home' element={<Home/>}/>
+        <Route path = "/Login" element={<Login/>}/>
+        <Route path='/' element={<LandingPage/>}/>
+        {/* <Route path="/" element={<Home/>}/> */}
         <Route path="/form" element={<Form/>}/>
         <Route path='/signup' element={<SignUp/>}/>
         <Route path='*' element={<Error404/>}/>

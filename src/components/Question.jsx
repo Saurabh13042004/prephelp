@@ -10,6 +10,6 @@ const Question = ({ question }) => {
       </div>
     </div>
   );
-};
+}
 
 export default Question;
