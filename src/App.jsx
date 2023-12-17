@@ -9,8 +9,15 @@ import Home from './pages/Home'
 import Form from './pages/Form'
 import BlogPost from './components/BlogPost'
 import Questions from './pages/Questions'
+<<<<<<< HEAD
 import InterviewForm from './pages/InterviewForm'
 import LandingPage from './components/LandingPage'
+=======
+import Error404 from './pages/Error404'
+import LandingPage from './pages/LandingPage'
+import SignIn from './pages/SignIn'
+import SignUp from './pages/SignUp'
+>>>>>>> ad397a873b97ead1109ffbbe755a1f02449188d4
 function App() {
 
   return (
@@ -24,8 +31,11 @@ function App() {
         <Route path='/' element={<LandingPage/>}/>
         {/* <Route path="/" element={<Home/>}/> */}
         <Route path="/form" element={<Form/>}/>
+        <Route path='/signup' element={<SignUp/>}/>
+        <Route path='*' element={<Error404/>}/>
         <Route path='/questions' element={<Questions/>}/>
         <Route path='/post/:id' element={<BlogPost/>}/>
+        
       </Routes>
     </Router>
   )

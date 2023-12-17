@@ -176,7 +176,7 @@ const BlogPost = () => {
                   Final Outcome
                 </h3>
                 <p className="text-lg text-gray-800">
-                  I was {post.gotOffer ? <span className="text-green-500">selected</span> : <span className="text-red-500">not selected</span>} for the role of {post.role} at {post.company}. I would like to thank Chitkara University Placement Cell for providing me this opportunity. I would also like to thank PrepHelp for providing me the platform to share my interview experience with you all. I hope it will help you in your preparation. All the best for your interviews.
+                  I was {post.gotOffer === 'yes' ? <span className="text-green-500">selected</span> : <span className="text-red-500">not selected</span>} for the role of {post.role} at {post.company}. I would like to thank Chitkara University Placement Cell for providing me this opportunity. I would also like to thank PrepHelp for providing me the platform to share my interview experience with you all. I hope it will help you in your preparation. All the best for your interviews.
                 </p>
               </section>
             </div>

@@ -9,7 +9,7 @@ const getCompanyLogo = (company) => {
     case 'Microsoft':
       return 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1200px-Microsoft_logo.svg.png';
     case 'Google':
-      return 'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png';
+      return 'https://imgs.search.brave.com/RhIO_Tc-OGhbwwdc61rqGCfFacsUlQPNcaIZxOl_CZk/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9ibG9n/LmxvZ29teXdheS5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MjEvMDEvZ29vZ2xl/LXN5bWJvbC5qcGc';
     case 'Adobe':
       return 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Adobe_Acrobat_DC_logo_2020.svg/1200px-Adobe_Acrobat_DC_logo_2020.svg.png';
     default:
@@ -17,7 +17,7 @@ const getCompanyLogo = (company) => {
   }
 };
 
-const popularCompanies = ['Microsoft', 'Google', 'Adobe', 'Gojek'];
+const popularCompanies = ['Microsoft', 'Google', 'Adobe', 'Atlassian','Amazon'];
 
 function BlogItem() {
   const [posts, setPosts] = useState([]);
