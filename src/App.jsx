@@ -10,6 +10,7 @@ import Form from './pages/Form'
 import BlogPost from './components/BlogPost'
 import Questions from './pages/Questions'
 import InterviewForm from './pages/InterviewForm'
+import LandingPage from './components/LandingPage'
 function App() {
 
   return (
@@ -20,7 +21,8 @@ function App() {
         <Route path="/admin" element={<Admin/>} />
         <Route path="/formSubmitted" element={<Submitted/>}/>
         <Route path = "/Login" element={<Login/>}/>
-        <Route path="/" element={<Home/>}/>
+        <Route path='/' element={<LandingPage/>}/>
+        {/* <Route path="/" element={<Home/>}/> */}
         <Route path="/form" element={<Form/>}/>
         <Route path='/questions' element={<Questions/>}/>
         <Route path='/post/:id' element={<BlogPost/>}/>
