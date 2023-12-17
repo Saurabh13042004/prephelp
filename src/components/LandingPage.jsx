@@ -1,10 +1,43 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
 import { RiLoginCircleLine } from 'react-icons/ri';
 import { FaCode,  FaAccusoft } from "react-icons/fa";
 import { IoMdMailUnread } from "react-icons/io";
 
 function LandingPage() {
+  const controls = useAnimation();
+  const [ref, inView] = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      controls.start({ opacity: 1, y: 0 });
+    }
+  }, [controls, inView]);
+  const startAnimation = () => {
+    controls.start({
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5 },
+    });
+  };
+
+  useEffect(() => {
+    const scrollHandler = () => {
+      const offsetTop = document.getElementById('stats-section')?.offsetTop || 0;
+      const scrollPosition = window.scrollY + window.innerHeight;
+
+      if (scrollPosition > offsetTop) {
+        startAnimation();
+      }
+    };
+
+    window.addEventListener('scroll', scrollHandler);
+
+    return () => window.removeEventListener('scroll', scrollHandler);
+  }, []);
+
   return (
     <div>
 
@@ -144,54 +177,70 @@ function LandingPage() {
 
 </motion.section>
 
-<section className='bg-white dark:bg-gray-900 mx-auto  items-center justify-center flex'>
-    <div className='flex flex-wrap'>
+<motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={controls}
+      transition={{ duration: 0.8 }}
+      className='bg-white dark:bg-gray-900 mx-auto xl:my-3 items-center justify-center flex'
+    >
+      <div className='flex flex-wrap'>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className='flex items-center m-4'
+        >
+          <div className='rounded-full bg-[#F36A8D] p-8'>
+            <FaCode size={35} color='white' />
+          </div>
+          <div className='items-start px-4 flex flex-col'>
+            <p className='text-xl font-bold'>Solve Questions</p>
+           
 
-        <div className='flex items-center  m-4'>
-            <div className='rounded-full bg-[#F36A8D] p-8'>
-                <FaCode size={35} color='white'/>
-            </div>
-            <div className='items-start px-4 flex flex-col'>
-                <p className="text-xl font-bold">Solve Questions</p>
-                <p className="w-[250px] text-[#79808A]">
-                 Solve the most frequently asked questions.
-                </p>
-            </div>
-        </div>
+            <p className='w-[250px] text-[#79808A]'>
+              Solve the most frequently asked questions.
+            </p>
+          </div>
+        </motion.div>
 
-        <div className='flex items-center m-4'>
-            <div className='rounded-full bg-[#20CA66] p-8'>
-              <FaAccusoft size={35} color='white'/>
-            </div>
-            <div className='items-start px-4 flex flex-col'>
-            <p className="text-xl font-bold">
-                    Interiview Experiences
-                </p>
-                <p className="w-[250px] text-[#79808A]">
-                    Read the interview experiences of your seniors.
-                </p>
-            </div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className='flex items-center m-4'
+        >
+          <div className='rounded-full bg-[#20CA66] p-8'>
+            <FaAccusoft size={35} color='white' />
+          </div>
+          <div className='items-start px-4 flex flex-col'>
+            <p className='text-xl font-bold'>Interview Experiences</p>
+            <p className='w-[250px] text-[#79808A]'>
+              Read the interview experiences of your seniors.
+            </p>
+          </div>
+        </motion.div>
 
-        <div className='flex items-center m-4'>
-            <div className='rounded-full bg-[#FA9161] p-8'>
-                <IoMdMailUnread size={35} color='white'/>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className='flex items-center m-4'
+        >
+          <div className='rounded-full bg-[#FA9161] p-8'>
+            <IoMdMailUnread size={35} color='white' />
+          </div>
+          <div className='items-start px-4 flex flex-col'>
+            <p className='text-xl font-bold'>Connect with Seniors</p>
+            <p className='w-[250px] text-[#79808A]'>
+              Connect with your seniors and get guidance.
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </motion.section>
 
-            </div>
-            <div className='items-start px-4 flex flex-col'>
-            <p className="text-xl font-bold">
-                    Connect with Seniors
-                </p>
-                <p className="w-[250px] text-[#79808A]">
-                    Connect with your seniors and get guidance.
-                </p>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section className='bg-white dark:bg-gray-900 mx-auto  items-center justify-center flex'>
+<section className='bg-white dark:bg-gray-900 mx-auto xl:my-3 items-center justify-center flex'>
 
 
 <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
@@ -264,7 +313,7 @@ function LandingPage() {
     <div className="relative z-10 lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
       <div className="mb-10 lg:mb-0 lg:col-span-6 lg:col-start-8 lg:order-2">
         <h2 className="text-2xl text-gray-800 font-bold sm:text-3xl dark:text-gray-200">
-          Fully customizable rules to match your unique needs
+        Unlock a world of possibilities and prepare for success!
         </h2>
 
  
@@ -273,8 +322,8 @@ function LandingPage() {
             <span className="flex">
               <svg className="flex-shrink-0 mt-2 h-6 w-6 md:w-7 md:h-7 hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/></svg>
               <span className="grow ms-6">
-                <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200">Advanced tools</span>
-                <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">Use Preline thoroughly thought and automated libraries to manage your businesses.</span>
+                <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200">Customizable Rules for Your Successs</span>
+                <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">Use ailor your interview preparation journey with advanced tools designed to manage every aspect of your career readiness.</span>
               </span>
             </span>
           </button>
@@ -283,8 +332,8 @@ function LandingPage() {
             <span className="flex">
               <svg className="flex-shrink-0 mt-2 h-6 w-6 md:w-7 md:h-7 hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
               <span className="grow ms-6">
-                <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200">Smart dashboards</span>
-                <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">Quickly Preline sample components, copy-paste codes, and start right off.</span>
+                <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200">Empower Your Preparation</span>
+                <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">Our platform is equipped with advanced tools to ensure you are well-prepared for every opportunity that comes your way.</span>
               </span>
             </span>
           </button>
@@ -293,8 +342,8 @@ function LandingPage() {
             <span className="flex">
               <svg className="flex-shrink-0 mt-2 h-6 w-6 md:w-7 md:h-7 hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
               <span className="grow ms-6">
-                <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200">Powerful features</span>
-                <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">Reduce time and effort on building modern look design with Preline only.</span>
+                <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200">Unleash the Power of Modern Design</span>
+                <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">PrepHelp brings you powerful features to reduce time and effort in building a modern and polished design for your interview materials.</span>
               </span>
             </span>
           </button>
@@ -344,121 +393,145 @@ function LandingPage() {
 
 </section>
 
-<section className="bg-white dark:bg-gray-900 mx-auto  items-center justify-center flex">
+<motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="bg-[#ECF0F5] dark:bg-gray-900 mx-auto items-center justify-center flex"
+    >
+      <div className="relative overflow-hidden">
+        <div className="max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8 lg:py-16 mx-auto">
+          <div aria-hidden="true" className="flex absolute start-0 -z-[1]">
+            <div className="bg-purple-200 opacity-20 blur-3xl w-[1036px] h-[300px] dark:bg-purple-900 dark:opacity-20"></div>
+          </div>
 
-<div className="relative overflow-hidden">
-  <div className="max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8 lg:py-16 mx-auto">
-
-    <div aria-hidden="true" className="flex absolute start-0 -z-[1]">
-      <div className="bg-purple-200 opacity-20 blur-3xl w-[1036px] h-[300px] dark:bg-purple-900 dark:opacity-20"></div>
-    </div>
-   
-
- 
-    <div className="lg:grid lg:grid-cols-6 lg:gap-8 lg:items-center">
-      <div className="hidden lg:block lg:col-span-2">
-        <img className="rounded-xl" src="https://media.licdn.com/dms/image/D5622AQEMW7pNFIlAFQ/feedshare-shrink_800/0/1695360948152?e=1705536000&v=beta&t=pVt2PwWYdQM9IHNYZ127rmOPgqOEgAraIfVevTIoccI" alt="Image Description"/>
-      </div>
-
-
-      <div className="lg:col-span-4">
-      
-        <blockquote>
-          <img className="w-24 h-auto mb-4" viewBox="-0.3 0 320.3999999999999 99.9" src='https://assets-global.website-files.com/63e3db0853d16fd219ecdb33/6410c12087e0984729244c1a_Prophecy%20Dark%20Logo.svg' xmlns="http://www.w3.org/2000/svg" width="2500" height="779"/>
-
-          <p className="text-xl font-medium text-gray-800 lg:text-2xl lg:leading-normal dark:text-gray-200">
-            “PrepHelp is a platform that helps you prepare for your oncampus interviews by providing you with the interview experiences of your seniors, the most frequently asked questions and the best resources.”
-          </p>
-
-          <footer className="mt-6">
-            <div className="flex items-center">
-              <div className="lg:hidden flex-shrink-0">
-                <img className="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1671726203390-cdc4354ee2eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80" alt="Image Description"/>
-              </div>
-              <div className="ms-4 lg:ms-0">
-                <p className="font-medium text-gray-800 dark:text-gray-200">
-                  Yuvraj Verma
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  SDE at Prophecy.io
-                </p>
-              </div>
+          <div className="lg:grid lg:grid-cols-6 lg:gap-8 lg:items-center">
+            <div className="hidden lg:block lg:col-span-2">
+              <img
+                className="rounded-xl"
+                src="https://media.licdn.com/dms/image/D5622AQEMW7pNFIlAFQ/feedshare-shrink_800/0/1695360948152?e=1705536000&v=beta&t=pVt2PwWYdQM9IHNYZ127rmOPgqOEgAraIfVevTIoccI"
+                alt="Image Description"
+              />
             </div>
-          </footer>
-        </blockquote>
 
-      </div>
+            <div className="lg:col-span-4">
+              <blockquote>
+                <motion.img
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8 }}
+                  className="w-24 h-auto mb-4"
+                  src="https://assets-global.website-files.com/63e3db0853d16fd219ecdb33/6410c12087e0984729244c1a_Prophecy%20Dark%20Logo.svg"
+                  alt="Logo"
+                  viewBox="-0.3 0 320.3999999999999 99.9"
+                />
 
-    </div>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="text-xl font-medium text-gray-800 lg:text-2xl lg:leading-normal dark:text-gray-200"
+                >
+                  “PrepHelp is a platform that helps you prepare for your on-campus interviews by providing you with the interview experiences of your seniors, the most frequently asked questions, and the best resources.”
+                </motion.p>
 
-  </div>
-</div>
-
-
-</section>
-<section className="bg-white dark:bg-gray-900 mx-auto  items-center justify-center flex">
-
-<div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-
-  <div className="grid items-center lg:grid-cols-12 gap-6 lg:gap-12">
-    <div className="lg:col-span-4">
-
-      <div className="lg:pe-6 xl:pe-12">
-        <p className="text-6xl font-bold leading-10 text-blue-600">
-          95%
-          <span className="ms-1 inline-flex items-center gap-x-1 bg-gray-200 font-medium text-gray-800 text-xs leading-4 rounded-full py-0.5 px-2 dark:bg-gray-800 dark:text-gray-300">
-            <svg className="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-            </svg>
-            +7% this year
-          </span>
-        </p>
-        <p className="mt-2 sm:mt-3 text-gray-500">
-            of Chitkara University students got placed in 2023.
-        </p>
-      </div>
- 
-    </div>
-
-
-    <div className="lg:col-span-8 relative lg:before:absolute lg:before:top-0 lg:before:-start-12 lg:before:w-px lg:before:h-full lg:before:bg-gray-200 lg:before:dark:bg-gray-700">
-      <div className="grid gap-6 grid-cols-2 md:grid-cols-4 lg:grid-cols-3 sm:gap-8">
-
-        <div>
-          <p className="text-3xl font-semibold text-blue-600">99.95%</p>
-          <p className="mt-1 text-gray-500">
-            of our students are placed
-          </p>
+                <footer className="mt-6">
+                  <div className="flex items-center">
+                    <div className="lg:hidden flex-shrink-0">
+                      <motion.img
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8 }}
+                        className="h-12 w-12 rounded-full"
+                        src="https://images.unsplash.com/photo-1671726203390-cdc4354ee2eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
+                        alt="Image Description"
+                      />
+                    </div>
+                    <div className="ms-4 lg:ms-0">
+                      <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="font-medium text-gray-800 dark:text-gray-200"
+                      >
+                        Yuvraj Verma
+                      </motion.p>
+                      <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-sm text-gray-600 dark:text-gray-400"
+                      >
+                        SDE at Prophecy.io
+                      </motion.p>
+                    </div>
+                  </div>
+                </footer>
+              </blockquote>
+            </div>
+          </div>
         </div>
-   
-
-        <div>
-          <p className="text-3xl font-semibold text-blue-600">2,000+</p>
-          <p className="mt-1 text-gray-500">
-            students placed in 2023
-          </p>
-        </div>
-
-
- 
-        <div>
-          <p className="text-3xl font-semibold text-blue-600">85%</p>
-          <p className="mt-1 text-gray-500">
-            of students got placed in top companies
-          </p>
-        </div>
-
       </div>
-    </div>
+    </motion.section>
+<section id="stats-section" className="bg-[#ECF0F5] dark:bg-gray-900 mx-auto py-20">
+      <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
+        <div className="grid items-center grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+          <div className="lg:col-span-4">
+            <div className="lg:pr-6 xl:pr-12">
+              <p className="text-5xl font-bold leading-10 text-blue-600">
+                <span className="mr-1">95%</span>
+                <span className="inline-flex items-center gap-x-1 bg-gray-200 font-medium text-gray-800 text-xs leading-4 rounded-full py-0.5 px-2 dark:bg-gray-800 dark:text-gray-300">
+                  <svg className="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z" />
+                  </svg>
+                  +7% this year
+                </span>
+              </p>
+              <p className="mt-2 sm:mt-3 text-gray-500">
+                of Chitkara University students got placed in 2023.
+              </p>
+            </div>
+          </div>
 
-  </div>
+          <div className="lg:col-span-8 relative lg:before:absolute lg:before:top-0 lg:before:-start-12 lg:before:w-px lg:before:h-full lg:before:bg-gray-200 lg:before:dark:bg-gray-700">
+            <div className="grid gap-6 grid-cols-2 md:grid-cols-4 lg:grid-cols-3 sm:gap-8">
+              {/* Individual Stats */}
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={controls}
+              >
+                <p className="text-3xl font-semibold text-blue-600">99.95%</p>
+                <p className="mt-1 text-gray-500">of students are placed</p>
+              </motion.div>
 
-</div>
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={controls}
+              >
+                <p className="text-3xl font-semibold text-blue-600">2,000+</p>
+                <p className="mt-1 text-gray-500">students placed in 2023</p>
+              </motion.div>
 
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={controls}
+              >
+                <p className="text-3xl font-semibold text-blue-600">85%</p>
+                <p className="mt-1 text-gray-500">of students in top companies</p>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</section>
-
-<section className="bg-white dark:bg-gray-900 mx-auto  items-center justify-center flex">
+<motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }} className="bg-white dark:bg-gray-900 mx-auto  items-center justify-center flex">
 
 <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
   <div className="max-w-2xl lg:max-w-5xl mx-auto">
@@ -524,7 +597,10 @@ function LandingPage() {
       </div>
 
 
-      <div className="divide-y divide-gray-200 dark:divide-gray-800">
+      <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }} className="divide-y divide-gray-200 dark:divide-gray-800">
 
         <div className="flex gap-x-7 py-6">
           <svg className="flex-shrink-0 w-6 h-6 mt-1.5 text-gray-800 dark:text-gray-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
@@ -608,12 +684,12 @@ function LandingPage() {
           </div>
         </div>
        
-      </div>
+      </motion.div>
     </div>
   </div>
 </div>
 
-</section>
+</motion.section>
 <section className="bg-white dark:bg-gray-900 mx-auto  items-center justify-center flex">
 <footer className="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
 

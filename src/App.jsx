@@ -10,7 +10,9 @@ import Form from './pages/Form'
 import BlogPost from './components/BlogPost'
 import Questions from './pages/Questions'
 import InterviewForm from './pages/InterviewForm'
+import Error404 from './pages/Error404'
 import LandingPage from './components/LandingPage'
+import SignUp from './pages/SignUp'
 function App() {
 
   return (
