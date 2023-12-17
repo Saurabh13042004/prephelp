@@ -36,12 +36,9 @@ function SignIn() {
 
     // Random positions for circles
     const circleStyles = [
-        { top: '10%', left: '15%', backgroundColor: 'red' },
-        { top: '60%', left: '70%', backgroundColor: 'yellow' },
-        { top: '50%', left: '2%', backgroundColor: 'red' },
-        { top: '20%', left: '100%', backgroundColor: 'yellow' },
-        { top: '40%', left: '50%', backgroundColor: 'yellow', transform: 'translate(-50%, 0%)' },
-        { top: '100%', left: '80%', backgroundColor: 'red', transform: 'translate(-50%, -100%)' },
+        { top: '10%', left: '15%', backgroundColor: 'indigo' },
+ 
+        { top: '100%', left: '80%', backgroundColor: 'blue', transform: 'translate(-50%, -100%)' },
     ];
 
     return (
@@ -53,7 +50,7 @@ function SignIn() {
             {circleStyles.map((style, index) => (
                 <div
                     key={index}
-                    className={`absolute w-[100px] h-[100px] bg-${style.backgroundColor}-500 rounded-full`}
+                    className={`absolute w-[100px] h-[100px] bg-${style.backgroundColor}-00 rounded-full`}
                     style={{ ...style, transform: 'translate(-50%, -50%)' }}
                 ></div>
             ))}
@@ -63,7 +60,7 @@ function SignIn() {
                 
                 <div className="text-center mb-8">
                     <div className="text-2xl text-indigo-800 tracking-wide font-semibold">Sign In to Your Account</div>
-                    <p className="text-gray-500 mt-3">Sign in as an Admin.</p>
+                    <p className="text-gray-500 mt-3">Sign in to proceed.</p>
                 </div>
                 <form onSubmit={handleLogin}>
                     <div>
@@ -71,7 +68,7 @@ function SignIn() {
                         <input
                             className="w-full text-lg border-b border-gray-300 focus:outline-none focus:border-indigo-500"
                             type="text"
-                            placeholder="Admin@gmail.com"
+                            placeholder="user@chitkarauniversity.edu.in"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />

@@ -46,12 +46,9 @@ function SignUp() {
         }
     };
     const circleStyles = [
-        { top: '10%', left: '15%', backgroundColor: 'red' },
-        { top: '60%', left: '70%', backgroundColor: 'yellow' },
-        { top: '50%', left: '2%', backgroundColor: 'red' },
-        { top: '20%', left: '100%', backgroundColor: 'yellow' },
-        
-        { top: '100%', left: '80%', backgroundColor: 'red', transform: 'translate(-50%, -100%)' },
+        { top: '10%', left: '15%', backgroundColor: 'indigo' },
+ 
+        { top: '100%', left: '80%', backgroundColor: 'blue', transform: 'translate(-50%, -100%)' },
     ];
 
     return (
