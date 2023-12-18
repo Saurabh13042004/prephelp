@@ -13,6 +13,7 @@ import InterviewForm from './pages/InterviewForm'
 import Error404 from './pages/Error404'
 import LandingPage from './components/LandingPage'
 import SignUp from './pages/SignUp'
+import SignIn from './pages/SignIn'
 function App() {
 
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/admin" element={<Admin/>} />
         <Route path="/formSubmitted" element={<Submitted/>}/>
         <Route path = "/Login" element={<Login/>}/>
+        <Route path='/sign-in' element={<SignIn/>} />
         <Route path='/' element={<LandingPage/>}/>
         {/* <Route path="/" element={<Home/>}/> */}
         <Route path="/form" element={<Form/>}/>
