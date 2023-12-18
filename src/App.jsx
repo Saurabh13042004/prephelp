@@ -2,7 +2,6 @@
 import './App.css'
 
 import Admin from './pages/Admin'
-import { useLocation } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Submitted from './pages/Submitted'
 import Login from './pages/Login'
@@ -15,19 +14,9 @@ import Error404 from './pages/Error404'
 import LandingPage from './components/LandingPage'
 import SignUp from './pages/SignUp'
 function App() {
-  const location = useLocation();
 
-  useEffect(() => {
-    require('preline/preline');
-  }, []);
-
-  useEffect(() => {
-    // @ts-ignore
-    HSStaticMethods.autoInit();
-  }, [location.pathname]);
   return (
     <Router>
-      
       {/* <Navbar/> */}
       <Routes>
         
