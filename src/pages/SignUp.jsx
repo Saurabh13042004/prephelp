@@ -137,7 +137,7 @@ function SignUp() {
                     </form>
                     <div className="text-sm text-gray-600 text-center">
                         Already have an account?{' '}
-                        <Link to="/signin" className="text-indigo-600 hover:text-indigo-800">
+                        <Link to="/sign-in" className="text-indigo-600 hover:text-indigo-800">
                             Log in here
                         </Link>
                     </div>

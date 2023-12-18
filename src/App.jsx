@@ -28,6 +28,7 @@ function App() {
         <Route path='/' element={<LandingPage/>}/>
         {/* <Route path="/" element={<Home/>}/> */}
         <Route path="/form" element={<Form/>}/>
+        <Route path='/home' element={<Home/>}/>
         <Route path='/signup' element={<SignUp/>}/>
         <Route path='*' element={<Error404/>}/>
         <Route path='/questions' element={<Questions/>}/>
