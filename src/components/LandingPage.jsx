@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { RiLoginCircleLine } from 'react-icons/ri';
 import { FaCode,  FaAccusoft } from "react-icons/fa";
 import { IoMdMailUnread } from "react-icons/io";
+import { Link } from 'react-router-dom';
 
 function LandingPage() {
   const controls = useAnimation();
@@ -115,12 +116,12 @@ function LandingPage() {
           </div>
         </div> */}
 
-        <a className="flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500" href="#">
+        <Link className="flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500" to='/sign-in'>
           <svg className="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
           </svg>
           Log in
-        </a>
+        </Link>
       </div>
     </div>
   </nav>
@@ -165,11 +166,11 @@ function LandingPage() {
     </div>
 
     <div className="mt-8 gap-3 flex justify-center">
-      <a className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 border border-transparent text-white text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white py-3 px-4 dark:focus:ring-offset-gray-800" href="#">
+      <Link  to='/sign-in' className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 border border-transparent text-white text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white py-3 px-4 dark:focus:ring-offset-gray-800" >
        
       <RiLoginCircleLine/>
       Continue with PrepHelp
-      </a>
+      </Link>
     </div>
 
   </div>
