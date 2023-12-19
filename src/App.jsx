@@ -13,6 +13,7 @@ import InterviewForm from './pages/InterviewForm'
 import Error404 from './pages/Error404'
 import LandingPage from './components/LandingPage'
 import SignUp from './pages/SignUp'
+import SignIn from './pages/SignIn'
 function App() {
 
   return (
@@ -30,7 +31,7 @@ function App() {
         <Route path='*' element={<Error404/>}/>
         <Route path='/questions' element={<Questions/>}/>
         <Route path='/post/:id' element={<BlogPost/>}/>
-        
+        <Route path='/signin' element={<SignIn/>}/>
       </Routes>
     </Router>
   )
