@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { collection, addDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from 'firebase/auth';
 
-import { db } from '../firebase';
+import { auth } from '../firebase';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
 function SignUp() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -16,35 +15,55 @@ function SignUp() {
     const handleSignUp = async (e) => {
         e.preventDefault();
         const validEmailDomain = email.endsWith('@chitkarauniversity.edu.in');
-    if (!validEmailDomain) {
-        alert('Please use a valid Chitkara University email address.');
-        return; // Do not proceed with signup
-    }
-    const validUniversityIdLength = universityId.length === 10;
-    if (!validUniversityIdLength) {
-        alert('University ID should be exactly 10 characters.');
-        return; // Do not proceed with signup
-    }
-
+        if (!validEmailDomain) {
+            alert('Please use a valid Chitkara University email address.');
+            return;
+        }
+    
         try {
-            // Add a new user to the "users" collection
-            const usersRef = collection(db, 'Admin');
-            const newUser = {
-                Name: name,
-                Email: email,
-                Password: password,
-                UniversityId: universityId,
-            };
-            await addDoc(usersRef, newUser);
-
-            // Navigate to the home page or any other desired route upon successful signup
-            navigate('/home');
+            // Create a new user with email and password
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    
+            // Send email verification
+            await sendEmailVerification(userCredential.user);
+    
+            // Wait for email verification to complete
+            const unsubscribe = onAuthStateChanged(auth, (user) => {
+                if (user && user.emailVerified) {
+                    // Email is verified, navigate to the home page or any other desired route
+                    navigate('/home');
+                } else if (user && !user.emailVerified) {
+                    // Email is not verified, prompt the user to check their email
+                    alert('Please verify your email address. Check your inbox for the verification link and refresh after verifing email.');
+                }
+            });
+    
+            // Cleanup the subscription
+            unsubscribe();
         } catch (error) {
             console.error('Error during signup:', error);
             // Handle signup failure, e.g., display an error message or redirect to an error page
             navigate('/Error');
         }
     };
+    // Add this useEffect to check email verification status
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                if (user.emailVerified) {
+                    // Email is verified, navigate to the home page or any other desired route
+                    navigate('/home');
+                } else {
+                    // Email is not verified, prompt the user to check their email
+                    alert('Please verify your email address. Check your inbox for the verification link.');
+                }
+            }
+        });
+
+        // Cleanup the subscription
+        return () => unsubscribe();
+    }, [auth, navigate]);
+
     const circleStyles = [
         { top: '10%', left: '15%', backgroundColor: 'indigo' },
  
@@ -137,7 +156,7 @@ function SignUp() {
                     </form>
                     <div className="text-sm text-gray-600 text-center">
                         Already have an account?{' '}
-                        <Link to="/sign-in" className="text-indigo-600 hover:text-indigo-800">
+                        <Link to="/login" className="text-indigo-600 hover:text-indigo-800">
                             Log in here
                         </Link>
                     </div>

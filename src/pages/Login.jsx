@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -52,8 +53,8 @@ return (
         <div className="relative z-10 bg-white p-8 rounded-lg  shadow-md w-full sm:w-[96px] md:w-[420px] lg:w-[524px]">
             
             <div className="text-center mb-8">
-                <div className="text-2xl text-indigo-800 tracking-wide font-semibold">Sign In As Admin</div>
-                <p className="text-gray-500 mt-3">Log Into Your Admin Account.</p>
+                <div className="text-2xl text-indigo-800 tracking-wide font-semibold">Sign In to your Account</div>
+                <p className="text-gray-500 mt-3">Log Into Your user Account.</p>
             </div>
             <form onSubmit={handleLogin}>
                 <div>
@@ -92,6 +93,12 @@ return (
                     </button>
                 </div>
             </form>
+            <div className="text-sm text-gray-600 text-center mt-8">
+                    Don't have an Account?
+                    <Link to="/signup" className="text-indigo-600 hover:text-indigo-800">
+                        Sign up here
+                    </Link>
+                </div>
         </div>
     </div>
     <Footer/>

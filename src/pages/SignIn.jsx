@@ -59,7 +59,7 @@ function SignIn() {
             <div className="relative z-10 bg-white p-8 rounded-lg  shadow-md w-full sm:w-[96px] md:w-[420px] lg:w-[524px]">
                 
                 <div className="text-center mb-8">
-                    <div className="text-2xl text-indigo-800 tracking-wide font-semibold">Sign In to Your Account</div>
+                    <div className="text-2xl text-indigo-800 tracking-wide font-semibold">Sign In to Your Admin Account</div>
                     <p className="text-gray-500 mt-3">Sign in to proceed.</p>
                 </div>
                 <form onSubmit={handleLogin}>
@@ -99,12 +99,7 @@ function SignIn() {
                         </button>
                     </div>
                 </form>
-                <div className="text-sm text-gray-600 text-center mt-8">
-                        Don't have an Account?{' '}
-                        <Link to="/signup" className="text-indigo-600 hover:text-indigo-800">
-                            Sign up here
-                        </Link>
-                    </div>
+                
             </div>
         </div>
         <Footer/>
