@@ -14,7 +14,6 @@ function SignIn() {
         e.preventDefault();
 
         try {
-            // Query the "user" collection to find a user with the provided email and password
             const usersRef = collection(db, 'Admin');
             const q = query(usersRef, where('Email', '==', email), where('Password', '==', password));
             const querySnapshot = await getDocs(q);
@@ -22,7 +21,7 @@ function SignIn() {
             // Check if a user with the provided credentials exists
             if (querySnapshot.size > 0) {
                 // Credentials are correct, navigate to "/admin"
-                navigate('/home');
+                navigate('/admin');
             } else {
                 // No user found with the provided credentials
                 console.error('Invalid credentials');

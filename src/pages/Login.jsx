@@ -20,7 +20,7 @@ function Login() {
 
       // Check if the user is an admin
       if (userCredential) {
-        navigate('/admin');
+        navigate('/home');
       } else {
         // Handle login for other user types (students, etc.)
       }
