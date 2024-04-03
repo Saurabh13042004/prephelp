@@ -4,6 +4,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { toast } from 'react-toastify';
 
 function SignIn() {
     const [email, setEmail] = useState('');
@@ -14,23 +15,31 @@ function SignIn() {
         e.preventDefault();
 
         try {
-            const usersRef = collection(db, 'Admin');
-            const q = query(usersRef, where('Email', '==', email), where('Password', '==', password));
+            const q = query(collection(db, 'admin'), where('email', '==', email));
+
             const querySnapshot = await getDocs(q);
 
-            // Check if a user with the provided credentials exists
-            if (querySnapshot.size > 0) {
-                // Credentials are correct, navigate to "/admin"
-                navigate('/admin');
-            } else {
-                // No user found with the provided credentials
-                console.error('Invalid credentials');
-                navigate('/Error');
+            if (querySnapshot.empty) {
+                toast.error('Invalid email or password');
+                return;
             }
+
+            querySnapshot.forEach((doc) => {
+                if (doc.data().password === password) {
+                    navigate('/admin');
+                } else {
+                    toast.error('Invalid email or password');
+                }
+            }
+            );
+
         } catch (error) {
-            console.error('Error during login:', error);
-            navigate('/Error');
+            console.error('Error signing in: ', error);
+            toast.error('Error signing in');
+
         }
+
+        
     };
 
     // Random positions for circles
