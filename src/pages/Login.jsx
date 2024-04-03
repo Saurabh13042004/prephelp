@@ -62,7 +62,7 @@ return (
                     <input
                         className="w-full text-lg border-b border-gray-300 focus:outline-none focus:border-indigo-500"
                         type="text"
-                        placeholder="Admin@gmail.com"
+                        placeholder="user@chitkarauniversity.edu.in"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />

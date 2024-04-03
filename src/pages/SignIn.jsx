@@ -76,7 +76,7 @@ function SignIn() {
                         <input
                             className="w-full text-lg border-b border-gray-300 focus:outline-none focus:border-indigo-500"
                             type="text"
-                            placeholder="user@chitkarauniversity.edu.in"
+                            placeholder="Enter your email address"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
