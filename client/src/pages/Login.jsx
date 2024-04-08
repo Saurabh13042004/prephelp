@@ -14,9 +14,11 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const cookies = new Cookies();
+  const [loading,setLoading] = useState(false);
 
   const handleSignUpDb = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const config = {
         headers: {
@@ -24,17 +26,78 @@ function Login() {
         },
       };
       const validateEmail = email.endsWith("@chitkarauniversity.edu.in");
-      if (validateEmail) {
-        const response = await axios.post(
-          `${import.meta.env.VITE_SERVER}/login`,
-          { email, password },
-          config
-        );
-        if (response.data.isAdmin === true) {
-          cookies.set("token", response.data.token);
-          cookies.set("isAdmin", response.data.isAdmin);
-          if (response.data.success) {
-            toast.success(response.data.message, {
+      if  (validateEmail) {
+          try{
+            const response = await axios.post(
+              `${import.meta.env.VITE_SERVER}/login`,
+              { email, password },
+              config
+            );
+            if(response.data.success){
+              if(response.data.isAdmin === true){
+                cookies.set("token", response.data.token);
+                cookies.set("isAdmin", response.data.isAdmin);
+                toast.success(response.data.message, {
+                  position: "top-left",
+                  autoClose: 1000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
+                setTimeout(() => {
+                  navigate("/admin");
+                  window.location.reload();
+                }, 1000);
+              }else{
+                cookies.set("token", response.data.token);
+                toast.success(response.data.message, {
+                  position: "top-left",
+                  autoClose: 1000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
+                setTimeout(() => {
+                  navigate("/home");
+                  window.location.reload();
+                }, 1000);
+              }
+
+            }
+            else{
+              if(response.status === 401){
+                toast.error(response.data.message, {
+                  position: "top-left",
+                  autoClose: 1000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
+              }else{
+                toast.error("Invalid credentials", {
+                  position: "top-left",
+                  autoClose: 1000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
+              
+              }
+            }
+          } catch (error) {
+            toast.error("Invalid credentials", {
               position: "top-left",
               autoClose: 1000,
               hideProgressBar: false,
@@ -45,40 +108,63 @@ function Login() {
               theme: "colored",
             });
           }
-          setTimeout(() => {
-            navigate("/admin");
-            window.location.reload();
-          }, 1000);
-        } else {
-          cookies.set("token", response.data.token);
-          if (response.data.success) {
-            toast.success(response.data.message, {
-              position: "top-left",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
-            setTimeout(() => {
-              navigate("/home");
-              window.location.reload();
-            }, 1000);
-          } else {
-            toast.error(response.data.message, {
-              position: "top-left",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
-          }
-        }
+
+
+
+        // const response = await axios.post(
+        //   `${import.meta.env.VITE_SERVER}/login`,
+        //   { email, password },
+        //   config
+        // );
+        // if (response.data.isAdmin === true) {
+        //   cookies.set("token", response.data.token);
+        //   cookies.set("isAdmin", response.data.isAdmin);
+        //   if (response.data.success) {
+        //     toast.success(response.data.message, {
+        //       position: "top-left",
+        //       autoClose: 1000,
+        //       hideProgressBar: false,
+        //       closeOnClick: true,
+        //       pauseOnHover: true,
+        //       draggable: true,
+        //       progress: undefined,
+        //       theme: "colored",
+        //     });
+        //   }
+        //   setTimeout(() => {
+        //     navigate("/admin");
+        //     window.location.reload();
+        //   }, 1000);
+        // } else {
+        //   cookies.set("token", response.data.token);
+        //   if (response.data.success) {
+        //     toast.success(response.data.message, {
+        //       position: "top-left",
+        //       autoClose: 1000,
+        //       hideProgressBar: false,
+        //       closeOnClick: true,
+        //       pauseOnHover: true,
+        //       draggable: true,
+        //       progress: undefined,
+        //       theme: "colored",
+        //     });
+        //     setTimeout(() => {
+        //       navigate("/home");
+        //       window.location.reload();
+        //     }, 1000);
+        //   } else {
+        //     toast.error(response.data.message, {
+        //       position: "top-left",
+        //       autoClose: 1000,
+        //       hideProgressBar: false,
+        //       closeOnClick: true,
+        //       pauseOnHover: true,
+        //       draggable: true,
+        //       progress: undefined,
+        //       theme: "colored",
+        //     });
+        //   }
+        // }
       } else {
         toast.error("Please enter chitkara email id only.", {
           position: "top-left",
@@ -103,6 +189,7 @@ function Login() {
         theme: "colored",
       });
     }
+    setLoading(false);
   };
 
   const circleStyles = [
@@ -131,6 +218,12 @@ function Login() {
         theme="colored"
         transition:Bounce
       />
+
+    {loading &&  <div className="fixed top-0 left-0 z-50 w-screen h-screen bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>  
+    }
+
       <Navbar />
       <div className="relative h-screen flex items-center justify-center bg-gray-100 overflow-hidden">
         {/* Random Circles */}
