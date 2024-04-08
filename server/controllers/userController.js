@@ -5,33 +5,40 @@ const jwt = require("jsonwebtoken");
 const Func = (req, res) => {
   res.send("hii");
 };
+
+
 const signup = async (req, res) => {
   try {
     const userExist = await userModel.findOne({ email: req.body.email });
     if (userExist) {
       return res.status(401).send({
-        meesage: "User already exist",
+        message: "User already exists",
         success: false,
       });
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hassPassword = await bcrypt.hash(req.body.password, salt);
-    req.body.password = hassPassword;
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    req.body.password = hashedPassword;
     const newUser = await new userModel(req.body);
     const token = jwt.sign({ userId: newUser._id }, process.env.SECRET_KEY, {
       expiresIn: "30d",
     });
     await newUser.save();
     return res.status(200).send({
-      message: "Register successfully",
+      message: "Registered successfully",
       success: true,
       token: token,
     });
   } catch (error) {
-    console.log("Error " + error);
+    console.log("Error: ", error);
+    return res.status(500).send({
+      message: "Error registering user",
+      success: false,
+    });
   }
 };
+
 const login = async (req, res) => {
   try {
     const userExit = await userModel.findOne({ email: req.body.email });

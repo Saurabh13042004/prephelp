@@ -21,6 +21,7 @@ function SignUp() {
   const [validResponse, setValidResponse] = useState(true);
   const navigate = useNavigate();
   const cookies = new Cookies();
+  const [loading,setLoading] = useState(false);
 
   // const handleSignUp = async (e) => {
   //     e.preventDefault();
@@ -100,7 +101,7 @@ function SignUp() {
   };
   const handleSignUpDb = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const isValidEmail = handleEmailChange(email);
     if (!isValidEmail) {
       toast.info("Please enter the chitkara email", {
@@ -136,46 +137,87 @@ function SignUp() {
         uid: parseInt(universityId),
       };
 
-      let res = await fetch(`${import.meta.env.VITE_SERVER}/signup`, {
-        method: "POST",
-        body: JSON.stringify(obj),
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-      res = await res.json();
-      cookies.set("token", res.token);
-      cookies.set("isAdmin", false);
-      sessionStorage.setItem("token", res.token);
-      if (res.success) {
-        toast.success(res.message, {
-          position: "top-left",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
+      try{
+        const res = await fetch(`${import.meta.env.VITE_SERVER}/signup`, {
+          method: "POST",
+          body: JSON.stringify(obj),
+          headers: {
+            "Content-type": "application/json",
+          },
         });
-
-        setTimeout(() => {
-          navigate("/home");
-          window.location.reload();
-        }, 1010);
-      } else {
-        toast.info(res.message, {
-          position: "top-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        const data = await res.json();
+        if(data.success){
+          toast.success(data.message, {
+            position: "top-left",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          setTimeout(() => {
+            navigate("/login");
+          }, 1010);
+        }else{
+          toast.info(data.message, {
+            position: "top-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      } catch (error) {
+        console.error("Error signing up: ", error);
+        toast.error("Error signing up");
       }
+
+      // let res = await fetch(`${import.meta.env.VITE_SERVER}/signup`, {
+      //   method: "POST",
+      //   body: JSON.stringify(obj),
+      //   headers: {
+      //     "Content-type": "application/json",
+      //   },
+      // });
+      // res = await res.json();
+      // cookies.set("token", res.token);
+      // cookies.set("isAdmin", false);
+      // sessionStorage.setItem("token", res.token);
+      // if (res.success) {
+      //   toast.success(res.message, {
+      //     position: "top-left",
+      //     autoClose: 1000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "colored",
+      //   });
+
+      //   setTimeout(() => {
+      //     navigate("/home");
+      //     window.location.reload();
+      //   }, 1010);
+      // } else {
+      //   toast.info(res.message, {
+      //     position: "top-left",
+      //     autoClose: 2000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "colored",
+      //   });
+      // }
     }
+    setLoading(false);
   };
 
   const circleStyles = [
@@ -189,8 +231,14 @@ function SignUp() {
     },
   ];
 
+
+
   return (
     <>
+    {loading && <div className="fixed top-0 left-0 h-screen w-screen bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
+      }
       <ToastContainer
         position="top-left"
         autoClose={5000}
