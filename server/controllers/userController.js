@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const Func = (req, res) => {
   res.send("Server is connected")
-
+}
 
 const signup = async (req, res) => {
   try {
