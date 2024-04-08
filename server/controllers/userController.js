@@ -3,8 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const Func = (req, res) => {
-  res.send("hii");
-};
+  res.send("Server is connected")
 
 
 const signup = async (req, res) => {
