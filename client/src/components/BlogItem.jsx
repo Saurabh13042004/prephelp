@@ -12,6 +12,20 @@ const getCompanyLogo = (company) => {
       return "https://imgs.search.brave.com/RhIO_Tc-OGhbwwdc61rqGCfFacsUlQPNcaIZxOl_CZk/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9ibG9n/LmxvZ29teXdheS5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MjEvMDEvZ29vZ2xl/LXN5bWJvbC5qcGc";
     case "Adobe":
       return "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Adobe_Acrobat_DC_logo_2020.svg/1200px-Adobe_Acrobat_DC_logo_2020.svg.png";
+    case "Apple":
+      return "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1200px-Apple_logo_black.svg.png";
+    case "Amazon":
+      return "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1200px-Amazon_logo.svg.png";
+    case "Atlassian":
+      return "https://logos-world.net/wp-content/uploads/2023/03/Atlassian-Logo.png";
+    case "Facebook":
+      return "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1200px-Facebook_f_logo_%282019%29.svg.png";
+    case "TCS":
+      return "https://companieslogo.com/img/orig/TCS.NS-7401f1bd.png?t=1631949260";
+    case "Infosys":
+      return "https://w7.pngwing.com/pngs/687/655/png-transparent-infosys-logo.png";
+    case "Netflix":
+      return "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg";
     default:
       return "https://files.codingninjas.in/company-25223.svg";
   }
@@ -23,6 +37,11 @@ const popularCompanies = [
   "Adobe",
   "Atlassian",
   "Amazon",
+  "Apple",
+  "Facebook",
+  "TCS",
+  "Infosys",
+  "Netflix",
 ];
 
 function BlogItem() {
@@ -53,10 +72,14 @@ function BlogItem() {
           `${import.meta.env.VITE_SERVER}/get-experience`
         );
         response = await response.json();
-        setSearchedPosts(response.exp);
-        // const data = response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        // setPosts(data);
-        // setSearchedPosts(data);
+        // Sort the fetched posts by date in descending order
+        const sortedPosts = response.exp.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          return dateB - dateA;
+        });
+
+        setSearchedPosts(sortedPosts);
       } catch (error) {
         console.error(error);
       }
@@ -116,25 +139,28 @@ function BlogItem() {
                 <Link to={`/post/${post._id}`}>
                   <div className="max-w-[85%] mx-auto bg-white rounded-lg overflow-hidden hover:shadow-xl transition-shadow mt-8 p-2 shadow">
                     {/* Title block */}
-                    <div className="p-4 flex items-center ">
-                      <div className="w-14 h-14 rounded overflow-hidden">
-                        <img
-                          className="w-full h-full object-cover "
-                          src={getCompanyLogo(post.company)}
-                          alt="Company Logo"
-                        />
+                    <div className="flex items-center justify-between">
+                      <div className="p-4 flex items-center ">
+                        <div className="w-14 h-14 rounded overflow-hidden">
+                          <img
+                            className="w-full h-full object-cover "
+                            src={getCompanyLogo(post.company)}
+                            alt="Company Logo"
+                          />
+                        </div>
+                        <div className="ml-4">
+                          <p className="text-xl font-semibold">
+                            {post.company} | {post.role} |{" "}
+                            {post.expyr == 0
+                              ? "Fresher"
+                              : `Experience ${post.expyr} year`}
+                          </p>
+                          <p className="text-gray-600 font-bold">
+                            {post.rounds} Rounds | 6 Coding Problems
+                          </p>
+                        </div>
                       </div>
-                      <div className="ml-4">
-                        <p className="text-xl font-semibold">
-                          {post.company} | {post.role} |{" "}
-                          {post.expyr == 0
-                            ? "Fresher"
-                            : `Experience ${post.expyr} year`}
-                        </p>
-                        <p className="text-gray-600 font-bold">
-                          {post.rounds} Rounds | 6 Coding Problems
-                        </p>
-                      </div>
+                      <div className="font-bold mr-2">{post.date}</div>
                     </div>
                     <div className="border-t border-gray-200 my-2"></div>
                     {/* Profile block */}

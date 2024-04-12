@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 // import { addDoc, collection } from "firebase/firestore";
@@ -26,12 +26,26 @@ function Form() {
   const [hrQuestions, setHRQuestions] = useState([""]);
   const [mistakes, setMistakes] = useState("");
   const [techQuestions, setTechQuestions] = useState([""]);
-  // const [otherCompany, setOtherCompany] = useState("");
-  const [expyr, setExpyr] = useState(0);
-  const isApproved = false;
+  const [interviewPrep, Setinterviewprep] = useState("");
+  const [IPSubjects, setIPSubjects] = useState([""]);
+  const isApproved = true;
+
+  useEffect(() => {
+    const name = sessionStorage.getItem("name");
+    const email = sessionStorage.getItem("email");
+    const uid = sessionStorage.getItem("uid");
+
+    name == undefined || null ? "" : setName(name);
+    email == undefined || null ? "" : setEmail(email);
+    uid == undefined || null ? "" : setUniversityID(uid);
+    uid == undefined || null ? "" : setBatch(20 + uid.slice(0, 2));
+  }, []);
 
   const addHRQuestion = () => {
     setHRQuestions([...hrQuestions, ""]);
+  };
+  const addIPSubjects = () => {
+    setIPSubjects([...IPSubjects, ""]);
   };
 
   const addTechQuestion = () => {
@@ -63,6 +77,7 @@ function Form() {
   };
 
   const handleSubmit = async () => {
+    const currentDate = new Date().toDateString();
     const formData = {
       company,
       role,
@@ -82,17 +97,22 @@ function Form() {
       techQuestions,
       mistakes,
       isApproved,
+      interviewPrep,
+      date: currentDate,
+      ipSubjects: IPSubjects,
     };
 
-    console.log(formData);
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER}/experience`, {
+      console.log(formData);
+      let res = await fetch(`${import.meta.env.VITE_SERVER}/experience`, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
           "Content-type": "application/json",
         },
       });
+      res = await res.json();
+      console.log(res);
       if (res.success) {
         toast.success("Form Submitted Successfully");
         navigate("/formSubmitted");
@@ -174,8 +194,8 @@ function Form() {
             </div>
             <div className="flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52">
               <div className="w-80">
-                <label className="block font-semibold my-12">
-                  Did you get an offer?
+                <label className="block font-semibold my-12 w-full">
+                  Did you get an offer?*
                 </label>
                 <div className="flex items-center space-x-4">
                   <label className="inline-flex items-center">
@@ -205,7 +225,7 @@ function Form() {
               </div>
               <div className="w-80">
                 <label className="block font-semibold my-12">
-                  Location Of company?
+                  Location Of company?*
                 </label>
                 <input
                   type="text"
@@ -224,7 +244,13 @@ function Form() {
                 </label>
                 <input
                   type="number"
-                  onChange={(e) => setRounds(e.target.value)}
+                  onChange={(e) => {
+                    if (e.target.value < 0) {
+                      setRounds(0);
+                    } else {
+                      setRounds(e.target.value);
+                    }
+                  }}
                   value={rounds}
                   className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block  appearance-none leading-5 text-gray-700 w-80"
                 />
@@ -292,19 +318,6 @@ function Form() {
               </div>
               <div className="w-80">
                 <label className="block font-semibold mt-8 mb-5">
-                  Your Mobile No.
-                </label>
-                <input
-                  type="number"
-                  onChange={(e) => setMobileNo(e.target.value)}
-                  value={mobileNo}
-                  className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block  appearance-none leading-5 text-gray-700 w-80"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52">
-              <div className="w-80">
-                <label className="block font-semibold mt-8 mb-5">
                   LinkedIn Profile Link
                 </label>
                 <input
@@ -314,13 +327,21 @@ function Form() {
                   className="border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block  appearance-none leading-5 text-gray-700 w-80"
                 />
               </div>
+            </div>
+            <div className="flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52">
               <div className="w-80">
                 <label className="block font-semibold mt-8 mb-5">
-                  Your CGPA
+                  Your CGPA*
                 </label>
                 <input
                   type="number"
-                  onChange={(e) => setCgpa(e.target.value)}
+                  onChange={(e) => {
+                    if (e.target.value < 0) {
+                      setCgpa(0);
+                    } else {
+                      setCgpa(e.target.value);
+                    }
+                  }}
                   value={cgpa}
                   className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block  appearance-none leading-5 text-gray-700 w-80"
                 />
@@ -358,6 +379,15 @@ function Form() {
               onChange={(e) => setMistakes(e.target.value)}
             />
             <label className="block font-semibold mt-8 mb-5">
+              Interview Preparation
+            </label>
+            <textarea
+              value={interviewPrep}
+              placeholder="Please Share some Interview preparation."
+              className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] "
+              onChange={(e) => Setinterviewprep(e.target.value)}
+            />
+            <label className="block font-semibold mt-8 mb-5">
               Preparation Tips
             </label>
             <textarea
@@ -393,6 +423,35 @@ function Form() {
                 className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
               >
                 ADD HR QUESTION
+              </button>
+            </div>
+            <div>
+              <p className="font-semibold text-xl mt-10 font-sans">
+                Interview Preparation Subjects
+              </p>
+              {IPSubjects.map((question, index) => (
+                <div key={index}>
+                  <label className="block font-semibold mt-8 mb-5">
+                    IP Subject {index + 1}
+                  </label>
+                  <textarea
+                    value={question}
+                    placeholder={`Enter IP Subjects ${index + 1}`}
+                    onChange={(e) => {
+                      const updatedIPSubjects = [...IPSubjects];
+                      updatedIPSubjects[index] = e.target.value;
+                      setIPSubjects(updatedIPSubjects);
+                    }}
+                    className="border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
+                  />
+                </div>
+              ))}
+              <button
+                onClick={addIPSubjects}
+                type="button"
+                className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
+              >
+                ADD IP SUBJECTS
               </button>
             </div>
             <div>

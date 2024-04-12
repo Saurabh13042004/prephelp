@@ -4,7 +4,7 @@ const expController = require("../controllers/expController.js");
 const adminController = require("../controllers/adminController.js");
 require("../middleware/authMiddleware.js");
 const contactController = require("../controllers/contactController.js");
-
+const changepassController = require("../controllers/changepassController.js");
 Route.get("/", userController.Func);
 Route.post("/signup", userController.signup);
 Route.post("/login", userController.login);
@@ -16,5 +16,10 @@ Route.get("/admin-users", adminController.getUsers);
 Route.put("/admin-update-approved", adminController.updateApproved);
 Route.put("/admin-update-allfield", adminController.updateField);
 Route.post("/contact", contactController.storeContact);
-
+Route.post("/verifyEmail", userController.generateOtpFunc);
+Route.post("/getUserDetails", userController.getUserDetails);
+Route.post("/changePassword", changepassController.changePass);
+Route.post("/checkUserExists", userController.checkUserExists);
+Route.post("/compareotp", userController.compareotp);
+Route.put("/add-admin", userController.addadmin);
 module.exports = Route;
