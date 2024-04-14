@@ -94,7 +94,7 @@ function Login() {
                   window.location.reload();
                 }, 1000);
               } else {
-                toast.error(res.message, {
+                toast.error(response.message, {
                   position: "top-left",
                   autoClose: 1000,
                   hideProgressBar: false,
@@ -433,15 +433,6 @@ function Login() {
                 <div className="text-sm font-bold text-gray-700 tracking-wide mb-2">
                   Password
                 </div>
-                <div>
-                  <button
-                    onClick={() => handleForgetPass()}
-                    className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800 cursor-pointer"
-                    type="button"
-                  >
-                    Forgot Password?
-                  </button>
-                </div>
               </div>
               <input
                 className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
@@ -451,6 +442,15 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+            </div>
+            <div>
+              <button
+                onClick={() => handleForgetPass()}
+                className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800 cursor-pointer text-end w-full"
+                type="button"
+              >
+                Forgot Password?
+              </button>
             </div>
             <div className="mt-10">
               <button

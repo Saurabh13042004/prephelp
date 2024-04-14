@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const expSchema = mongoose.Schema({
   date: {
-    type: String,
+    type: Array,
   },
   company: {
     type: String,
@@ -44,7 +44,6 @@ const expSchema = mongoose.Schema({
   },
   cgpa: {
     type: String,
-    required: true,
   },
   question: {
     type: String,

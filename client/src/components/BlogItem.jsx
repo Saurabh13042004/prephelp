@@ -32,25 +32,45 @@ const getCompanyLogo = (company) => {
 };
 
 const popularCompanies = [
-  "Microsoft",
-  "Google",
-  "Adobe",
-  "Atlassian",
   "Amazon",
-  "Apple",
+  "Google",
+  "Microsoft",
   "Facebook",
-  "TCS",
-  "Infosys",
+  "Apple",
   "Netflix",
+  "Uber",
+  "LinkedIn",
+  "Twitter",
+  "Salesforce",
+  "Oracle",
+  "Adobe",
+  "Paypal",
+  "Cisco",
+  "IBM",
+  "Intel",
+  "Infosys",
+  "Others",
+];
+const d = new Date().getFullYear();
+const popularYear = [
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  d,
 ];
 
 function BlogItem() {
-  // const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
   const [searchedPosts, setSearchedPosts] = useState([]);
-  const [selectedCompany, setSelectedCompany] = useState("");
-
+  const [allCompany, setAllCompany] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState("All Companies");
+  const [fromSearch, setFromSearch] = useState("2016");
+  const [toSearch, setToSearch] = useState("all years");
   // const fetchData = async () => {
   //   setLoading(true);
   //   try {
@@ -74,12 +94,18 @@ function BlogItem() {
         response = await response.json();
         // Sort the fetched posts by date in descending order
         const sortedPosts = response.exp.sort((a, b) => {
-          const dateA = new Date(a.date);
-          const dateB = new Date(b.date);
-          return dateB - dateA;
+          const timeA = new Date(`${a.date[0]} ${a.date[1]}`);
+          const timeB = new Date(`${b.date[0]} ${b.date[1]}`);
+
+          if (isNaN(timeA.getTime()) || isNaN(timeB.getTime())) {
+            return 0;
+          }
+
+          return timeB - timeA;
         });
 
         setSearchedPosts(sortedPosts);
+        setAllCompany(sortedPosts);
       } catch (error) {
         console.error(error);
       }
@@ -90,39 +116,84 @@ function BlogItem() {
   }, []);
 
   const handleSearch = () => {
-    let filteredPosts = posts;
+    let filteredPosts = allCompany;
+    const fromYear = parseInt(fromSearch);
+    const toYear = parseInt(toSearch);
+    let selectedCompanyPosts = [];
 
-    if (selectedCompany) {
-      filteredPosts = filteredPosts.filter(
-        (post) => post.company === selectedCompany
-      );
+    if (selectedCompany == "All Companies") {
+      for (let obj of filteredPosts) {
+        let d = new Date(obj.date[0]);
+        let year = d.getFullYear();
+
+        if (year >= fromYear && year <= toYear) {
+          selectedCompanyPosts.push(obj);
+        }
+      }
+      setSearchedPosts(selectedCompanyPosts);
+    } else {
+      for (let obj of filteredPosts) {
+        let d = new Date(obj.date[0]);
+        let year = d.getFullYear();
+
+        if (
+          year >= fromYear &&
+          year <= toYear &&
+          obj.company == selectedCompany
+        ) {
+          selectedCompanyPosts.push(obj);
+        }
+      }
+      setSearchedPosts(selectedCompanyPosts);
     }
-
-    filteredPosts = filteredPosts.filter((post) =>
-      post.company.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    setSearchedPosts(filteredPosts);
   };
 
   return (
     <div id="list_of_exp">
-      <div className="flex items-center mb-4 ml-[8%]">
-        <p className="me-4">Sort By Companies : </p>
-        <select
-          value={selectedCompany}
-          onChange={(e) => setSelectedCompany(e.target.value)}
-          className="p-2 border border-gray-300 rounded-md mr-2"
-        >
-          <option value="">All Companies</option>
-          {popularCompanies.map((company) => (
-            <option key={company} value={company}>
-              {company}
-            </option>
-          ))}
-        </select>
+      <div className="flex flex-col items-center mb-4 ml-[8%] gap-5 md:gap-2 md:flex-row">
+        <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
+          <p className="me-4 font-bold">Sort By Companies : </p>
+          <select
+            value={selectedCompany}
+            onChange={(e) => setSelectedCompany(e.target.value)}
+            className="p-2 border border-gray-300 rounded-md mr-2"
+          >
+            <option value="All Companies">All Companies</option>
+            {popularCompanies.map((company) => (
+              <option key={company} value={company}>
+                {company}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
+          <p className="me-4 font-bold">Sort By Year : </p>
+          <select
+            value={fromSearch}
+            onChange={(e) => setFromSearch(e.target.value)}
+            className="p-2 border border-gray-300 rounded-md mr-2"
+          >
+            {popularYear.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+          <span>To</span>
+          <select
+            value={toSearch}
+            onChange={(e) => setToSearch(e.target.value)}
+            className="p-2 border border-gray-300 rounded-md mr-2"
+          >
+            {popularYear.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
         <button
-          onClick={handleSearch}
+          onClick={() => handleSearch()}
           className="bg-blue-700 text-white p-2 rounded-full ml-2 px-4 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-all"
         >
           Search
@@ -131,7 +202,7 @@ function BlogItem() {
 
       {loading ? (
         <Loader />
-      ) : (
+      ) : searchedPosts.length > 0 ? (
         searchedPosts.map(
           (post) =>
             post.isApproved && (
@@ -141,9 +212,9 @@ function BlogItem() {
                     {/* Title block */}
                     <div className="flex items-center justify-between">
                       <div className="p-4 flex items-center ">
-                        <div className="w-14 h-14 rounded overflow-hidden">
+                        <div className="w-10 h-10 rounded overflow-hidden flex items-center justify-centern">
                           <img
-                            className="w-full h-full object-cover "
+                            className="max-w-full max-h-full object-cover"
                             src={getCompanyLogo(post.company)}
                             alt="Company Logo"
                           />
@@ -160,7 +231,7 @@ function BlogItem() {
                           </p>
                         </div>
                       </div>
-                      <div className="font-bold mr-2">{post.date}</div>
+                      <div className="font-bold mr-2">{post.date[0]}</div>
                     </div>
                     <div className="border-t border-gray-200 my-2"></div>
                     {/* Profile block */}
@@ -197,9 +268,12 @@ function BlogItem() {
               </div>
             )
         )
+      ) : (
+        <div className="text-center text-2xl md:text-xl mt-8 mb-8 font-bold">
+          No posts found
+        </div>
       )}
     </div>
   );
 }
-
 export default BlogItem;

@@ -16,7 +16,11 @@ const otpGenerate = async (userEmail) => {
       },
     });
     const mailOptions = {
-      from: "arshdeeprooprai@gmail.com",
+      from: 
+      {
+        name:"uprep-team",
+        address:"arshdeeprooprai@gmail.com"
+      },
       to: userEmail,
       subject: "Verification Email OTP",
       text: `Your OTP for email verification is: ${otp}`,
@@ -55,4 +59,34 @@ const changePass = async (req, res) => {
     });
   }
 };
-module.exports = { otpGenerate, changePass };
+
+const passChangeAfterLogin = async (req, res) => {
+  try {
+    // console.log(req.body)
+    const email = req.body.email;
+    const findEmail = await userModel.findOne({ email: email });
+    if (!findEmail) {
+      return res.status(200).send({
+        message: "User dont exist",
+        success: false,
+      });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hassPassword = await bcrypt.hash(req.body.password, salt);
+    req.body.password = hassPassword;
+    await userModel.findOneAndUpdate(
+      { email: email },
+      { password: req.body.password }
+    );
+    return res.status(200).send({
+      message: "Change password succesfully",
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+module.exports = { otpGenerate, changePass, passChangeAfterLogin };
