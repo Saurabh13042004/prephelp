@@ -7,12 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 import AdminNavbar from "../components/AdminNavbar";
 import image from "../assets/image.png";
 import { CiEdit } from "react-icons/ci";
+import { Link } from "react-router-dom";
+import { MdDeleteForever } from "react-icons/md";
 
 const Profile = ({ isAuth, isAdmin }) => {
   const [name, setName] = useState("");
   const mainRef = useRef(null);
   const emailRef = useRef(null);
   const passRef = useRef(null);
+  const expref = useRef(null);
   const [editMode, setEditMode] = useState(false);
   const [email, setEmail] = useState("");
   const [newPass, setNewPass] = useState("");
@@ -21,7 +24,77 @@ const Profile = ({ isAuth, isAdmin }) => {
   const editImageRef = useRef();
   const imageRef = useRef();
   const [ProfileImage, setProfileImage] = useState("");
+  const [exp, setExp] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null);
+  // const [posts, setPosts] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [approvedTechQuestions, setApprovedTechQuestions] = useState([]);
+  // const [approvedHRQuestions, setApprovedHRQuestions] = useState([]);
 
+  const handleDeleteQuestion = (questionIndex, questionType) => {
+    const updatedQuestions = [...selectedPost[`${questionType}Questions`]];
+    updatedQuestions.splice(questionIndex, 1);
+    setSelectedPost({
+      ...selectedPost,
+      [`${questionType}Questions`]: updatedQuestions,
+    });
+  };
+  const editFromUser = (post) => {
+    setSelectedPost(post);
+    setEditMode(true);
+    document.getElementById("editModal").showModal();
+  };
+  const editFieldSave = async (id) => {
+    try {
+      handleCloseModal();
+      console.log(selectedPost);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const res = await axios.put(
+        `http://localhost:8000/update-user-exp?id=${id}`,
+        { selectedPost },
+        config
+      );
+      if (res.data.success) {
+        fetchExp();
+        toast.success("Updated succesfully");
+      }
+    } catch (error) {
+      console.log("Error" + error);
+      toast.error("Something went wrong");
+    }
+  };
+  // const fetchExp = async() =>{
+  //   const email = sessionStorage.getItem("email");
+  //   try {
+  //     const config = {
+  //       headers:{
+  //         "Content-Type":"application/json"
+  //       }
+  // =======
+
+  const fetchExp = async () => {
+    const email = sessionStorage.getItem("email");
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const res = await axios.post(
+        "http://localhost:8000/get-exp",
+        { email },
+        config
+      );
+      // console.log(res.data.data);
+      setExp(res.data.data);
+    } catch (error) {
+      console.log("Error from " + error);
+    }
+  };
   useEffect(() => {
     const name = sessionStorage.getItem("name");
     const email = sessionStorage.getItem("email");
@@ -29,10 +102,12 @@ const Profile = ({ isAuth, isAdmin }) => {
     email == undefined || null ? "" : setSessionEmail(name), setEmail(email);
     setName(name);
     setSessionEmail(email);
+    fetchExp();
     mainRef.current.style.display = "block";
     emailRef.current.style.display = "none";
     passRef.current.style.display = "none";
     editImageRef.current.style.display = "none";
+    expref.current.style.display = "none";
 
     const setImage = async () => {
       let user = await axios.post(
@@ -193,11 +268,13 @@ const Profile = ({ isAuth, isAdmin }) => {
         theme: "colored",
       });
     }
+    expref.current.style.display = "none";
     mainRef.current.style.display = "block";
     emailRef.current.style.display = "none";
     passRef.current.style.display = "none";
   };
   const handleForgetPass = async () => {
+    expref.current.style.display = "none";
     mainRef.current.style.display = "none";
     emailRef.current.style.display = "block";
     passRef.current.style.display = "none";
@@ -207,6 +284,7 @@ const Profile = ({ isAuth, isAdmin }) => {
     }
   };
   const emailRefBack = async () => {
+    expref.current.style.display = "none";
     mainRef.current.style.display = "block";
     emailRef.current.style.display = "none";
     passRef.current.style.display = "none";
@@ -233,6 +311,7 @@ const Profile = ({ isAuth, isAdmin }) => {
         progress: undefined,
         theme: "colored",
       });
+      expref.current.style.display = "none";
       mainRef.current.style.display = "none";
       emailRef.current.style.display = "none";
       passRef.current.style.display = "block";
@@ -247,6 +326,48 @@ const Profile = ({ isAuth, isAdmin }) => {
         progress: undefined,
         theme: "colored",
       });
+    }
+  };
+  const showExp = () => {
+    if (expref.current.style.display === "none") {
+      expref.current.style.display = "block";
+      // window.scrollBy(0, 500);
+      window.scrollTo({ top: 500, behavior: "smooth" });
+      mainRef.current.classList.remove("mb-32");
+      mainRef.current.classList.add("mb-20");
+    } else {
+      expref.current.style.display = "none";
+      window.scrollTo({ top: -500, behavior: "smooth" });
+      // window.scrollBy(0, -500);
+      mainRef.current.focus();
+      mainRef.current.classList.add("mb-32");
+      mainRef.current.classList.remove("mb-20");
+    }
+  };
+  const getCompanyLogo = (company) => {
+    switch (company) {
+      case "Microsoft":
+        return "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1200px-Microsoft_logo.svg.png";
+      case "Google":
+        return "https://imgs.search.brave.com/RhIO_Tc-OGhbwwdc61rqGCfFacsUlQPNcaIZxOl_CZk/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9ibG9n/LmxvZ29teXdheS5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MjEvMDEvZ29vZ2xl/LXN5bWJvbC5qcGc";
+      case "Adobe":
+        return "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Adobe_Acrobat_DC_logo_2020.svg/1200px-Adobe_Acrobat_DC_logo_2020.svg.png";
+      case "Apple":
+        return "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1200px-Apple_logo_black.svg.png";
+      case "Amazon":
+        return "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1200px-Amazon_logo.svg.png";
+      case "Atlassian":
+        return "https://logos-world.net/wp-content/uploads/2023/03/Atlassian-Logo.png";
+      case "Facebook":
+        return "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1200px-Facebook_f_logo_%282019%29.svg.png";
+      case "TCS":
+        return "https://companieslogo.com/img/orig/TCS.NS-7401f1bd.png?t=1631949260";
+      case "Infosys":
+        return "https://w7.pngwing.com/pngs/687/655/png-transparent-infosys-logo.png";
+      case "Netflix":
+        return "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg";
+      default:
+        return "https://files.codingninjas.in/company-25223.svg";
     }
   };
 
@@ -267,9 +388,9 @@ const Profile = ({ isAuth, isAdmin }) => {
       />
       {isAuth && isAdmin ? <AdminNavbar /> : <Navbar />}
 
-      <div className="container mx-auto my-60" ref={mainRef}>
+      <div className="container mx-auto mt-28 mb-32" ref={mainRef}>
         <div>
-          <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6 lg:w-4/6 xl:w-3/6 mx-auto">
+          <div className="bg-gray-100 relative shadow-lg rounded-lg w-5/6 md:w-5/6 lg:w-4/6 xl:w-3/6 mx-auto p-3">
             <div className="relative flex justify-center">
               <img
                 ref={imageRef}
@@ -299,7 +420,7 @@ const Profile = ({ isAuth, isAdmin }) => {
               </div>
             </div>
 
-            <div className="mt-16">
+            <div className="mt-10">
               <h1 className="font-bold text-center text-3xl text-gray-900">
                 Username : {name}
               </h1>
@@ -314,7 +435,7 @@ const Profile = ({ isAuth, isAdmin }) => {
               <div className="w-full">
                 <div className="mt-5 w-full flex flex-col items-center overflow-hidden text-sm">
                   <a
-                    className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-100 transition duration-150 text-lg md:text-base"
+                    className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block transition duration-150 text-lg md:text-base hover:bg-gray-300"
                     onClick={() => handleEditClick()}
                   >
                     <img
@@ -326,7 +447,7 @@ const Profile = ({ isAuth, isAdmin }) => {
                   </a>
                   <a
                     href="#"
-                    className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-100 transition duration-150 text-lg md:text-base"
+                    className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-300 transition duration-150 text-lg md:text-base"
                     onClick={() => handleForgetPass()}
                   >
                     <img
@@ -338,7 +459,7 @@ const Profile = ({ isAuth, isAdmin }) => {
                   </a>
                   <button
                     href="#"
-                    className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-100 transition duration-150 text-lg md:text-base text-start"
+                    className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-300 transition duration-150 text-lg md:text-base text-start"
                     onClick={editProfile}
                   >
                     <img
@@ -348,12 +469,422 @@ const Profile = ({ isAuth, isAdmin }) => {
                     />
                     Edit Profile Picture
                   </button>
+                  <button
+                    href="#"
+                    className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-300 transition duration-150 text-lg md:text-base text-start"
+                    onClick={showExp}
+                  >
+                    <img
+                      src="https://avatars0.githubusercontent.com/u/35900628?v=4"
+                      alt=""
+                      className="rounded-full h-6 shadow-md inline-block mr-2"
+                    />
+                    Show All Experience
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div
+        ref={expref}
+        className="relative z-10 bg-gray-100 rounded-lg shadow-md w-5/6 md:w-5/6 lg:w-4/6 xl:w-3/6 mx-auto mt-20 scroll-smooth mb-10"
+      >
+        <div className="flex flex-col font-bold">
+          {exp.length > 0 ? (
+            exp.map((post) => (
+              <div className={`py-0`} key={post._id}>
+                
+                  <div className="max-w-[85%] mx-auto bg-white rounded-lg overflow-hidden hover:shadow-xl transition-shadow mt-8 p-2 shadow">
+                    <span
+                      className={`position-absolute top-0 translate-middle badge rounded-pill text-md flex border-none justify-end items-end w-full ${
+                        post.isApproved ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      {post.isApproved ? "Approved" : "Pending"}
+                    </span>
+                    {/* Title block */}
+                    <div className="flex items-center justify-between">
+                      <div className="p-4 flex items-center ">
+                        <div className="w-10 h-10 rounded overflow-hidden flex items-center justify-centern">
+                          <img
+                            className="max-w-full max-h-full object-cover"
+                            src={getCompanyLogo(post.company)}
+                            alt="Company Logo"
+                          />
+                        </div>
+                        <div className="ml-4">
+                          <p className="text-xl font-semibold">
+                            {post.company} | {post.role} |{" "}
+                            {post.expyr == 0
+                              ? "Fresher"
+                              : `Experience ${post.expyr} year`}
+                          </p>
+                          <p className="text-gray-600 font-bold">
+                            {post.rounds} Rounds
+                          </p>
+                        </div>
+                      </div>
+                      <div className="font-bold mr-2">{post.date[0]}</div>
+                    </div>
+                    <div className="border-t border-gray-200 my-2"></div>
+                    {/* Profile block */}
+                    <div className="px-4 py-2 flex items-center">
+                      <div className="bg-gray-300 w-12 mx-2 h-12 rounded-full overflow-hidden">
+                        {/* Profile image */}
+                        <img
+                          className="w-full  h-full object-cover"
+                          src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+                          alt="Profile"
+                        />
+                      </div>
+                      <div className="ml-4 px-1">
+                        <p className="text-">{post.name}</p>
+                        <p className="text-gray-600 text-sm">
+                          {post.batch} Batch | Chitkara University
+                        </p>
+                      </div>
+                      <div className="ml-auto flex justify-center items-center">
+                        <p
+                          className={`font-bold ${
+                            post.gotOffer === "yes"
+                              ? "text-green-500"
+                              : "text-red-900"
+                          }`}
+                        >
+                          {post.gotOffer === "yes"
+                            ? "Selected"
+                            : "Not Selected"}
+                        </p>
+                        <button
+                          className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={() =>editFromUser(post)}
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                <div className="border-t border-gray-200 my-2"></div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center text-2xl md:text-xl mt-8 mb-8 font-bold">
+              No posts found
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mb-8"></div>
+
+      <dialog id="editModal" className="modal">
+        <div className="modal-box px-10">
+          <form method="dialog">
+            <button
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              onClick={handleCloseModal}
+            >
+              ✕
+            </button>
+          </form>
+
+          <h3 className="font-bold text-lg">Edit the Response:</h3>
+          <form>
+            {selectedPost && (
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text font-semibold">Name</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="First Name"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.name}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      name: e.target.value,
+                    })
+                  }
+                />
+                <label className="label">
+                  <span className="label-text font-semibold">CGPA</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="CGPA"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.cgpa}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      cgpa: e.target.value,
+                    })
+                  }
+                />
+                <label className="label">
+                  <span className="label-text font-semibold">Got Offer</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Got Offered Yes/No"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.gotOffer}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      gotOffer: e.target.value,
+                    })
+                  }
+                />
+
+                <label className="label">
+                  <span className="label-text font-semibold">Email</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Email"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.email}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      email: e.target.value,
+                    })
+                  }
+                />
+                <label className="label">
+                  <span className="label-text font-semibold">Phone</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Phone"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.mobileNo}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      phone: e.target.value,
+                    })
+                  }
+                />
+                <label className="label">
+                  <span className="label-text font-semibold">
+                    LinkedIn Profile Link
+                  </span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="LinkedIn"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.linkedin}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      linkedin: e.target.value,
+                    })
+                  }
+                />
+
+                <label className="label">
+                  <span className="label-text font-semibold">Company</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Company"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.company}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      company: e.target.value,
+                    })
+                  }
+                />
+                <label className="label">
+                  <span className="label-text font-semibold">Job Role</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Job Role"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.role}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      role: e.target.value,
+                    })
+                  }
+                />
+                <label className="label">
+                  <span className="label-text font-semibold">
+                    Interview Rounds
+                  </span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Interview Rounds"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.rounds}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      rounds: e.target.value,
+                    })
+                  }
+                />
+                <label className="label">
+                  <span className="label-text font-semibold">Eligibility</span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Eligibility"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.eligibility}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      eligibility: e.target.value,
+                    })
+                  }
+                />
+                <label className="label">
+                  <span className="label-text font-semibold">
+                    Preparation Tips
+                  </span>
+                </label>
+                <textarea
+                  type="text"
+                  placeholder="Preparation Tips"
+                  className="textarea h-10 textarea-bordered mb-3"
+                  value={selectedPost.preparationTips}
+                  onChange={(e) =>
+                    setSelectedPost({
+                      ...selectedPost,
+                      preparationTips: e.target.value,
+                    })
+                  }
+                />
+
+                {selectedPost && (
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold">
+                        Technical Questions
+                      </span>
+                    </label>
+                    {selectedPost.techQuestions &&
+                      selectedPost.techQuestions.map((question, index) => (
+                        <div className="form-control" key={index}>
+                          <label className="label">
+                            <span className="label-text">{`Technical Question ${
+                              index + 1
+                            }`}</span>
+                          </label>
+                          <div className="flex items-center">
+                            <textarea
+                              type="text"
+                              placeholder={`Technical Question ${index + 1}`}
+                              className="textarea h-10 textarea-bordered mb-3 w-full"
+                              value={selectedPost.techQuestions[index]}
+                              onChange={(e) => {
+                                const updatedQuestions = [
+                                  ...selectedPost.techQuestions,
+                                ];
+                                updatedQuestions[index] = e.target.value;
+                                setSelectedPost({
+                                  ...selectedPost,
+                                  techQuestions: updatedQuestions,
+                                });
+                              }}
+                            />
+                            <div className="flex items-center">
+                              <MdDeleteForever
+                                onClick={() =>
+                                  handleDeleteQuestion(index, "tech")
+                                }
+                                className="text-red-500 cursor-pointer mx-2"
+                                size={20}
+                              />
+                              {/* <TiTick
+              onClick={() => handleApproveTechQuestion(index)}
+              className={`text-green-500 cursor-pointer mx-2 ${
+                approvedTechQuestions[index] ? 'opacity-100' : 'opacity-30'
+              }`}
+            /> */}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+
+                {selectedPost && (
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold">
+                        HR Questions
+                      </span>
+                    </label>
+                    {selectedPost.hrQuestions &&
+                      selectedPost.hrQuestions.map((question, index) => (
+                        <div className="form-control" key={index}>
+                          <label className="label">
+                            <span className="label-text">{`HR Question ${
+                              index + 1
+                            }`}</span>
+                          </label>
+                          <div className="flex items-center">
+                            <textarea
+                              type="text"
+                              placeholder={`HR Question ${index + 1}`}
+                              className="textarea h-10 textarea-bordered mb-3 w-full"
+                              value={selectedPost.hrQuestions[index]}
+                              onChange={(e) => {
+                                const updatedQuestions = [
+                                  ...selectedPost.hrQuestions,
+                                ];
+                                updatedQuestions[index] = e.target.value;
+                                setSelectedPost({
+                                  ...selectedPost,
+                                  hrQuestions: updatedQuestions,
+                                });
+                              }}
+                            />
+                            <div className="flex items-center">
+                              <MdDeleteForever
+                                onClick={() =>
+                                  handleDeleteQuestion(index, "hr")
+                                }
+                                className="text-red-500 cursor-pointer mx-2"
+                                size={20}
+                              />
+                              {/* <TiTick
+              onClick={() => handleApproveHRQuestion(index)}
+              className={`text-green-500 cursor-pointer mx-2 ${
+                approvedHRQuestions[index] ? 'opacity-100' : 'opacity-30'
+              }`}
+            /> */}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </form>
+          <button
+            className="btn btn-primary mt-3"
+            onClick={() => editFieldSave(selectedPost._id)}
+          >
+            Save
+          </button>
+        </div>
+      </dialog>
 
       <div
         ref={emailRef}
@@ -467,47 +998,47 @@ const Profile = ({ isAuth, isAdmin }) => {
   );
 };
 
-const styles = {
-  container: {
-    backgroundColor: "#f0f0f0",
-    minHeight: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    width: "80vh",
-    borderRadius: "10px",
-  },
-  profileContainer: {
-    textAlign: "center",
-    marginTop: "50px",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  profilePicture: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: "60%",
-    marginBottom: "20px",
-    height: "50vh",
-    width: "950%",
-  },
-  buttonsContainer: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    flexDirection: "column",
-  },
-  button: {
-    backgroundColor: "#007bff",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    padding: "10px 20px",
-    margin: "10px",
-    cursor: "pointer",
-    transition: "background-color 0.3s ease",
-  },
-};
+// const styles = {
+//   container: {
+//     backgroundColor: "#f0f0f0",
+//     minHeight: "100vh",
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     flexDirection: "column",
+//     width: "80vh",
+//     borderRadius: "10px",
+//   },
+//   profileContainer: {
+//     textAlign: "center",
+//     marginTop: "50px",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   profilePicture: {
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     borderRadius: "60%",
+//     marginBottom: "20px",
+//     height: "50vh",
+//     width: "950%",
+//   },
+//   buttonsContainer: {
+//     display: "flex",
+//     justifyContent: "center",
+//     flexWrap: "wrap",
+//     flexDirection: "column",
+//   },
+//   button: {
+//     backgroundColor: "#007bff",
+//     color: "#fff",
+//     border: "none",
+//     borderRadius: "5px",
+//     padding: "10px 20px",
+//     margin: "10px",
+//     cursor: "pointer",
+//     transition: "background-color 0.3s ease",
+//   },
+// };
 export default Profile;

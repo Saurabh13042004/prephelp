@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 // import { db } from "../firebase";
 // import { collection, getDocs } from "firebase/firestore";
@@ -30,7 +30,6 @@ const getCompanyLogo = (company) => {
       return "https://files.codingninjas.in/company-25223.svg";
   }
 };
-
 const popularCompanies = [
   "Amazon",
   "Google",
@@ -68,21 +67,14 @@ function BlogItem() {
   const [loading, setLoading] = useState(true);
   const [searchedPosts, setSearchedPosts] = useState([]);
   const [allCompany, setAllCompany] = useState([]);
-  const [selectedCompany, setSelectedCompany] = useState("All Companies");
+  let [selectedCompany, setSelectedCompany] = useState("All Companies");
   const [fromSearch, setFromSearch] = useState("2016");
-  const [toSearch, setToSearch] = useState("all years");
-  // const fetchData = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await getDocs(collection(db, "formResponses"));
-  //     const data = response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  //     setPosts(data);
-  //     setSearchedPosts(data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  //   setLoading(false);
-  // };
+  const [toSearch, setToSearch] = useState(d);
+  const [otherCompany, setOtherCompany] = useState("");
+  const [isSelected, setIsSelected] = useState("yes");
+  const companyRef = useRef();
+  const postImageRef = useRef();
+  let [approvedPost, setApprovedPost] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,6 +95,11 @@ function BlogItem() {
 
           return timeB - timeA;
         });
+        for (let post of sortedPosts) {
+          if (post.isApproved) {
+            setApprovedPost(approvedPost++);
+          }
+        }
 
         setSearchedPosts(sortedPosts);
         setAllCompany(sortedPosts);
@@ -114,6 +111,11 @@ function BlogItem() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    if (selectedCompany === "Others") {
+      companyRef.current && companyRef.current.focus();
+    }
+  }, [selectedCompany]);
 
   const handleSearch = () => {
     let filteredPosts = allCompany;
@@ -126,12 +128,15 @@ function BlogItem() {
         let d = new Date(obj.date[0]);
         let year = d.getFullYear();
 
-        if (year >= fromYear && year <= toYear) {
+        if (year >= fromYear && year <= toYear && obj.gotOffer == isSelected) {
           selectedCompanyPosts.push(obj);
         }
       }
       setSearchedPosts(selectedCompanyPosts);
     } else {
+      if (selectedCompany == "Others") {
+        selectedCompany = otherCompany;
+      }
       for (let obj of filteredPosts) {
         let d = new Date(obj.date[0]);
         let year = d.getFullYear();
@@ -139,70 +144,120 @@ function BlogItem() {
         if (
           year >= fromYear &&
           year <= toYear &&
-          obj.company == selectedCompany
+          obj.company.toLowerCase() == selectedCompany.toLowerCase() &&
+          obj.gotOffer == isSelected
         ) {
           selectedCompanyPosts.push(obj);
         }
       }
+
       setSearchedPosts(selectedCompanyPosts);
+    }
+  };
+  const postImageSrc = async (imgUrl) => {
+    let res = await fetch(
+      `${import.meta.env.VITE_SERVER}/send-profile-image/${imgUrl}`
+    );
+    res = await res.json();
+
+    console.log(res);
+    if (res.success) {
+      postImageRef.current.src = "data:image/jpg;base64," + res.imagePath;
+    } else {
+      postImageRef.current.src =
+        "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg";
     }
   };
 
   return (
     <div id="list_of_exp">
-      <div className="flex flex-col items-center mb-4 ml-[8%] gap-5 md:gap-2 md:flex-row">
-        <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
-          <p className="me-4 font-bold">Sort By Companies : </p>
-          <select
-            value={selectedCompany}
-            onChange={(e) => setSelectedCompany(e.target.value)}
-            className="p-2 border border-gray-300 rounded-md mr-2"
-          >
-            <option value="All Companies">All Companies</option>
-            {popularCompanies.map((company) => (
-              <option key={company} value={company}>
-                {company}
+      <div className="flex items-center justify-center ml-5 mr-5 md:ml-16 md:mr-16">
+        <div className="flex flex-col items-center justify-center gap-5 md:gap-2 lg:flex-row flex-wrap">
+          <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
+            <p className="me-4 font-bold">Sort By Companies : </p>
+            <select
+              value={selectedCompany}
+              onChange={(e) => {
+                setSelectedCompany(e.target.value);
+                setOtherCompany("");
+              }}
+              className="p-2 border border-gray-300 rounded-md mr-2"
+            >
+              <option key="All Companies" value="All Companies">
+                All Companies
               </option>
-            ))}
-          </select>
+              {popularCompanies.map((company) => (
+                <option key={company} value={company}>
+                  {company}
+                </option>
+              ))}
+            </select>
+            {selectedCompany == "Others" && (
+              <input
+                ref={companyRef}
+                type="text"
+                value={otherCompany}
+                onChange={(e) => setOtherCompany(e.target.value)}
+                placeholder="Enter Company Name"
+                className="p-2 border border-gray-300 rounded-md"
+              />
+            )}
+          </div>
+          <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
+            <p className="me-4 font-bold">Sort By Selection:</p>
+            <select
+              value={isSelected}
+              onChange={(e) => setIsSelected(e.target.value)}
+              className="p-2 border border-gray-300 rounded-md mr-2"
+            >
+              <option key="yes" value="yes">
+                Selected
+              </option>
+              <option key="no" value="no">
+                Not Selected
+              </option>
+            </select>
+          </div>
+          <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
+            <p className="me-4 font-bold">Sort By Year : </p>
+            <select
+              value={fromSearch}
+              onChange={(e) => setFromSearch(e.target.value)}
+              className="p-2 border border-gray-300 rounded-md mr-2"
+            >
+              {popularYear.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            <span>To</span>
+            <select
+              value={toSearch}
+              onChange={(e) => setToSearch(e.target.value)}
+              className="p-2 border border-gray-300 rounded-md mr-2"
+            >
+              {popularYear.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex justify-center items-center">
+            <button
+              onClick={() => handleSearch()}
+              className="bg-blue-700 text-white p-2 rounded-full ml-2 px-4 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-all"
+            >
+              Search
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
-          <p className="me-4 font-bold">Sort By Year : </p>
-          <select
-            value={fromSearch}
-            onChange={(e) => setFromSearch(e.target.value)}
-            className="p-2 border border-gray-300 rounded-md mr-2"
-          >
-            {popularYear.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-          <span>To</span>
-          <select
-            value={toSearch}
-            onChange={(e) => setToSearch(e.target.value)}
-            className="p-2 border border-gray-300 rounded-md mr-2"
-          >
-            {popularYear.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button
-          onClick={() => handleSearch()}
-          className="bg-blue-700 text-white p-2 rounded-full ml-2 px-4 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-all"
-        >
-          Search
-        </button>
       </div>
 
       {loading ? (
         <Loader />
-      ) : searchedPosts.length > 0 ? (
+      ) : searchedPosts.length > 0 && approvedPost > 0 ? (
         searchedPosts.map(
           (post) =>
             post.isApproved && (
@@ -239,7 +294,12 @@ function BlogItem() {
                       <div className="bg-gray-300 w-12 mx-2 h-12 rounded-full overflow-hidden">
                         <img
                           className="w-full  h-full object-cover"
-                          src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+                          ref={postImageRef}
+                          src={
+                            post.img
+                              ? postImageSrc(post.image)
+                              : "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+                          }
                           alt="Profile"
                         />
                       </div>

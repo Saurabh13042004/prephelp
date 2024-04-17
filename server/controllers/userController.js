@@ -5,6 +5,8 @@ const { otpGenerate } = require("./changepassController.js");
 let generateOtp = 0;
 const fs = require("fs");
 
+const expModel = require("../models/expModel.js");
+
 const Func = (req, res) => {
   res.send("hii");
 };
@@ -84,7 +86,7 @@ const login = async (req, res) => {
         isAdmin: userExit.isAdmin,
       });
     } else {
-      return res.status(400).send({
+      return res.status(200).send({
         message: "Invalid crediantials",
         success: false,
       });
@@ -303,6 +305,46 @@ const sendProfileImage = async (req, res) => {
   }
 };
 
+const getExp = async (req, res) => {
+  try {
+    // console.log(req.body);
+    const data = await expModel.find({ email: req.body.email });
+    if (data) {
+      return res.status(201).send({
+        message: "Data fetch succesfully",
+        success: true,
+        data: data,
+      });
+    }
+  } catch (error) {
+    return res.status(501).send({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
+const editExpUser = async(req,res) =>{
+  try {
+    console.log(req.query.id)
+    console.log(req.body.selectedPost)
+    const id = req.query.id;
+    const data = await expModel.findByIdAndUpdate(id,req.body.selectedPost,{
+      new:true
+    })
+    return res.status(200).send({
+      message:"Updated succesfully",
+      success:true,
+      data:data
+    })
+  } catch (error) {
+    return res.status(501).send({
+      message: error.message,
+      success: false,
+    });
+  }
+}
+
 module.exports = {
   login,
   signup,
@@ -317,4 +359,6 @@ module.exports = {
   changeName,
   profileImage,
   sendProfileImage,
+  getExp,
+  editExpUser
 };

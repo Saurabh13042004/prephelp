@@ -59,6 +59,7 @@ function Login() {
           sessionStorage.setItem("email", userDetail.email);
           sessionStorage.setItem("name", userDetail.name);
           sessionStorage.setItem("uid", userDetail.uid);
+          sessionStorage.setItem("userImage", userDetail.image);
 
           let response = await fetch(`${import.meta.env.VITE_SERVER}/login`, {
             method: "POST",
@@ -73,7 +74,7 @@ function Login() {
             if (response.isAdmin === true) {
               cookies.set("token", response.token);
               cookies.set("isAdmin", response.isAdmin);
-              if (response.data.success) {
+              if (response.success) {
                 toast.success(response.message, {
                   position: "top-left",
                   autoClose: 1000,
