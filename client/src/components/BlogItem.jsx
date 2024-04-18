@@ -76,7 +76,6 @@ function BlogItem() {
   const postImageRef = useRef();
   let [approvedPost, setApprovedPost] = useState(0);
   let [presentPostImg, setPresentPostImg] = useState("");
-  const [resultImg, setResultImg] = useState([]);
   const [profileImageSrc, setProfileImageSrc] = useState([]);
 
   useEffect(() => {
