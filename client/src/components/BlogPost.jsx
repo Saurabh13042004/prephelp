@@ -13,23 +13,8 @@ const BlogPost = () => {
   const [loading, setLoading] = useState(true);
   const [hrques, setHrques] = useState([]);
   const [techques, setTechques] = useState([]);
+  const [emptyArray, setEmptyArray] = useState(true);
 
-  // const fetchData = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const docRef = doc(db, 'formResponses', id);
-  //     const docSnap = await getDoc(docRef);
-
-  //     if (docSnap.exists()) {
-  //       setPost({ id: docSnap.id, ...docSnap.data() });
-  //     } else {
-  //       console.log('No such document!');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching document: ', error);
-  //   }
-  //   setLoading(false);
-  // };
   const fetchData = async () => {
     // console.log(id);
     try {
@@ -41,6 +26,12 @@ const BlogPost = () => {
       setHrques(response.data.hrques);
       setTechques(response.data.techques);
       setLoading(false);
+
+      post.ipSubjects.map((obj, idx) => {
+        if (obj.length == 0) {
+          setEmptyArray(true);
+        }
+      });
     } catch (error) {
       console.log("Error from getting data in question page" + error);
     }
@@ -138,7 +129,7 @@ const BlogPost = () => {
                 </p>
               </section>
 
-              {post.ipSubjects && post.ipSubjects.length > 0 && (
+              {post.ipSubjects && post.ipSubjects.length > 0 && !emptyArray && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
                     Interview Preparation
@@ -155,18 +146,20 @@ const BlogPost = () => {
                 </section>
               )}
 
-              <section className="mt-6">
-                <h3 className="text-xl font-semibold text-gray-900">
-                  Tips for Preparation
-                </h3>
-                <p className="text-lg text-gray-800">
-                  I would like to share some tips with you all. I hope it will
-                  help you in your preparation.
-                  <ul className="list-disc list-inside">
-                    {post.preparationTips && <li>{post.preparationTips}</li>}
-                  </ul>
-                </p>
-              </section>
+              {post.preparationTips && post.preparationTips.length > 0 && (
+                <section className="mt-6">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    Tips for Preparation
+                  </h3>
+                  <p className="text-lg text-gray-800">
+                    I would like to share some tips with you all. I hope it will
+                    help you in your preparation.
+                    <ul className="list-disc list-inside">
+                      <li>{post.preparationTips}</li>
+                    </ul>
+                  </p>
+                </section>
+              )}
 
               {hrques.length > 0 && (
                 <section className="mt-6">
@@ -265,22 +258,21 @@ const BlogPost = () => {
 
             {/* Contact Info */}
 
-              <p className="text-base text-gray-800 mt-4">
-                Hey everyone, I am {post.name}. I am an undergraduate student at
-                Chitkara University. I am currently in my {post.batch} batch.
-                <br />
-                If you have any queries regarding the interview process, you can
-                contact me on my email id {post.email}. You can also connect
-                with me on LinkedIn.
-                <br />
-                {post.linkedin &&
+            <p className="text-base text-gray-800 mt-4">
+              Hey everyone, I am {post.name}. I am an undergraduate student at
+              Chitkara University. I am currently in my {post.batch} batch.
+              <br />
+              If you have any queries regarding the interview process, you can
+              contact me on my email id {post.email}. You can also connect with
+              me on LinkedIn.
+              <br />
+              {post.linkedin && (
                 <FaLinkedin
                   className="inline-block text-2xl text-blue-500 hover:text-blue-700 cursor-pointer my-4"
                   onClick={() => window.open(post.linkedin, "_blank")}
                 />
-}
-              </p>
-          
+              )}
+            </p>
           </motion.div>
         </div>
       )}
