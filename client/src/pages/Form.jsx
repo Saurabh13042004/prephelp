@@ -500,6 +500,45 @@ function Form() {
               className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] "
               onChange={(e) => setPreparationTips(e.target.value)}
             />
+             <div>  
+              <p className="font-semibold text-xl mt-10 font-sans">
+                Online Test
+              </p>
+              {IPSubjects.map((question, index) => (
+                <div key={index}>
+                  <label className="block font-semibold mt-8 mb-5">
+                    Online Test Question {index + 1}
+                  </label>
+                  <textarea
+                    ref={ipFieldRef}
+                    value={question}
+                    placeholder={`Enter Interview Preparation Subject ${
+                      index + 1
+                    }`}
+                    onChange={(e) => {
+                      const updatedIPSubjects = [...IPSubjects];
+                      updatedIPSubjects[index] = e.target.value;
+                      setIPSubjects(updatedIPSubjects);
+                    }}
+                    className="border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
+                  />
+                  <button
+                    onClick={() => deleteInterviewSubject(index)}
+                    type="button"
+                    className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={addIPSubjects}
+                type="button"
+                className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
+              >
+                ADD IP SUBJECTS
+              </button>
+            </div>
             <div>
               <p className="font-semibold text-xl mt-10 font-sans">
                 HR Questions
@@ -574,45 +613,6 @@ function Form() {
                 ADD TECH QUESTIONS
               </button>
             </div>
-            {/* <div>
-              <p className="font-semibold text-xl mt-10 font-sans">
-                Interview Preparation Subjects
-              </p>
-              {IPSubjects.map((question, index) => (
-                <div key={index}>
-                  <label className="block font-semibold mt-8 mb-5">
-                    Interview Preparation Subject {index + 1}
-                  </label>
-                  <textarea
-                    ref={ipFieldRef}
-                    value={question}
-                    placeholder={`Enter Interview Preparation Subject ${
-                      index + 1
-                    }`}
-                    onChange={(e) => {
-                      const updatedIPSubjects = [...IPSubjects];
-                      updatedIPSubjects[index] = e.target.value;
-                      setIPSubjects(updatedIPSubjects);
-                    }}
-                    className="border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
-                  />
-                  <button
-                    onClick={() => deleteInterviewSubject(index)}
-                    type="button"
-                    className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))}
-              <button
-                onClick={addIPSubjects}
-                type="button"
-                className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
-              >
-                ADD IP SUBJECTS
-              </button>
-            </div> */}
             <button
               onClick={handlePrevClick2}
               type="button"
