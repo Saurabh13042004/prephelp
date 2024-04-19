@@ -13,7 +13,7 @@ const BlogPost = () => {
   const [loading, setLoading] = useState(true);
   const [hrques, setHrques] = useState([]);
   const [techques, setTechques] = useState([]);
-  const [emptyArray, setEmptyArray] = useState(true);
+  const [emptyArray, setEmptyArray] = useState(false);
 
   const fetchData = async () => {
     // console.log(id);
@@ -27,13 +27,16 @@ const BlogPost = () => {
       setTechques(response.data.techques);
       setLoading(false);
 
-      post.ipSubjects.map((obj, idx) => {
-        if (obj.length == 0) {
-          setEmptyArray(true);
-        }
-      });
+      if (emptyArray == false) {
+        post &&
+          post.ipSubjects.map((obj, idx) => {
+            if (obj.length == 0) {
+              setEmptyArray(true);
+            }
+          });
+      }
     } catch (error) {
-      console.log("Error from getting data in question page" + error);
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -129,8 +132,28 @@ const BlogPost = () => {
                 </p>
               </section>
 
-
               {post.ipSubjects && post.ipSubjects.length > 0 && !emptyArray && (
+                <section className="mt-6">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    Online Test Questions
+                  </h3>
+                  <div className="text-lg text-gray-800">
+                    <p>
+                      I would like to share some online test questions which
+                      were asked in my interview. I hope it will help you in
+                      your preparation.
+                    </p>
+                    <ul className="list-disc list-inside">
+                      {post.ipSubjects &&
+                        post.ipSubjects.map((subject, index) => (
+                          <li key={index}>{subject}</li>
+                        ))}
+                    </ul>
+                  </div>
+                </section>
+              )}
+
+              {/* {post.ipSubjects && post.ipSubjects.length > 0 && !emptyArray && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
                     Interview Preparation
@@ -145,27 +168,9 @@ const BlogPost = () => {
                     </ul>
                   </p>
                 </section>
-              )}
+              )} */}
 
-              {post.ipSubjects && post.ipSubjects.length > 0 && !emptyArray && (
-                <section className="mt-6">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Interview Preparation
-                  </h3>
-                  <p className="text-lg text-gray-800">
-                    I prepared for the interview from the following topics:
-                    <ul className="list-disc list-inside">
-                      {post.ipSubjects &&
-                        post.ipSubjects.map((subject, index) => (
-                          <li key={index}>{subject}</li>
-                        ))}
-                    </ul>
-                  </p>
-                </section>
-              )}
-
-           
-{techques.length > 0 && (
+              {techques.length > 0 && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
                     Technical Interview Round Questions
@@ -174,12 +179,14 @@ const BlogPost = () => {
                     I would like to share some technical questions which were
                     asked in my interview. I hope it will help you in your
                     preparation.
-                    <ul className="list-disc list-inside">
-                      {techques.map(
-                        (question, index) =>
-                          question && <li key={index}>{question}</li>
-                      )}
-                    </ul>
+                  </p>
+                  <ul className="list-disc list-inside">
+                    {techques.map(
+                      (question, index) =>
+                        question && <li key={index}>{question}</li>
+                    )}
+                  </ul>
+                  <p>
                     Understand the constraints of the problem before writing the
                     code. Try to code from brute force approach to optimized
                     approach. This will help you in your preparation.
@@ -194,31 +201,31 @@ const BlogPost = () => {
                   <p className="text-lg text-gray-800">
                     I would like to share some questions with you all. I hope it
                     will help you in your preparation.
-                    <ul className="list-disc list-inside">
-                      {hrques.map(
-                        (question, index) =>
-                          question && <li key={index}>{question}</li>
-                      )}
-                    </ul>
+                  </p>
+                  <ul className="list-disc list-inside">
+                    {hrques.map(
+                      (question, index) =>
+                        question && <li key={index}>{question}</li>
+                    )}
+                  </ul>
+                  <p>
                     Prepare answers for these questions. This will help you in
                     your preparation.
                   </p>
                 </section>
               )}
 
-             
-
-{post.preparationTips && post.preparationTips.length > 0 && (
+              {post.preparationTips && post.preparationTips.length > 0 && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
-                   Summary
+                    Summary
                   </h3>
                   <p className="text-lg text-gray-800">
-                   Conclution of my interview
-                    <ul className="list-none list-inside ml-4">
-                      <li>{post.preparationTips}</li>
-                    </ul>
+                    Conclution of my interview.
                   </p>
+                  <ul className="list-none list-inside">
+                    <li>{post.preparationTips}</li>
+                  </ul>
                 </section>
               )}
               <section className="mt-6">
