@@ -43,11 +43,11 @@ const Profile = ({ isAuth, isAdmin }) => {
   const editFromUser = (post) => {
     setSelectedPost(post);
     setEditMode(true);
-    document.getElementById("editModal").showModal();
+    document.getElementById("editModal1").showModal();
   };
   const editFieldSave = async (id) => {
     try {
-      handleCloseModal();
+      handleCloseModal1();
       console.log(selectedPost);
       const config = {
         headers: {
@@ -183,6 +183,9 @@ const Profile = ({ isAuth, isAdmin }) => {
   };
   const handleCloseModal = () => {
     document.getElementById("editModal").close();
+  };
+  const handleCloseModal1 = () => {
+    document.getElementById("editModal1").close();
   };
   const handleSaveEdit = async (event) => {
     event.preventDefault();
@@ -675,6 +678,320 @@ const Profile = ({ isAuth, isAdmin }) => {
           </button>
         </div>
       </div>
+
+
+      
+      <dialog id="editModal1" className="modal">
+            <div className="modal-box px-10">
+              <form method="dialog">
+                <button
+                  className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                  onClick={handleCloseModal1}
+                >
+                  ✕
+                </button>
+              </form>
+
+              <h3 className="font-bold text-lg">Edit the Response:</h3>
+              <form>
+                {selectedPost && (
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold">Name</span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="First Name"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.name}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          name: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="label">
+                      <span className="label-text font-semibold">CGPA</span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="CGPA"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.cgpa}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          cgpa: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="label">
+                      <span className="label-text font-semibold">
+                        Got Offer
+                      </span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="Got Offered Yes/No"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.gotOffer}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          gotOffer: e.target.value,
+                        })
+                      }
+                    />
+
+                    <label className="label">
+                      <span className="label-text font-semibold">Email</span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="Email"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.email}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          email: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="label">
+                      <span className="label-text font-semibold">Phone</span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="Phone"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.mobileNo}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          phone: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="label">
+                      <span className="label-text font-semibold">
+                        LinkedIn Profile Link
+                      </span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="LinkedIn"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.linkedin}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          linkedin: e.target.value,
+                        })
+                      }
+                    />
+
+                    <label className="label">
+                      <span className="label-text font-semibold">Company</span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="Company"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.company}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          company: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="label">
+                      <span className="label-text font-semibold">Job Role</span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="Job Role"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.role}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          role: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="label">
+                      <span className="label-text font-semibold">
+                        Interview Rounds
+                      </span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="Interview Rounds"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.rounds}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          rounds: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="label">
+                      <span className="label-text font-semibold">
+                        Eligibility
+                      </span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="Eligibility"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.eligibility}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          eligibility: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="label">
+                      <span className="label-text font-semibold">
+                        Preparation Tips
+                      </span>
+                    </label>
+                    <textarea
+                      type="text"
+                      placeholder="Preparation Tips"
+                      className="textarea h-10 textarea-bordered mb-3"
+                      value={selectedPost.preparationTips}
+                      onChange={(e) =>
+                        setSelectedPost({
+                          ...selectedPost,
+                          preparationTips: e.target.value,
+                        })
+                      }
+                    />
+
+                    {selectedPost && (
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text font-semibold">
+                            Technical Questions
+                          </span>
+                        </label>
+                        {selectedPost.techQuestions &&
+                          selectedPost.techQuestions.map((question, index) => (
+                            <div className="form-control" key={index}>
+                              <label className="label">
+                                <span className="label-text">{`Technical Question ${
+                                  index + 1
+                                }`}</span>
+                              </label>
+                              <div className="flex items-center">
+                                <textarea
+                                  type="text"
+                                  placeholder={`Technical Question ${
+                                    index + 1
+                                  }`}
+                                  className="textarea h-10 textarea-bordered mb-3 w-full"
+                                  value={selectedPost.techQuestions[index]}
+                                  onChange={(e) => {
+                                    const updatedQuestions = [
+                                      ...selectedPost.techQuestions,
+                                    ];
+                                    updatedQuestions[index] = e.target.value;
+                                    setSelectedPost({
+                                      ...selectedPost,
+                                      techQuestions: updatedQuestions,
+                                    });
+                                  }}
+                                />
+                                <div className="flex items-center">
+                                  <MdDeleteForever
+                                    onClick={() =>
+                                      handleDeleteQuestion(index, "tech")
+                                    }
+                                    className="text-red-500 cursor-pointer mx-2"
+                                    size={20}
+                                  />
+                                  {/* <TiTick
+              onClick={() => handleApproveTechQuestion(index)}
+              className={`text-green-500 cursor-pointer mx-2 ${
+                approvedTechQuestions[index] ? 'opacity-100' : 'opacity-30'
+              }`}
+            /> */}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+
+                    {selectedPost && (
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text font-semibold">
+                            HR Questions
+                          </span>
+                        </label>
+                        {selectedPost.hrQuestions &&
+                          selectedPost.hrQuestions.map((question, index) => (
+                            <div className="form-control" key={index}>
+                              <label className="label">
+                                <span className="label-text">{`HR Question ${
+                                  index + 1
+                                }`}</span>
+                              </label>
+                              <div className="flex items-center">
+                                <textarea
+                                  type="text"
+                                  placeholder={`HR Question ${index + 1}`}
+                                  className="textarea h-10 textarea-bordered mb-3 w-full"
+                                  value={selectedPost.hrQuestions[index]}
+                                  onChange={(e) => {
+                                    const updatedQuestions = [
+                                      ...selectedPost.hrQuestions,
+                                    ];
+                                    updatedQuestions[index] = e.target.value;
+                                    setSelectedPost({
+                                      ...selectedPost,
+                                      hrQuestions: updatedQuestions,
+                                    });
+                                  }}
+                                />
+                                <div className="flex items-center">
+                                  <MdDeleteForever
+                                    onClick={() =>
+                                      handleDeleteQuestion(index, "hr")
+                                    }
+                                    className="text-red-500 cursor-pointer mx-2"
+                                    size={20}
+                                  />
+                                  {/* <TiTick
+              onClick={() => handleApproveHRQuestion(index)}
+              className={`text-green-500 cursor-pointer mx-2 ${
+                approvedHRQuestions[index] ? 'opacity-100' : 'opacity-30'
+              }`}
+            /> */}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </form>
+              <button
+                className="btn btn-primary mt-3"
+                onClick={() => editFieldSave(selectedPost._id)}
+              >
+                Save
+              </button>
+            </div>
+          </dialog>
 
       <dialog id="editModal" className="modal">
         <div className="modal-box px-10">
