@@ -478,6 +478,7 @@ function Form() {
       {questions == 2 && (
         <div>
           <div className="lg:mx-[12%] my-16 p-10">
+            {/* <div>
             <p className="font-bold text-3xl">Interview Experience</p>
             <label className="block font-semibold mt-8 mb-5">
               {" "}
@@ -489,6 +490,7 @@ function Form() {
               className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] "
               onChange={(e) => setMistakes(e.target.value)}
             />
+            </div> */}
             <label className="block font-semibold mt-8 mb-5">
               Preparation Tips
             </label>
@@ -572,7 +574,7 @@ function Form() {
                 ADD TECH QUESTIONS
               </button>
             </div>
-            <div>
+            {/* <div>
               <p className="font-semibold text-xl mt-10 font-sans">
                 Interview Preparation Subjects
               </p>
@@ -610,7 +612,7 @@ function Form() {
               >
                 ADD IP SUBJECTS
               </button>
-            </div>
+            </div> */}
             <button
               onClick={handlePrevClick2}
               type="button"
