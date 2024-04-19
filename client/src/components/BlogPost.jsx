@@ -129,6 +129,7 @@ const BlogPost = () => {
                 </p>
               </section>
 
+
               {post.ipSubjects && post.ipSubjects.length > 0 && !emptyArray && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
@@ -146,42 +147,25 @@ const BlogPost = () => {
                 </section>
               )}
 
-              {post.preparationTips && post.preparationTips.length > 0 && (
+              {post.ipSubjects && post.ipSubjects.length > 0 && !emptyArray && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
-                    Tips for Preparation
+                    Interview Preparation
                   </h3>
                   <p className="text-lg text-gray-800">
-                    I would like to share some tips with you all. I hope it will
-                    help you in your preparation.
+                    I prepared for the interview from the following topics:
                     <ul className="list-disc list-inside">
-                      <li>{post.preparationTips}</li>
+                      {post.ipSubjects &&
+                        post.ipSubjects.map((subject, index) => (
+                          <li key={index}>{subject}</li>
+                        ))}
                     </ul>
                   </p>
                 </section>
               )}
 
-              {hrques.length > 0 && (
-                <section className="mt-6">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    HR Interview Round Questions
-                  </h3>
-                  <p className="text-lg text-gray-800">
-                    I would like to share some questions with you all. I hope it
-                    will help you in your preparation.
-                    <ul className="list-disc list-inside">
-                      {hrques.map(
-                        (question, index) =>
-                          question && <li key={index}>{question}</li>
-                      )}
-                    </ul>
-                    Prepare answers for these questions. This will help you in
-                    your preparation.
-                  </p>
-                </section>
-              )}
-
-              {techques.length > 0 && (
+           
+{techques.length > 0 && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
                     Technical Interview Round Questions
@@ -202,7 +186,41 @@ const BlogPost = () => {
                   </p>
                 </section>
               )}
+              {hrques.length > 0 && (
+                <section className="mt-6">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    HR Interview Round Questions
+                  </h3>
+                  <p className="text-lg text-gray-800">
+                    I would like to share some questions with you all. I hope it
+                    will help you in your preparation.
+                    <ul className="list-disc list-inside">
+                      {hrques.map(
+                        (question, index) =>
+                          question && <li key={index}>{question}</li>
+                      )}
+                    </ul>
+                    Prepare answers for these questions. This will help you in
+                    your preparation.
+                  </p>
+                </section>
+              )}
 
+             
+
+{post.preparationTips && post.preparationTips.length > 0 && (
+                <section className="mt-6">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                   Summary
+                  </h3>
+                  <p className="text-lg text-gray-800">
+                   Conclution of my interview
+                    <ul className="list-none list-inside ml-4">
+                      <li>{post.preparationTips}</li>
+                    </ul>
+                  </p>
+                </section>
+              )}
               <section className="mt-6">
                 <h3 className="text-xl font-semibold text-gray-900">
                   Final Outcome

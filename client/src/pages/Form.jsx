@@ -491,15 +491,7 @@ function Form() {
               onChange={(e) => setMistakes(e.target.value)}
             />
             </div> */}
-            <label className="block font-semibold mt-8 mb-5">
-              Preparation Tips
-            </label>
-            <textarea
-              value={preparationTips}
-              placeholder="Please Share some preparation tips if there is any."
-              className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] "
-              onChange={(e) => setPreparationTips(e.target.value)}
-            />
+       
              <div>  
               <p className="font-semibold text-xl mt-10 font-sans">
                 Online Test
@@ -512,7 +504,7 @@ function Form() {
                   <textarea
                     ref={ipFieldRef}
                     value={question}
-                    placeholder={`Enter Interview Preparation Subject ${
+                    placeholder={`Enter Online Question ${
                       index + 1
                     }`}
                     onChange={(e) => {
@@ -536,8 +528,47 @@ function Form() {
                 type="button"
                 className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
               >
-                ADD IP SUBJECTS
+                ADD ONLINE QUESTION
               </button>
+            </div>
+            
+            <div>
+              <p className="font-semibold text-xl mt-10 font-sans">
+                Technical Questions
+              </p>
+              {techQuestions.map((question, index) => (
+                <div key={index}>
+                  <label className="block font-semibold mt-8 mb-5">
+                    Technical Question {index + 1}
+                  </label>
+                  <textarea
+                    ref={techFieldRef}
+                    value={question}
+                    placeholder={`Enter Technical Question ${index + 1}`}
+                    onChange={(e) => {
+                      const updatedTechQuestions = [...techQuestions];
+                      updatedTechQuestions[index] = e.target.value;
+                      setTechQuestions(updatedTechQuestions);
+                    }}
+                    className="border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
+                  />
+                  <button
+                    onClick={() => deleteTechnicalQuestion(index)}
+                    type="button"
+                    className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={addTechQuestion}
+                type="button"
+                className="bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
+              >
+                ADD TECH QUESTIONS
+              </button>
+       
             </div>
             <div>
               <p className="font-semibold text-xl mt-10 font-sans">
@@ -576,43 +607,15 @@ function Form() {
                 ADD HR QUESTION
               </button>
             </div>
-            <div>
-              <p className="font-semibold text-xl mt-10 font-sans">
-                Technical Questions
-              </p>
-              {techQuestions.map((question, index) => (
-                <div key={index}>
-                  <label className="block font-semibold mt-8 mb-5">
-                    Technical Question {index + 1}
-                  </label>
-                  <textarea
-                    ref={techFieldRef}
-                    value={question}
-                    placeholder={`Enter Technical Question ${index + 1}`}
-                    onChange={(e) => {
-                      const updatedTechQuestions = [...techQuestions];
-                      updatedTechQuestions[index] = e.target.value;
-                      setTechQuestions(updatedTechQuestions);
-                    }}
-                    className="border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
-                  />
-                  <button
-                    onClick={() => deleteTechnicalQuestion(index)}
-                    type="button"
-                    className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))}
-              <button
-                onClick={addTechQuestion}
-                type="button"
-                className="bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
-              >
-                ADD TECH QUESTIONS
-              </button>
-            </div>
+            <label className="block font-semibold mt-4 mb-5">
+              Summary
+            </label>
+            <textarea
+              value={preparationTips}
+              placeholder="Summarized your experience."
+              className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] "
+              onChange={(e) => setPreparationTips(e.target.value)}
+            />
             <button
               onClick={handlePrevClick2}
               type="button"
