@@ -99,9 +99,9 @@ function SignUp() {
       cookies.set("token", res.token);
       cookies.set("isAdmin", false);
 
-      sessionStorage.setItem("email", email);
-      sessionStorage.setItem("name", name);
-      sessionStorage.setItem("uid", universityId);
+      cookies.set("email", email);
+      cookies.set("name", name);
+      cookies.set("uid", universityId);
 
       if (res.success) {
         toast.success(res.message, {

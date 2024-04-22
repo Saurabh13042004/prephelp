@@ -14,7 +14,7 @@ function Navbar() {
   const ref = useRef();
   const imageRef = useRef();
   const [ProfileImage, setProfileImage] = useState("");
-  const userName = sessionStorage.getItem("name");
+  const userName = cookies.get("name");
 
   useEffect(() => {
     const validate = cookies.get("token");
@@ -29,14 +29,16 @@ function Navbar() {
     if (cookies.get("isAdmin")) {
       cookies.remove("isAdmin");
     }
-    sessionStorage.clear();
-    localStorage.clear();
+    cookies.remove("name")
+    cookies.remove("email")
+    cookies.remove("uid")
+    cookies.remove("userImage")
     navigate("/");
     window.location.reload();
   };
 
   useEffect(() => {
-    const email = sessionStorage.getItem("email");
+    const email = cookies.get("email");
     const setImage = async () => {
       if (email) {
         let user = await axios.post(

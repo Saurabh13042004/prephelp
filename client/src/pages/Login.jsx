@@ -56,10 +56,10 @@ function Login() {
         );
         if (user.data.success) {
           const userDetail = user.data.data;
-          sessionStorage.setItem("email", userDetail.email);
-          sessionStorage.setItem("name", userDetail.name);
-          sessionStorage.setItem("uid", userDetail.uid);
-          sessionStorage.setItem("userImage", userDetail.image);
+          cookies.set("email", userDetail.email);
+          cookies.set("name", userDetail.name);
+          cookies.set("uid", userDetail.uid);
+          cookies.set("userImage", userDetail.image);
 
           let response = await fetch(`${import.meta.env.VITE_SERVER}/login`, {
             method: "POST",
