@@ -162,6 +162,7 @@ function Form() {
       date: [currentDate, currentTime],
       ipSubjects: IPSubjects,
       image: userImage,
+      groupDiscussion
     };
     // console.log(formData);
     try {

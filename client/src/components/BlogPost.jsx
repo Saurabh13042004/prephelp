@@ -13,6 +13,7 @@ const BlogPost = () => {
   const [loading, setLoading] = useState(true);
   const [hrques, setHrques] = useState([]);
   const [techques, setTechques] = useState([]);
+  const [grpdiscuss, setGrpdiscuss] = useState([]);
   const [emptyArray, setEmptyArray] = useState(false);
 
   const fetchData = async () => {
@@ -21,10 +22,11 @@ const BlogPost = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_SERVER}/get-experience-question?id=${id}`
       );
-      // console.log(response.data);
+      console.log(response.data.grpques);
       setPost(response.data.data);
       setHrques(response.data.hrques);
       setTechques(response.data.techques);
+      setGrpdiscuss(response.data.grpques)
       setLoading(false);
 
       if (emptyArray == false) {
@@ -214,7 +216,27 @@ const BlogPost = () => {
                   </p>
                 </section>
               )}
-
+  {grpdiscuss.length > 0 && (
+                <section className="mt-6">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    Group Discussion Round Questions
+                  </h3>
+                  <p className="text-lg text-gray-800 text-justify">
+                    I would like to share some questions with you all. I hope it
+                    will help you in your preparation and help you to built your communication skills.
+                  </p>
+                  <ul className="list-disc list-inside">
+                    {grpdiscuss.map(
+                      (question, index) =>
+                        question && <li key={index}>{question}</li>
+                    )}
+                  </ul>
+                  <p className="text-justify">
+                    Prepare answers for these questions. This will help you in
+                    your preparation.
+                  </p>
+                </section>
+              )}
               {post.preparationTips && post.preparationTips.length > 0 && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
@@ -228,6 +250,7 @@ const BlogPost = () => {
                   </ul>
                 </section>
               )}
+              
               <section className="mt-6">
                 <h3 className="text-xl font-semibold text-gray-900">
                   Final Outcome

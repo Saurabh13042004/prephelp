@@ -81,7 +81,7 @@ const expSchema = mongoose.Schema({
   ipSubjects: {
     type: Array,
   },
-  GroupDiscussion: {
+  groupDiscussion: {
     type: Array,
   },
   image: {

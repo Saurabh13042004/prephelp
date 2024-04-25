@@ -73,6 +73,7 @@ function Admin() {
         `${import.meta.env.VITE_SERVER}/admin-users`
       );
       setPosts(response.data.users);
+      console.log(response.data.users)
       setFilteredPosts(response.data.users);
       // console.log(response.data.users);
     } catch (error) {
@@ -88,7 +89,7 @@ function Admin() {
         setFilteredPosts(posts.filter(post => !post.isApproved));
         break;
       case "progress":
-        setFilteredPosts(posts.filter(post => post.status === "In Progress")); // Adjust this based on your data structure
+        setFilteredPosts(posts.filter(post => post.status === "progress")); // Adjust this based on your data structure
         break;
       default:
         setFilteredPosts(posts);

@@ -42,6 +42,7 @@ const getQues = async (req, res) => {
       data: getQues,
       techques: getQues.techQuestions,
       hrques: getQues.hrQuestions,
+      grpques: getQues.groupDiscussion,
     });
   } catch (error) {
     res.status(500).send({ message: error.message, success: false });
