@@ -10,7 +10,7 @@ import video from "../assets/video.mp4";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GiHamburgerMenu } from "react-icons/gi";
-
+import axios from "axios";
 function LandingPage() {
   const controls = useAnimation();
   const [ref, inView] = useInView();
@@ -35,6 +35,13 @@ function LandingPage() {
 
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
+
+  useEffect(()=>{
+    const autoStart = async() =>{
+      const res = await axios.get(`${import.meta.env.VITE_SERVER}/`)  
+    }
+    autoStart()
+  },[])
   useEffect(() => {
     if (inView) {
       controls.start({ opacity: 1, y: 0 });

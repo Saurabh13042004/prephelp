@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import { db } from "../firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "universal-cookie";
 
 function Form() {
   const navigate = useNavigate();
@@ -36,12 +37,12 @@ function Form() {
   const [OthereligibilityCgpa, setOthereligibilityCgpa] = useState("");
   const [OtherCgpa, setOtherCgpa] = useState("");
   const [userImage, setUserImage] = useState("");
-
+  const cookies = new Cookies(null, { path: '/' });
   useEffect(() => {
-    const name = sessionStorage.getItem("name");
-    const email = sessionStorage.getItem("email");
-    const uid = sessionStorage.getItem("uid");
-    const Image = sessionStorage.getItem("userImage");
+    const name = cookies.get("name");
+    const email = cookies.get("email");
+    const uid = localStorage.getItem("uid");
+    const Image = cookies.get("userImage");
 
     name == undefined || null ? "" : setName(name);
     email == undefined || null ? "" : setEmail(email);
@@ -248,8 +249,7 @@ function Form() {
                   className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4  appearance-none leading-5 text-gray-700 w-80"
                 >
                   <option value="Above 9">Above 9</option>
-                  <option value="Between 8 and 9">Between 8 and 9</option>
-                  <option value="Below 8">Below 8</option>
+                  <option value="Below 8">Above 8</option>
                   <option value="Others">Others</option>
                 </select>
                 {eligibility == "Others" && (
@@ -315,6 +315,17 @@ function Form() {
                       checked={gotOffer === "no"}
                     />
                     <span className="mx-5">No</span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      className="form-radio"
+                      name="offerOption"
+                      value="progress"
+                      onChange={(e) => setGotOffer(e.target.value)}
+                      checked={gotOffer === "progress"}
+                    />
+                    <span className="mx-5">progress</span>
                   </label>
                 </div>
               </div>
@@ -436,8 +447,7 @@ function Form() {
                   className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4  appearance-none leading-5 text-gray-700 w-80"
                 >
                   <option value="Above 9">Above 9</option>
-                  <option value="Between 8 and 9">Between 8 and 9</option>
-                  <option value="Below 8">Below 8</option>
+                  <option value="Below 8">Above 8</option>
                   <option value="Others">Others</option>
                 </select>
                 {cgpa == "Others" && (
@@ -613,7 +623,7 @@ function Form() {
             <textarea
               value={preparationTips}
               placeholder="Summarized your experience."
-              className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] "
+              className="border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] h-[200px] resize-none"
               onChange={(e) => setPreparationTips(e.target.value)}
             />
             <button

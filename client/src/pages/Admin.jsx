@@ -20,6 +20,8 @@ function Admin() {
   const [approvedHRQuestions, setApprovedHRQuestions] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
+  const [isSelected, setIsSelected] = useState("all"); // Updated default value
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
   // const fetchData = async () => {  // FOR FIREBASE DATABASE
   //   setLoading(true);
@@ -71,11 +73,31 @@ function Admin() {
         `${import.meta.env.VITE_SERVER}/admin-users`
       );
       setPosts(response.data.users);
+      setFilteredPosts(response.data.users);
       // console.log(response.data.users);
     } catch (error) {
       console.log("Error form the admin page get data " + error);
     }
   };
+  const filterPosts = () => {
+    switch (isSelected) {
+      case "yes":
+        setFilteredPosts(posts.filter(post => post.isApproved));
+        break;
+      case "no":
+        setFilteredPosts(posts.filter(post => !post.isApproved));
+        break;
+      case "progress":
+        setFilteredPosts(posts.filter(post => post.status === "In Progress")); // Adjust this based on your data structure
+        break;
+      default:
+        setFilteredPosts(posts);
+        break;
+    }
+  }
+    useEffect(() => {
+      filterPosts(); 
+    }, [isSelected, posts]);
   const handleCheckboxChange = async (id, entry) => {
     try {
       const response = await axios.put(
@@ -157,12 +179,38 @@ function Admin() {
         theme="colored"
         transition:Bounce
       />
+    {/* <input type="text" /> */}
+  
       <AdminNavbar />
+      
       {!user === null ? (
         <Loader />
       ) : (
         <>
+       
           <div className="overflow-x-auto m-auto mt-14 p-8">
+          <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
+            <p className="me-4 font-bold">Sort By Selection:</p>
+            <select
+              value={isSelected}
+              onChange={(e) => setIsSelected(e.target.value)}
+              className="p-2 border border-gray-300 rounded-md mr-2"
+            >
+                <option key="all" value="all">
+                All
+              </option>
+              <option key="yes" value="yes">
+                Selected
+              </option>
+              <option key="no" value="no">
+                Not Selected
+              </option>
+              <option key="progress" value="progress">
+                In Progress
+              </option>
+              
+            </select>
+          </div>
             <table className="table">
               <thead>
                 <tr>
@@ -178,7 +226,7 @@ function Admin() {
                 {loading ? (
                   <Loader />
                 ) : (
-                  posts.map((entry) => (
+                  filteredPosts.map((entry) => (
                     <tr key={entry._id}>
                       <td>
                         <span className="flex items-center space-x-3">

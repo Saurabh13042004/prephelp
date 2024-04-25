@@ -584,14 +584,23 @@ const Profile = ({ isAuth, isAdmin }) => {
                             : "text-red-900"
                         }`}
                       >
-                        {post.gotOffer === "yes" ? "Selected" : "Not Selected"}
+                        {post.gotOffer === "yes" ? (
+  <span className="text-green-500">Selected</span>
+) : post.gotOffer === "no" ? (
+  <span className="text-red-500">Not Selected</span>
+) : (
+  <span className="text-yellow-500">In Progress</span>
+)}
                       </p>
-                      <button
-                        className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => editFromUser(post)}
-                      >
-                        Edit
-                      </button>
+                      {!post.isApproved && (
+  <button
+    className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    onClick={() => editFromUser(post)}
+  >
+    Edit
+  </button>
+)}
+
                     </div>
                   </div>
                 </div>

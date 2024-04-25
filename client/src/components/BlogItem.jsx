@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 // import { db } from "../firebase";
 // import { collection, getDocs } from "firebase/firestore";
 import Loader from "./Loader";
+import axios from "axios";
 
 const getCompanyLogo = (company) => {
   switch (company) {
@@ -31,24 +32,23 @@ const getCompanyLogo = (company) => {
   }
 };
 const popularCompanies = [
-  "Amazon",
-  "Google",
-  "Microsoft",
-  "Facebook",
-  "Apple",
-  "Netflix",
-  "Uber",
-  "LinkedIn",
-  "Twitter",
-  "Salesforce",
-  "Oracle",
   "Adobe",
-  "Paypal",
+  "Apple",
   "Cisco",
+  "Facebook",
+  "Google",
   "IBM",
-  "Intel",
   "Infosys",
+  "Intel",
+  "LinkedIn",
+  "Microsoft",
+  "Netflix",
+  "Oracle",
   "Others",
+  "Paypal",
+  "Salesforce",
+  "Twitter",
+  "Uber",
 ];
 const d = new Date().getFullYear();
 const popularYear = [
@@ -157,6 +157,10 @@ function BlogItem() {
     }
   };
 
+  // for auto starting the server
+
+
+
   useEffect(() => {
     const fetchProfileImages = async () => {
       const promises = searchedPosts.map(async (post) => {
@@ -234,6 +238,7 @@ function BlogItem() {
               <option key="no" value="no">
                 Not Selected
               </option>
+              
             </select>
           </div>
           <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
