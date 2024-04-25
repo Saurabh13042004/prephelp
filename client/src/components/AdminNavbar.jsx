@@ -15,7 +15,7 @@ function AdminNavbar() {
   const [ProfileImage, setProfileImage] = useState("");
 
   useEffect(() => {
-    const email = sessionStorage.getItem("email");
+    const email = cookies.get("email");
     const setImage = async () => {
       let user = await axios.post(
         `${import.meta.env.VITE_SERVER}/getUserDetails`,
@@ -62,7 +62,7 @@ function AdminNavbar() {
     navigate("/");
     window.location.reload();
   };
-  const userName = sessionStorage.getItem("name");
+  const userName = cookies.get("name");
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow fixed w-full top-0 z-50">

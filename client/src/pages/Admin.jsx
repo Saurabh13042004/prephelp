@@ -258,7 +258,9 @@ function Admin() {
                             entry.isApproved ? "text-green-500" : "text-red-500"
                           }`}
                         >
-                          {entry.isApproved ? "Active" : "Inactive"}
+                         {entry.gretoffer === "yes" ? "Selected" : entry.gretoffer === "no" ? "Not Selected" :entry.gretoffer === "progress" ? "In Progress" :" "}
+
+
                         </span>
                       </td>
                       <td>
