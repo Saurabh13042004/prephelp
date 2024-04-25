@@ -34,6 +34,7 @@ const getCompanyLogo = (company) => {
 const popularCompanies = [
   "Adobe",
   "Apple",
+  "Amazon",
   "Cisco",
   "Facebook",
   "Google",
@@ -145,6 +146,21 @@ function BlogItem() {
           }
         }
       }
+      setSearchedPosts(selectedCompanyPosts);
+    } else if (selectedCompany != "Others" && isSelected == "both") {
+      for (let obj of filteredPosts) {
+        let d = new Date(obj.date[0]);
+        let year = d.getFullYear();
+
+        if (
+          year >= fromYear &&
+          year <= toYear &&
+          obj.company.toLowerCase() == selectedCompany.toLowerCase()
+        ) {
+          selectedCompanyPosts.push(obj);
+        }
+      }
+
       setSearchedPosts(selectedCompanyPosts);
     } else {
       if (selectedCompany == "Others") {
@@ -347,12 +363,14 @@ function BlogItem() {
                           className={`font-bold ${
                             post.gotOffer === "yes"
                               ? "text-green-500"
-                              : "text-red-900"
+                              : "text-red-800"
                           }`}
                         >
                           {post.gotOffer === "yes"
                             ? "Selected"
-                            : "Not-Selected"}
+                            : post.gotOffer === "no"
+                            ? "Not-Selected"
+                            : "in Progress"}
                         </p>
                       </div>
                     </div>

@@ -82,6 +82,7 @@ const Profile = ({ isAuth, isAdmin }) => {
         { email },
         config
       );
+      console.log(res.data);
       setExp(res.data.data);
     } catch (error) {
       console.log("Error from " + error);

@@ -15,6 +15,9 @@ const BlogPost = () => {
   const [techques, setTechques] = useState([]);
   const [grpdiscuss, setGrpdiscuss] = useState([]);
   const [emptyArray, setEmptyArray] = useState(true);
+  const [hrEmptyArray, setHrEmptyArray] = useState(true);
+  const [techEmptyArray, setTechEmptyArray] = useState(true);
+  const [grpEmptyArray, setGrpEmptyArray] = useState(true);
 
   const fetchData = async () => {
     // console.log(id);
@@ -22,21 +25,12 @@ const BlogPost = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_SERVER}/get-experience-question?id=${id}`
       );
-      console.log(response.data);
+      // console.log(response.data);
       setPost(response.data.data);
       setHrques(response.data.hrques);
       setTechques(response.data.techques);
       setGrpdiscuss(response.data.grpques);
       setLoading(false);
-
-      if (emptyArray == true) {
-        post &&
-          post.ipSubjects.map((obj, idx) => {
-            if (obj.length == 0) {
-              setEmptyArray(false);
-            }
-          });
-      }
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +38,39 @@ const BlogPost = () => {
   useEffect(() => {
     fetchData();
   }, [id]);
+  useEffect(() => {
+    if (post && post.ipSubjects && post.ipSubjects.length > 0) {
+      post.ipSubjects.map((obj, idx) => {
+        if (obj.length == 0) {
+          setEmptyArray(false);
+        }
+      });
+    }
+
+    if (post && post.hrQuestions && post.hrQuestions.length > 0) {
+      post.hrQuestions.map((obj, idx) => {
+        if (obj.length == 0) {
+          setHrEmptyArray(false);
+        }
+      });
+    }
+
+    if (post && post.techQuestions && post.techQuestions.length > 0) {
+      post.techQuestions.map((obj, idx) => {
+        if (obj.length == 0) {
+          setTechEmptyArray(false);
+        }
+      });
+    }
+
+    if (post && post.groupDiscussion && post.groupDiscussion.length > 0) {
+      post.groupDiscussion.map((obj, idx) => {
+        if (obj.length == 0) {
+          setGrpEmptyArray(false);
+        }
+      });
+    }
+  }, [post]);
 
   return (
     <>
@@ -154,72 +181,79 @@ const BlogPost = () => {
                   </div>
                 </section>
               )}
-              {post.techques && techques.length > 0 && (
-                <section className="mt-6">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Technical Interview Round Questions
-                  </h3>
-                  <p className="text-lg text-gray-800 text-justify">
-                    I would like to share some technical questions which were
-                    asked in my interview. I hope it will help you in your
-                    preparation.
-                  </p>
-                  <ul className="list-disc list-inside">
-                    {techques.map(
-                      (question, index) =>
-                        question && <li key={index}>{question}</li>
-                    )}
-                  </ul>
-                  <p className="text-justify">
-                    Understand the constraints of the problem before writing the
-                    code. Try to code from brute force approach to optimized
-                    approach. This will help you in your preparation.
-                  </p>
-                </section>
-              )}
-              {post.hrques && hrques.length > 0 && (
-                <section className="mt-6">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    HR Interview Round Questions
-                  </h3>
-                  <p className="text-lg text-gray-800 text-justify">
-                    I would like to share some questions with you all. I hope it
-                    will help you in your preparation.
-                  </p>
-                  <ul className="list-disc list-inside">
-                    {hrques.map(
-                      (question, index) =>
-                        question && <li key={index}>{question}</li>
-                    )}
-                  </ul>
-                  <p className="text-justify">
-                    Prepare answers for these questions. This will help you in
-                    your preparation.
-                  </p>
-                </section>
-              )}
-              {post.grpdiscuss && grpdiscuss.length > 0 && (
-                <section className="mt-6">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Group Discussion Round Questions
-                  </h3>
-                  <p className="text-lg text-gray-800 text-justify">
-                    I would like to share some questions with you all. I hope it
-                    will help you in your preparation and help you to built your
-                    communication skills.
-                  </p>
-                  <ul className="list-disc list-inside">
-                    {grpdiscuss.map(
-                      (question, index) =>
-                        question && <li key={index}>{question}</li>
-                    )}
-                  </ul>
-                  <p className="text-justify">
-                    Prepare answers for these questions. This will help you in
-                    your preparation.
-                  </p>
-                </section>
-              )}
+              {post.techQuestions &&
+                post.techQuestions.length > 0 &&
+                techEmptyArray && (
+                  <section className="mt-6">
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      Technical Interview Round Questions
+                    </h3>
+                    <p className="text-lg text-gray-800 text-justify">
+                      I would like to share some technical questions which were
+                      asked in my interview. I hope it will help you in your
+                      preparation.
+                    </p>
+                    <ul className="list-disc list-inside">
+                      {post.techQuestions.map(
+                        (question, index) =>
+                          question && <li key={index}>{question}</li>
+                      )}
+                    </ul>
+                    <p className="text-justify">
+                      Understand the constraints of the problem before writing
+                      the code. Try to code from brute force approach to
+                      optimized approach. This will help you in your
+                      preparation.
+                    </p>
+                  </section>
+                )}
+              {post.hrQuestions &&
+                post.hrQuestions.length > 0 &&
+                hrEmptyArray && (
+                  <section className="mt-6">
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      HR Interview Round Questions
+                    </h3>
+                    <p className="text-lg text-gray-800 text-justify">
+                      I would like to share some questions with you all. I hope
+                      it will help you in your preparation.
+                    </p>
+                    <ul className="list-disc list-inside">
+                      {post.hrQuestions.map(
+                        (question, index) =>
+                          question && <li key={index}>{question}</li>
+                      )}
+                    </ul>
+                    <p className="text-justify">
+                      Prepare answers for these questions. This will help you in
+                      your preparation.
+                    </p>
+                  </section>
+                )}
+              {post.groupDiscussion &&
+                post.groupDiscussion.length > 0 &&
+                grpEmptyArray && (
+                  <section className="mt-6">
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      Group Discussion Round Questions
+                    </h3>
+                    <p className="text-lg text-gray-800 text-justify">
+                      I would like to share some questions with you all. I hope
+                      it will help you in your preparation and help you to built
+                      your communication skills.
+                    </p>
+                    <ul className="list-disc list-inside">
+                      {post.groupDiscussion.map(
+                        (question, index) =>
+                          question && <li key={index}>{question}</li>
+                      )}
+                    </ul>
+                    <p className="text-justify">
+                      Prepare answers for these questions. This will help you in
+                      your preparation.
+                    </p>
+                  </section>
+                )}
               {post.preparationTips && post.preparationTips.length > 0 && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
