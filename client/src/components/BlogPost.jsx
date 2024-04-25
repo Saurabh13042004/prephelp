@@ -96,7 +96,7 @@ const BlogPost = () => {
                 <h3 className="text-xl font-semibold text-gray-900">
                   Introduction
                 </h3>
-                <p className="text-lg text-gray-800">
+                <p className="text-lg text-gray-800 text-justify">
                   My name is {post.name}. I am an undergraduate student at
                   Chitkara University. I am currently in my {post.batch} batch.
                   I have been selected for the role of {post.role} at{" "}
@@ -111,7 +111,7 @@ const BlogPost = () => {
                 <h3 className="text-xl font-semibold text-gray-900">
                   Application Process
                 </h3>
-                <p className="text-lg text-gray-800">
+                <p className="text-lg text-gray-800  text-justify">
                   I got to know about the placement drive through the Placement
                   Cell of Chitkara University. I applied for the role of{" "}
                   {post.role} at {post.company}. I was shortlisted for the
@@ -125,7 +125,7 @@ const BlogPost = () => {
                 <h3 className="text-xl font-semibold text-gray-900">
                   Eligibility and Resume
                 </h3>
-                <p className="text-lg text-gray-800">
+                <p className="text-lg text-gray-800 text-justify">
                   The eligibility criteria for the role was {post.eligibility}.
                   I was shortlisted for the interview based on my resume. I had
                   mentioned my projects, achievements, and skills in my resume.
@@ -137,7 +137,7 @@ const BlogPost = () => {
                   <h3 className="text-xl font-semibold text-gray-900">
                     Online Test Questions
                   </h3>
-                  <div className="text-lg text-gray-800">
+                  <div className="text-lg text-gray-800 text-justify">
                     <p>
                       I would like to share some online test questions which
                       were asked in my interview. I hope it will help you in
@@ -175,7 +175,7 @@ const BlogPost = () => {
                   <h3 className="text-xl font-semibold text-gray-900">
                     Technical Interview Round Questions
                   </h3>
-                  <p className="text-lg text-gray-800">
+                  <p className="text-lg text-gray-800 text-justify">
                     I would like to share some technical questions which were
                     asked in my interview. I hope it will help you in your
                     preparation.
@@ -186,7 +186,7 @@ const BlogPost = () => {
                         question && <li key={index}>{question}</li>
                     )}
                   </ul>
-                  <p>
+                  <p className="text-justify">
                     Understand the constraints of the problem before writing the
                     code. Try to code from brute force approach to optimized
                     approach. This will help you in your preparation.
@@ -198,7 +198,7 @@ const BlogPost = () => {
                   <h3 className="text-xl font-semibold text-gray-900">
                     HR Interview Round Questions
                   </h3>
-                  <p className="text-lg text-gray-800">
+                  <p className="text-lg text-gray-800 text-justify">
                     I would like to share some questions with you all. I hope it
                     will help you in your preparation.
                   </p>
@@ -208,7 +208,7 @@ const BlogPost = () => {
                         question && <li key={index}>{question}</li>
                     )}
                   </ul>
-                  <p>
+                  <p className="text-justify">
                     Prepare answers for these questions. This will help you in
                     your preparation.
                   </p>
@@ -232,7 +232,7 @@ const BlogPost = () => {
                 <h3 className="text-xl font-semibold text-gray-900">
                   Final Outcome
                 </h3>
-                <p className="text-lg text-gray-800">
+                <p className="text-lg text-gray-800 text-justify">
                   I was{" "}
                   {post.gotOffer === "yes" ? (
                     <span className="text-green-500">selected</span>
@@ -283,7 +283,7 @@ const BlogPost = () => {
 
             {/* Contact Info */}
 
-            <p className="text-base text-gray-800 mt-4">
+            <p className="text-base text-gray-800 mt-4 text-justify">
               Hey everyone, I am {post.name}. I am an undergraduate student at
               Chitkara University. I am currently in my {post.batch} batch.
               <br />

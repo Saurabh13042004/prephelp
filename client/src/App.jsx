@@ -1,5 +1,5 @@
 import "./App.css";
-
+import RingLoader from "react-spinners/RingLoader";
 import Admin from "./pages/Admin";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Submitted from "./pages/Submitted";
@@ -19,12 +19,22 @@ import Cookies from "universal-cookie";
 import About from "./components/About";
 import Addadmin from "./pages/Addadmin";
 import Profile from "./pages/Profile";
+import "./styles/animateText.css";
 
 function App() {
   const [isAuth, setIsAuth] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
   const cookies = new Cookies();
 
+  useEffect(() => {
+    const connectingToServer = async () => {
+      setLoading(true);
+      let res = await fetch(`${import.meta.env.VITE_SERVER}`);
+      setLoading(false);
+    };
+    connectingToServer();
+  }, []);
   useEffect(() => {
     const validate = cookies.get("token");
     const admin = cookies.get("isAdmin");
@@ -43,6 +53,20 @@ function App() {
 
   return (
     <>
+      {loading && (
+        <div className="w-full h-full absolute flex justify-center items-center z-50 bg-opacity-90 bg-slate-700 flex-col">
+          <span className="font-bold text-4xl mb-3 bg-gradient-to-r from-black to-white text-transparent bg-clip-text animate-gradient flex justify-center items-center text-center">
+            Site is in developing mode, please wait to start the server
+          </span>
+          <RingLoader
+            color={"blue"}
+            loading={loading}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      )}
       <Routes>
         <Route
           path="/"

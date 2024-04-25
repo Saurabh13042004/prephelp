@@ -44,11 +44,11 @@ const popularCompanies = [
   "Microsoft",
   "Netflix",
   "Oracle",
-  "Others",
   "Paypal",
   "Salesforce",
   "Twitter",
   "Uber",
+  "Others",
 ];
 const d = new Date().getFullYear();
 const popularYear = [
@@ -71,7 +71,7 @@ function BlogItem() {
   const [fromSearch, setFromSearch] = useState("2016");
   const [toSearch, setToSearch] = useState(d);
   const [otherCompany, setOtherCompany] = useState("");
-  const [isSelected, setIsSelected] = useState("yes");
+  const [isSelected, setIsSelected] = useState("both");
   const companyRef = useRef();
   const postImageRef = useRef();
   let [approvedPost, setApprovedPost] = useState(0);
@@ -130,8 +130,18 @@ function BlogItem() {
         let d = new Date(obj.date[0]);
         let year = d.getFullYear();
 
-        if (year >= fromYear && year <= toYear && obj.gotOffer == isSelected) {
-          selectedCompanyPosts.push(obj);
+        if (isSelected == "both") {
+          if (year >= fromYear && year <= toYear) {
+            selectedCompanyPosts.push(obj);
+          }
+        } else {
+          if (
+            year >= fromYear &&
+            year <= toYear &&
+            obj.gotOffer == isSelected
+          ) {
+            selectedCompanyPosts.push(obj);
+          }
         }
       }
       setSearchedPosts(selectedCompanyPosts);
@@ -158,8 +168,6 @@ function BlogItem() {
   };
 
   // for auto starting the server
-
-
 
   useEffect(() => {
     const fetchProfileImages = async () => {
@@ -232,13 +240,15 @@ function BlogItem() {
               onChange={(e) => setIsSelected(e.target.value)}
               className="p-2 border border-gray-300 rounded-md mr-2"
             >
+              <option key="both" value="both">
+                Both
+              </option>
               <option key="yes" value="yes">
                 Selected
               </option>
               <option key="no" value="no">
                 Not Selected
               </option>
-              
             </select>
           </div>
           <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">

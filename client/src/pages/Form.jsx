@@ -30,25 +30,34 @@ function Form() {
   const [techQuestions, setTechQuestions] = useState([""]);
   const [interviewPrep, Setinterviewprep] = useState("");
   const [IPSubjects, setIPSubjects] = useState([""]);
+  const [groupDiscussion, setGroupDisccusion] = useState([""]);
   const isApproved = false;
   let hrFieldRef = useRef();
   let techFieldRef = useRef();
   let ipFieldRef = useRef();
+  let groupDiscussionFieldRef = useRef();
   const [OthereligibilityCgpa, setOthereligibilityCgpa] = useState("");
   const [OtherCgpa, setOtherCgpa] = useState("");
   const [userImage, setUserImage] = useState("");
-  const cookies = new Cookies(null, { path: '/' });
+  const cookies = new Cookies();
+  const [onlineTestToggle, setOnlineTestToggle] = useState(false);
+  const [technicalQuesToggle, setTechnicalQuesToggle] = useState(false);
+  const [hrQuesToggle, setHrQuesToggle] = useState(false);
+  const [groupDiscussionToogle, setGroupDiscussionToogle] = useState(false);
+
   useEffect(() => {
     const name = cookies.get("name");
     const email = cookies.get("email");
-    const uid = localStorage.getItem("uid");
+    const uid = cookies.get("uid");
     const Image = cookies.get("userImage");
 
-    name == undefined || null ? "" : setName(name);
-    email == undefined || null ? "" : setEmail(email);
-    uid == undefined || null ? "" : setUniversityID(uid);
-    uid == undefined || null ? "" : setBatch(20 + uid.slice(0, 2));
-    Image == undefined || null ? "" : setUserImage(Image);
+    if (name) setName(name);
+    if (email) setEmail(email);
+    if (uid) {
+      setUniversityID(uid);
+      setBatch("20" + uid.toString().slice(0, 2));
+    }
+    if (Image) setUserImage(Image);
   }, []);
   useEffect(() => {
     if (hrQuestions.length > 1) {
@@ -74,6 +83,9 @@ function Form() {
   };
   const addTechQuestion = () => {
     setTechQuestions([...techQuestions, ""]);
+  };
+  const addGroupDiscussion = () => {
+    setGroupDisccusion([...groupDiscussion, ""]);
   };
 
   const handleNextClick1 = () => {
@@ -117,6 +129,11 @@ function Form() {
     const updatedInterviewSubjects = [...IPSubjects];
     updatedInterviewSubjects.splice(index, 1);
     setIPSubjects(updatedInterviewSubjects);
+  };
+  const deleteGroupDiscussion = (index) => {
+    const updatedHRQuestions = [...groupDiscussion];
+    updatedHRQuestions.splice(index, 1);
+    setGroupDisccusion(updatedHRQuestions);
   };
 
   const handleSubmit = async () => {
@@ -447,12 +464,14 @@ function Form() {
                   className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4  appearance-none leading-5 text-gray-700 w-80"
                 >
                   <option value="Above 9">Above 9</option>
-                  <option value="Below 8">Above 8</option>
+                  <option value="Above 8">Above 8</option>
+                  <option value="Above 7">Above 7</option>
                   <option value="Others">Others</option>
                 </select>
                 {cgpa == "Others" && (
                   <input
                     type="number"
+                    value={OtherCgpa}
                     onChange={(e) => {
                       if (e.target.value < 0) {
                         setOtherCgpa(0);
@@ -462,7 +481,6 @@ function Form() {
                         setOtherCgpa(e.target.value);
                       }
                     }}
-                    value={OtherCgpa}
                     className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block  appearance-none leading-5 text-gray-700 w-80"
                   />
                 )}
@@ -488,138 +506,239 @@ function Form() {
       {questions == 2 && (
         <div>
           <div className="lg:mx-[12%] my-16 p-10">
-            {/* <div>
-            <p className="font-bold text-3xl">Interview Experience</p>
-            <label className="block font-semibold mt-8 mb-5">
-              {" "}
-              Share your Interview Experience ?
-            </label>
-            <textarea
-              value={mistakes}
-              placeholder="Please Share some preparation tips if there is any."
-              className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] "
-              onChange={(e) => setMistakes(e.target.value)}
-            />
-            </div> */}
-       
-             <div>  
-              <p className="font-semibold text-xl mt-10 font-sans">
-                Online Test
-              </p>
-              {IPSubjects.map((question, index) => (
-                <div key={index}>
-                  <label className="block font-semibold mt-8 mb-5">
-                    Online Test Question {index + 1}
-                  </label>
-                  <textarea
-                    ref={ipFieldRef}
-                    value={question}
-                    placeholder={`Enter Online Question ${
-                      index + 1
-                    }`}
-                    onChange={(e) => {
-                      const updatedIPSubjects = [...IPSubjects];
-                      updatedIPSubjects[index] = e.target.value;
-                      setIPSubjects(updatedIPSubjects);
-                    }}
-                    className="border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
-                  />
-                  <button
-                    onClick={() => deleteInterviewSubject(index)}
-                    type="button"
-                    className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))}
-              <button
-                onClick={addIPSubjects}
-                type="button"
-                className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
-              >
-                ADD ONLINE QUESTION
-              </button>
-            </div>
-            
             <div>
-              <p className="font-semibold text-xl mt-10 font-sans">
-                Technical Questions
-              </p>
-              {techQuestions.map((question, index) => (
-                <div key={index}>
-                  <label className="block font-semibold mt-8 mb-5">
-                    Technical Question {index + 1}
-                  </label>
-                  <textarea
-                    ref={techFieldRef}
-                    value={question}
-                    placeholder={`Enter Technical Question ${index + 1}`}
+              <span className="flex justify-center items-center text-2xl mt-2 font-semibold">
+                Select the type of rounds in your interview :-
+              </span>
+              <div className="flex justify-center items-center text-lg mt-4 gap-6">
+                <div>
+                  <input
+                    type="checkbox"
                     onChange={(e) => {
-                      const updatedTechQuestions = [...techQuestions];
-                      updatedTechQuestions[index] = e.target.value;
-                      setTechQuestions(updatedTechQuestions);
+                      if (e.target.checked) {
+                        setOnlineTestToggle(true);
+                      } else {
+                        setOnlineTestToggle(false);
+                      }
                     }}
-                    className="border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
+                    className="rounded-full"
+                    name="onlineTest"
+                    id="onlineTest"
                   />
-                  <button
-                    onClick={() => deleteTechnicalQuestion(index)}
-                    type="button"
-                    className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))}
-              <button
-                onClick={addTechQuestion}
-                type="button"
-                className="bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
-              >
-                ADD TECH QUESTIONS
-              </button>
-       
-            </div>
-            <div>
-              <p className="font-semibold text-xl mt-10 font-sans">
-                HR Questions
-              </p>
-              {hrQuestions.map((question, index) => (
-                <div key={index}>
-                  <label className="block font-semibold mt-8 mb-5">
-                    HR Question {index + 1}
+                  <label className="ml-2" htmlFor="onlineTest">
+                    Online Test
                   </label>
-                  <textarea
-                    ref={hrFieldRef}
-                    value={question}
-                    placeholder={`Enter HR Question ${index + 1}`}
-                    onChange={(e) => {
-                      const updatedHRQuestions = [...hrQuestions];
-                      updatedHRQuestions[index] = e.target.value;
-                      setHRQuestions(updatedHRQuestions);
-                    }}
-                    className="border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
-                  />
-                  <button
-                    onClick={() => deleteHRQuestion(index)}
-                    type="button"
-                    className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
-                  >
-                    Delete
-                  </button>
                 </div>
-              ))}
-              <button
-                onClick={addHRQuestion}
-                type="button"
-                className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
-              >
-                ADD HR QUESTION
-              </button>
+                <div>
+                  <input
+                    type="checkbox"
+                    className="rounded-full"
+                    name="TechnicalQues"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setTechnicalQuesToggle(true);
+                      } else {
+                        setTechnicalQuesToggle(false);
+                      }
+                    }}
+                    id="TechnicalQues"
+                  />
+                  <label className="ml-2" htmlFor="TechnicalQues">
+                    Technical Questions
+                  </label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    className="rounded-full"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setHrQuesToggle(true);
+                      } else {
+                        setHrQuesToggle(false);
+                      }
+                    }}
+                    name="HrQues"
+                    id="HrQues"
+                  />
+                  <label className="ml-2" htmlFor="HrQues">
+                    HR Questions
+                  </label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    className="rounded-full"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setGroupDiscussionToogle(true);
+                      } else {
+                        setGroupDiscussionToogle(false);
+                      }
+                    }}
+                    name="groupDiscussion"
+                    id="groupDiscussion"
+                  />
+                  <label className="ml-2" htmlFor="groupDiscussion">
+                    Group Discussion
+                  </label>
+                </div>
+              </div>
             </div>
-            <label className="block font-semibold mt-4 mb-5">
-              Summary
-            </label>
+            {onlineTestToggle && (
+              <div>
+                <p className="font-semibold text-xl mt-8 font-sans">
+                  Online/Offline Test
+                </p>
+                {IPSubjects.map((question, index) => (
+                  <div key={index} ref={ipFieldRef}>
+                    <label className="block font-semibold mt-8 mb-5">
+                      Share Your Online/Offline Test Question {index + 1}{" "}
+                      Experience
+                    </label>
+                    <textarea
+                      value={question}
+                      placeholder={`Enter Online/Offline Question ${index + 1}`}
+                      onChange={(e) => {
+                        const updatedIPSubjects = [...IPSubjects];
+                        updatedIPSubjects[index] = e.target.value;
+                        setIPSubjects(updatedIPSubjects);
+                      }}
+                      className="border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
+                    />
+                    <button
+                      onClick={() => deleteInterviewSubject(index)}
+                      type="button"
+                      className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={addIPSubjects}
+                  type="button"
+                  className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
+                >
+                  ADD ONLINE QUESTION
+                </button>
+              </div>
+            )}
+            {technicalQuesToggle && (
+              <div>
+                <p className="font-semibold text-xl mt-10 font-sans">
+                  Technical Questions
+                </p>
+                {techQuestions.map((question, index) => (
+                  <div key={index} ref={techFieldRef}>
+                    <label className="block font-semibold mt-8 mb-5">
+                      Share Your Technical Question {index + 1} Experience
+                    </label>
+                    <textarea
+                      value={question}
+                      placeholder={`Enter Technical Question ${index + 1}`}
+                      onChange={(e) => {
+                        const updatedTechQuestions = [...techQuestions];
+                        updatedTechQuestions[index] = e.target.value;
+                        setTechQuestions(updatedTechQuestions);
+                      }}
+                      className="border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
+                    />
+                    <button
+                      onClick={() => deleteTechnicalQuestion(index)}
+                      type="button"
+                      className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={addTechQuestion}
+                  type="button"
+                  className="bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
+                >
+                  ADD TECH QUESTIONS
+                </button>
+              </div>
+            )}
+            {hrQuesToggle && (
+              <div>
+                <p className="font-semibold text-xl mt-10 font-sans">
+                  HR Questions
+                </p>
+                {hrQuestions.map((question, index) => (
+                  <div key={index} ref={techFieldRef}>
+                    <label className="block font-semibold mt-8 mb-5">
+                      Share Your HR Question {index + 1} Experience
+                    </label>
+                    <textarea
+                      value={question}
+                      placeholder={`Enter HR Question ${index + 1}`}
+                      onChange={(e) => {
+                        const updatedHRQuestions = [...hrQuestions];
+                        updatedHRQuestions[index] = e.target.value;
+                        setHRQuestions(updatedHRQuestions);
+                      }}
+                      className="border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
+                    />
+                    <button
+                      onClick={() => deleteHRQuestion(index)}
+                      type="button"
+                      className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={addHRQuestion}
+                  type="button"
+                  className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
+                >
+                  ADD HR QUESTION
+                </button>
+              </div>
+            )}
+            {groupDiscussionToogle && (
+              <div>
+                <p className="font-semibold text-xl mt-10 font-sans">
+                  Group Discussion
+                </p>
+                {groupDiscussion.map((question, index) => (
+                  <div key={index} ref={groupDiscussionFieldRef}>
+                    <label className="block font-semibold mt-8 mb-5">
+                      Share Your Group Dicussion Question {index + 1} Experience
+                    </label>
+                    <textarea
+                      value={question}
+                      placeholder={`Enter HR Question ${index + 1}`}
+                      onChange={(e) => {
+                        const updatedHRQuestions = [...groupDiscussion];
+                        updatedHRQuestions[index] = e.target.value;
+                        setGroupDisccusion(updatedHRQuestions);
+                      }}
+                      className="border-2 border-gray-300 focus:outline-none  focus:border-orange-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%]"
+                    />
+                    <button
+                      onClick={() => deleteGroupDiscussion(index)}
+                      type="button"
+                      className="bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-2"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={addGroupDiscussion}
+                  type="button"
+                  className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
+                >
+                  ADD GROUP DISCUSSION QUESTION
+                </button>
+              </div>
+            )}
+            <label className="block font-semibold mt-4 mb-5">Summary</label>
             <textarea
               value={preparationTips}
               placeholder="Summarized your experience."

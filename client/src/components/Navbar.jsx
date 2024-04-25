@@ -29,10 +29,10 @@ function Navbar() {
     if (cookies.get("isAdmin")) {
       cookies.remove("isAdmin");
     }
-    cookies.remove("name")
-    cookies.remove("email")
-    cookies.remove("uid")
-    cookies.remove("userImage")
+    cookies.remove("name");
+    cookies.remove("email");
+    cookies.remove("uid");
+    cookies.remove("userImage");
     navigate("/");
     window.location.reload();
   };
@@ -53,6 +53,7 @@ function Navbar() {
         );
         if (user.data.success) {
           const imagePath = user.data.data.image;
+          // console.log(imagePath);
           if (imagePath) {
             let imageUrl = await fetch(
               `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`

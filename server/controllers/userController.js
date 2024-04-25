@@ -309,7 +309,7 @@ const getExp = async (req, res) => {
   try {
     // console.log(req.body);
     const data = await expModel.find({ email: req.body.email });
-    console.log(data);
+    // console.log(data);
     if (data) {
       return res.status(201).send({
         message: "Data fetch succesfully",
@@ -327,8 +327,8 @@ const getExp = async (req, res) => {
 
 const editExpUser = async (req, res) => {
   try {
-    console.log(req.query.id);
-    console.log(req.body.selectedPost);
+    // console.log(req.query.id);
+    // console.log(req.body.selectedPost);
     const id = req.query.id;
     const data = await expModel.findByIdAndUpdate(id, req.body.selectedPost, {
       new: true,
