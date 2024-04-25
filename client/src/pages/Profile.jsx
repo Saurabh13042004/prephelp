@@ -50,7 +50,6 @@ const Profile = ({ isAuth, isAdmin }) => {
   const editFieldSave = async (id) => {
     try {
       handleCloseModal1();
-      console.log(selectedPost);
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +82,7 @@ const Profile = ({ isAuth, isAdmin }) => {
         { email },
         config
       );
-      // console.log(res.data.data);
+      console.log(res.data.data);
       setExp(res.data.data);
     } catch (error) {
       console.log("Error from " + error);
@@ -585,22 +584,21 @@ const Profile = ({ isAuth, isAdmin }) => {
                         }`}
                       >
                         {post.gotOffer === "yes" ? (
-  <span className="text-green-500">Selected</span>
-) : post.gotOffer === "no" ? (
-  <span className="text-red-500">Not Selected</span>
-) : (
-  <span className="text-yellow-500">In Progress</span>
-)}
+                          <span className="text-green-500">Selected</span>
+                        ) : post.gotOffer === "no" ? (
+                          <span className="text-red-500">Not Selected</span>
+                        ) : (
+                          <span className="text-yellow-500">In Progress</span>
+                        )}
                       </p>
                       {!post.isApproved && (
-  <button
-    className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    onClick={() => editFromUser(post)}
-  >
-    Edit
-  </button>
-)}
-
+                        <button
+                          className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={() => editFromUser(post)}
+                        >
+                          Edit
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
