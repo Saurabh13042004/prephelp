@@ -162,7 +162,7 @@ function Form() {
       date: [currentDate, currentTime],
       ipSubjects: IPSubjects,
       image: userImage,
-      groupDiscussion
+      groupDiscussion,
     };
     // console.log(formData);
     try {
@@ -669,7 +669,7 @@ function Form() {
                   HR Questions
                 </p>
                 {hrQuestions.map((question, index) => (
-                  <div key={index} ref={techFieldRef}>
+                  <div key={index} ref={hrFieldRef}>
                     <label className="block font-semibold mt-8 mb-5">
                       Share Your HR Question {index + 1} Experience
                     </label>
