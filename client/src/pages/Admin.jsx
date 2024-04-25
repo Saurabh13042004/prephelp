@@ -73,7 +73,7 @@ function Admin() {
         `${import.meta.env.VITE_SERVER}/admin-users`
       );
       setPosts(response.data.users);
-      console.log(response.data.users)
+      console.log(response.data.users);
       setFilteredPosts(response.data.users);
       // console.log(response.data.users);
     } catch (error) {
@@ -83,22 +83,22 @@ function Admin() {
   const filterPosts = () => {
     switch (isSelected) {
       case "yes":
-        setFilteredPosts(posts.filter(post => post.gotOffer === "yes"));
+        setFilteredPosts(posts.filter((post) => post.gotOffer === "yes"));
         break;
       case "no":
-        setFilteredPosts(posts.filter(post => post.gotOffer === "no"));
+        setFilteredPosts(posts.filter((post) => post.gotOffer === "no"));
         break;
       case "progress":
-        setFilteredPosts(posts.filter(post => post.gotOffer === "progress")); 
+        setFilteredPosts(posts.filter((post) => post.gotOffer === "progress"));
         break;
       default:
         setFilteredPosts(posts);
         break;
     }
-  }
-    useEffect(() => {
-      filterPosts(); 
-    }, [isSelected, posts]);
+  };
+  useEffect(() => {
+    filterPosts();
+  }, [isSelected, posts]);
   const handleCheckboxChange = async (id, entry) => {
     try {
       const response = await axios.put(
@@ -180,38 +180,36 @@ function Admin() {
         theme="colored"
         transition:Bounce
       />
-    {/* <input type="text" /> */}
-  
+      {/* <input type="text" /> */}
+
       <AdminNavbar />
-      
+
       {!user === null ? (
         <Loader />
       ) : (
         <>
-       
           <div className="overflow-x-auto m-auto mt-14 p-8">
-          <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
-            <p className="me-4 font-bold">Sort By Selection:</p>
-            <select
-              value={isSelected}
-              onChange={(e) => setIsSelected(e.target.value)}
-              className="p-2 border border-gray-300 rounded-md mr-2"
-            >
+            <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row text-center mb-4">
+              <p className="me-4 font-bold">Sort By Selection:</p>
+              <select
+                value={isSelected}
+                onChange={(e) => setIsSelected(e.target.value)}
+                className="p-2 border border-gray-300 rounded-md mr-2"
+              >
                 <option key="all" value="all">
-                All
-              </option>
-              <option key="yes" value="yes">
-                Selected
-              </option>
-              <option key="no" value="no">
-                Not Selected
-              </option>
-              <option key="progress" value="progress">
-                In Progress
-              </option>
-              
-            </select>
-          </div>
+                  All
+                </option>
+                <option key="yes" value="yes">
+                  Selected
+                </option>
+                <option key="no" value="no">
+                  Not Selected
+                </option>
+                <option key="progress" value="progress">
+                  In Progress
+                </option>
+              </select>
+            </div>
             <table className="table">
               <thead>
                 <tr>
@@ -258,9 +256,13 @@ function Admin() {
                             entry.isApproved ? "text-green-500" : "text-red-500"
                           }`}
                         >
-                         {entry.gotOffer === "yes" ? "Selected" : entry.gotOffer === "no" ? "Not Selected" :entry.gotOffer === "progress" ? "In Progress" :" "}
-
-
+                          {entry.gotOffer === "yes"
+                            ? "Selected"
+                            : entry.gotOffer === "no"
+                            ? "Not Selected"
+                            : entry.gotOffer === "progress"
+                            ? "In Progress"
+                            : " "}
                         </span>
                       </td>
                       <td>
