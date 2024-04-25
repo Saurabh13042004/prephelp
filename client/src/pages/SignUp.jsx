@@ -9,7 +9,7 @@ import RingLoader from "react-spinners/RingLoader";
 
 function SignUp() {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("@chitkarauniversity.edu.in");
   const [password, setPassword] = useState("");
   const [universityId, setUniversityId] = useState("");
   const [validResponse, setValidResponse] = useState(true);

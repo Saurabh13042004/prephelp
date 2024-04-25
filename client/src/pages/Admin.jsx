@@ -89,7 +89,7 @@ function Admin() {
         setFilteredPosts(posts.filter(post => !post.isApproved));
         break;
       case "progress":
-        setFilteredPosts(posts.filter(post => post.status === "progress")); // Adjust this based on your data structure
+        setFilteredPosts(posts.filter(post => post.status === "progress")); 
         break;
       default:
         setFilteredPosts(posts);

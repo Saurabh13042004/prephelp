@@ -11,7 +11,7 @@ import Cookies from "universal-cookie";
 import RingLoader from "react-spinners/RingLoader";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("@chitkarauniversity.edu.in");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const cookies = new Cookies(null, { path: "/" });
