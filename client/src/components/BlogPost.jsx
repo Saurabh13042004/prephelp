@@ -14,7 +14,7 @@ const BlogPost = () => {
   const [hrques, setHrques] = useState([]);
   const [techques, setTechques] = useState([]);
   const [grpdiscuss, setGrpdiscuss] = useState([]);
-  const [emptyArray, setEmptyArray] = useState(false);
+  const [emptyArray, setEmptyArray] = useState(true);
 
   const fetchData = async () => {
     // console.log(id);
@@ -22,18 +22,18 @@ const BlogPost = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_SERVER}/get-experience-question?id=${id}`
       );
-      console.log(response.data.grpques);
+      console.log(response.data);
       setPost(response.data.data);
       setHrques(response.data.hrques);
       setTechques(response.data.techques);
-      setGrpdiscuss(response.data.grpques)
+      setGrpdiscuss(response.data.grpques);
       setLoading(false);
 
-      if (emptyArray == false) {
+      if (emptyArray == true) {
         post &&
           post.ipSubjects.map((obj, idx) => {
             if (obj.length == 0) {
-              setEmptyArray(true);
+              setEmptyArray(false);
             }
           });
       }
@@ -134,7 +134,7 @@ const BlogPost = () => {
                 </p>
               </section>
 
-              {post.ipSubjects && post.ipSubjects.length > 0 && !emptyArray && (
+              {post.ipSubjects && post.ipSubjects.length > 0 && emptyArray && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
                     Online Test Questions
@@ -154,25 +154,7 @@ const BlogPost = () => {
                   </div>
                 </section>
               )}
-
-              {/* {post.ipSubjects && post.ipSubjects.length > 0 && !emptyArray && (
-                <section className="mt-6">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Interview Preparation
-                  </h3>
-                  <p className="text-lg text-gray-800">
-                    I prepared for the interview from the following topics:
-                    <ul className="list-disc list-inside">
-                      {post.ipSubjects &&
-                        post.ipSubjects.map((subject, index) => (
-                          <li key={index}>{subject}</li>
-                        ))}
-                    </ul>
-                  </p>
-                </section>
-              )} */}
-
-              {techques.length > 0 && (
+              {post.techques && techques.length > 0 && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
                     Technical Interview Round Questions
@@ -195,7 +177,7 @@ const BlogPost = () => {
                   </p>
                 </section>
               )}
-              {hrques.length > 0 && (
+              {post.hrques && hrques.length > 0 && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
                     HR Interview Round Questions
@@ -216,14 +198,15 @@ const BlogPost = () => {
                   </p>
                 </section>
               )}
-  {grpdiscuss.length > 0 && (
+              {post.grpdiscuss && grpdiscuss.length > 0 && (
                 <section className="mt-6">
                   <h3 className="text-xl font-semibold text-gray-900">
                     Group Discussion Round Questions
                   </h3>
                   <p className="text-lg text-gray-800 text-justify">
                     I would like to share some questions with you all. I hope it
-                    will help you in your preparation and help you to built your communication skills.
+                    will help you in your preparation and help you to built your
+                    communication skills.
                   </p>
                   <ul className="list-disc list-inside">
                     {grpdiscuss.map(
@@ -250,7 +233,7 @@ const BlogPost = () => {
                   </ul>
                 </section>
               )}
-              
+
               <section className="mt-6">
                 <h3 className="text-xl font-semibold text-gray-900">
                   Final Outcome

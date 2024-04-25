@@ -162,9 +162,9 @@ function Form() {
       date: [currentDate, currentTime],
       ipSubjects: IPSubjects,
       image: userImage,
-      groupDiscussion,
+      groupDiscussion: groupDiscussion,
     };
-    // console.log(formData);
+    console.log(formData);
     try {
       let res = await fetch(`${import.meta.env.VITE_SERVER}/experience`, {
         method: "POST",

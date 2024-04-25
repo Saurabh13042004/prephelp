@@ -104,6 +104,7 @@ function BlogItem() {
         }
 
         setSearchedPosts(sortedPosts);
+
         setAllCompany(sortedPosts);
       } catch (error) {
         console.error(error);
