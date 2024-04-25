@@ -258,7 +258,7 @@ function Admin() {
                             entry.isApproved ? "text-green-500" : "text-red-500"
                           }`}
                         >
-                         {entry.gretoffer === "yes" ? "Selected" : entry.gretoffer === "no" ? "Not Selected" :entry.gretoffer === "progress" ? "In Progress" :" "}
+                         {entry.gotOffer === "yes" ? "Selected" : entry.gotOffer === "no" ? "Not Selected" :entry.gotOffer === "progress" ? "In Progress" :" "}
 
 
                         </span>
