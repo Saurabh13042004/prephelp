@@ -26,9 +26,7 @@ function Navbar() {
   };
   const logoutUtils = () => {
     cookies.remove("token");
-    if (cookies.get("isAdmin")) {
-      cookies.remove("isAdmin");
-    }
+    cookies.remove("isAdmin");
     cookies.remove("name");
     cookies.remove("email");
     cookies.remove("uid");

@@ -14,7 +14,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const cookies = new Cookies(null, { path: '/' });
+  const cookies = new Cookies(null, { path: "/" });
   const [loading, setLoading] = useState(false);
   const [Userotp, setUserotp] = useState("");
   const [generateOtp, setGenerateOtp] = useState("");

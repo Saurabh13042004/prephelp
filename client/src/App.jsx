@@ -20,6 +20,7 @@ import About from "./components/About";
 import Addadmin from "./pages/Addadmin";
 import Profile from "./pages/Profile";
 import "./styles/animateText.css";
+import { decodeToken, isExpired } from "react-jwt";
 
 function App() {
   const [isAuth, setIsAuth] = useState(null);
@@ -31,24 +32,22 @@ function App() {
     const connectingToServer = async () => {
       setLoading(true);
       let res = await fetch(`${import.meta.env.VITE_SERVER}`);
-      setLoading(false);
+      if (res.status === 200) {
+        setLoading(false);
+      }
     };
     connectingToServer();
   }, []);
   useEffect(() => {
     const validate = cookies.get("token");
-    const admin = cookies.get("isAdmin");
-
-    if (validate) {
+    const decoded = decodeToken(validate);
+    const expired = isExpired(validate);
+    if (!expired) {
       setIsAuth(validate);
-      document.cookie = `token=${validate}`;
+      if (decoded.isAdmin) {
+        setIsAdmin(true);
+      }
     }
-    if (admin) {
-      setIsAdmin(admin);
-      document.cookie = `isAdmin=${admin}`;
-    }
-
-    // console.log(isAdmin, isAuth);
   }, [isAuth, isAdmin]);
 
   return (

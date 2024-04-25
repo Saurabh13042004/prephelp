@@ -75,15 +75,19 @@ const login = async (req, res) => {
     const dbPass = userExit.password;
     const passMatch = await bcrypt.compare(userPass, dbPass);
     if (passMatch) {
-      const token = jwt.sign({ userId: userExit._id }, process.env.SECRET_KEY, {
-        expiresIn: "1d",
-      });
+      console.log(userExit.isAdmin);
+      const token = jwt.sign(
+        { userId: userExit._id, isAdmin: userExit.isAdmin },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "1d",
+        }
+      );
       return res.status(200).send({
         message: "Login successfully",
         success: true,
         data: userExit,
         token: token,
-        isAdmin: userExit.isAdmin,
       });
     } else {
       return res.status(200).send({
