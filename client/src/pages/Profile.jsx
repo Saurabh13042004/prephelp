@@ -138,6 +138,7 @@ const Profile = ({ isAuth, isAdmin }) => {
       formData.append("file", file);
       formData.append("email", email);
 
+      // console.log(formData);
       let res = await fetch(`${import.meta.env.VITE_SERVER}/profile-image`, {
         method: "POST",
         body: formData,
