@@ -257,7 +257,7 @@ function Form() {
             <div className="flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52">
               <div className="w-80">
                 <label className="block font-semibold mt-8 mb-5">
-                  Any eligibility Criteria?*
+                  Enter Cgpa required for applying*
                 </label>
                 <select
                   name="eligibilityCriteria"
@@ -527,7 +527,7 @@ function Form() {
                     id="onlineTest"
                   />
                   <label className="ml-2" htmlFor="onlineTest">
-                    Online Test
+                    Online/Offline Test
                   </label>
                 </div>
                 <div>
@@ -545,7 +545,7 @@ function Form() {
                     id="TechnicalQues"
                   />
                   <label className="ml-2" htmlFor="TechnicalQues">
-                    Technical Questions
+                    Technical Rounds
                   </label>
                 </div>
                 <div>
@@ -563,7 +563,7 @@ function Form() {
                     id="HrQues"
                   />
                   <label className="ml-2" htmlFor="HrQues">
-                    HR Questions
+                    HR Rounds
                   </label>
                 </div>
                 <div>
@@ -628,7 +628,7 @@ function Form() {
             {technicalQuesToggle && (
               <div>
                 <p className="font-semibold text-xl mt-10 font-sans">
-                  Technical Questions
+                  Technical Rounds
                 </p>
                 {techQuestions.map((question, index) => (
                   <div key={index} ref={techFieldRef}>
@@ -666,7 +666,7 @@ function Form() {
             {hrQuesToggle && (
               <div>
                 <p className="font-semibold text-xl mt-10 font-sans">
-                  HR Questions
+                  HR Rounds
                 </p>
                 {hrQuestions.map((question, index) => (
                   <div key={index} ref={hrFieldRef}>

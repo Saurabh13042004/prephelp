@@ -55,7 +55,7 @@ function App() {
       {loading && (
         <div className="w-full h-full absolute flex justify-center items-center z-50 bg-opacity-90 bg-slate-700 flex-col">
           <span className="font-bold text-4xl mb-3 bg-gradient-to-r from-black to-white text-transparent bg-clip-text animate-gradient flex justify-center items-center text-center">
-            Site is in developing mode, please wait to start the server
+            please wait to start the server....
           </span>
           <RingLoader
             color={"blue"}

@@ -216,6 +216,15 @@ function BlogItem() {
   // admin@prephelp.com
   // admin123
 
+  const handleClearFilters = () => {
+    setSelectedCompany("All Companies");
+    setFromSearch("2016");
+    setToSearch(new Date().getFullYear());
+    setOtherCompany("");
+    setIsSelected("both");
+    setSearchedPosts(allCompany);
+  };
+
   return (
     <div id="list_of_exp">
       <div className="flex items-center justify-center ml-5 mr-5 md:ml-16 md:mr-16">
@@ -300,6 +309,15 @@ function BlogItem() {
               className="bg-blue-700 text-white p-2 rounded-full ml-2 px-4 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-all"
             >
               Search
+            </button>
+          </div>
+
+          <div className="flex justify-center items-center">
+            <button
+              onClick={handleClearFilters}
+              className="bg-blue-700 text-white p-2 rounded-full ml-2 px-4 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-all"
+            >
+              Clear Filter
             </button>
           </div>
         </div>
