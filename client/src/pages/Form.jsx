@@ -589,7 +589,7 @@ function Form() {
             {onlineTestToggle && (
               <div>
                 <p className="font-semibold text-xl mt-8 font-sans">
-                  Online/Offline Test
+                  Online/Offline Test Experience
                 </p>
                 {IPSubjects.map((question, index) => (
                   <div key={index} ref={ipFieldRef}>
@@ -620,7 +620,7 @@ function Form() {
                   type="button"
                   className="bg-blue-600  hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
                 >
-                  ADD ONLINE QUESTION
+                  ADD ONLINE/OFFLINE QUESTION
                 </button>
               </div>
             )}
