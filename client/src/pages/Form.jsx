@@ -23,7 +23,7 @@ function Form() {
   const [linkedin, setLinkedin] = useState("");
   const [cgpa, setCgpa] = useState("Above 9");
   const [eligibility, setEligibility] = useState("Above 9");
-  const [questions, setQuestions] = useState(2);
+  const [questions, setQuestions] = useState(0);
   const [preparationTips, setPreparationTips] = useState("");
   const [hrQuestions, setHRQuestions] = useState([""]);
   const [mistakes, setMistakes] = useState("");
