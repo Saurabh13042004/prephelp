@@ -23,7 +23,7 @@ function Form() {
   const [linkedin, setLinkedin] = useState("");
   const [cgpa, setCgpa] = useState("Above 9");
   const [eligibility, setEligibility] = useState("Above 9");
-  const [questions, setQuestions] = useState(0);
+  const [questions, setQuestions] = useState(2);
   const [preparationTips, setPreparationTips] = useState("");
   const [hrQuestions, setHRQuestions] = useState([""]);
   const [mistakes, setMistakes] = useState("");
@@ -511,7 +511,7 @@ function Form() {
               <span className="flex justify-center items-center text-2xl mt-2 font-semibold">
                 Select the type of rounds in your interview :-
               </span>
-              <div className="flex justify-center items-center text-lg mt-4 gap-6">
+              <div className="flex flex-col lg:flex-row justify-center items-center text-lg mt-4 gap-6">
                 <div>
                   <input
                     type="checkbox"
@@ -594,8 +594,7 @@ function Form() {
                 {IPSubjects.map((question, index) => (
                   <div key={index} ref={ipFieldRef}>
                     <label className="block font-semibold mt-8 mb-5">
-                      Share Your Online/Offline Test Question {index + 1}{" "}
-                      Experience
+                      Question {index + 1}
                     </label>
                     <textarea
                       value={question}
@@ -628,12 +627,12 @@ function Form() {
             {technicalQuesToggle && (
               <div>
                 <p className="font-semibold text-xl mt-10 font-sans">
-                  Technical Rounds
+                  Technical Rounds Experience
                 </p>
                 {techQuestions.map((question, index) => (
                   <div key={index} ref={techFieldRef}>
                     <label className="block font-semibold mt-8 mb-5">
-                      Share Your Technical Question {index + 1} Experience
+                      Question {index + 1}
                     </label>
                     <textarea
                       value={question}
@@ -666,12 +665,12 @@ function Form() {
             {hrQuesToggle && (
               <div>
                 <p className="font-semibold text-xl mt-10 font-sans">
-                  HR Rounds
+                  HR Rounds Experience
                 </p>
                 {hrQuestions.map((question, index) => (
                   <div key={index} ref={hrFieldRef}>
                     <label className="block font-semibold mt-8 mb-5">
-                      Share Your HR Question {index + 1} Experience
+                      Question {index + 1}
                     </label>
                     <textarea
                       value={question}
@@ -704,12 +703,12 @@ function Form() {
             {groupDiscussionToogle && (
               <div>
                 <p className="font-semibold text-xl mt-10 font-sans">
-                  Group Discussion
+                  Group Discussion Experience
                 </p>
                 {groupDiscussion.map((question, index) => (
                   <div key={index} ref={groupDiscussionFieldRef}>
                     <label className="block font-semibold mt-8 mb-5">
-                      Share Your Group Dicussion Question {index + 1} Experience
+                      Question {index + 1}
                     </label>
                     <textarea
                       value={question}
