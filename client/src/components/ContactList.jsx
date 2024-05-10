@@ -15,6 +15,7 @@ const ContactList = ({ isAuth, isAdmin }) => {
       );
       console.log(response);
       response = await response.json();
+      console.log(response)
       setContacts(response?.data);
     };
 
