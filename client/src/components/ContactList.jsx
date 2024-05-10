@@ -14,6 +14,7 @@ const ContactList = ({ isAuth, isAdmin }) => {
         `${import.meta.env.VITE_SERVER}/get-contact-list`
       );
       response = await response.json();
+      console.log(response)
       setContacts(response?.data);
     };
 
