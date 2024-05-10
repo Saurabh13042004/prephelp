@@ -82,7 +82,6 @@ const Profile = ({ isAuth, isAdmin }) => {
         { email },
         config
       );
-      console.log(res.data);
       setExp(res.data.data);
     } catch (error) {
       console.log("Error from " + error);
@@ -417,49 +416,45 @@ const Profile = ({ isAuth, isAdmin }) => {
       <div className="container mx-auto mt-28 mb-32" ref={mainRef}>
         <div>
           <div className="bg-gray-100 relative shadow-lg rounded-lg w-5/6 md:w-5/6 lg:w-4/6 xl:w-3/6 mx-auto p-3">
-            <div className="relative flex justify-center">
-              <img
-                ref={imageRef}
-                onMouseEnter={() => {
-                  editImageRef.current.style.display = "block";
-                }}
-                onMouseLeave={() => {
-                  editImageRef.current.style.display = "none";
-                }}
-                onClick={() => editProfile()}
-                src={ProfileImage == "" ? image : ProfileImage}
-                alt="Profile Picture"
-                className="rounded-full mx-auto w-32 h-32 shadow-md border-4 border-white transition duration-200  transform hover:scale-110 text-center"
-              />
-              <div
-                className="absolute bottom-10 text-5xl"
-                ref={editImageRef}
-                onClick={() => editProfile()}
-                onMouseEnter={() => {
-                  editImageRef.current.style.display = "block";
-                }}
-                onMouseLeave={() => {
-                  editImageRef.current.style.display = "none";
-                }}
-              >
-                <CiEdit />
+            <div className="h-28 flex justify-center">
+              <div className="flex absolute">
+                <img
+                  ref={imageRef}
+                  onMouseEnter={() => {
+                    editImageRef.current.style.display = "flex";
+                  }}
+                  onMouseLeave={() => {
+                    editImageRef.current.style.display = "none";
+                  }}
+                  onClick={() => editProfile()}
+                  src={ProfileImage == "" ? image : ProfileImage}
+                  alt="Profile Picture"
+                  className="rounded-full mx-auto w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110 text-center"
+                />
+                <span
+                  className="z-50 items-end -ml-11 text-4xl"
+                  ref={editImageRef}
+                  onClick={() => editProfile()}
+                  onMouseEnter={() => {
+                    editImageRef.current.style.display = "flex";
+                  }}
+                  onMouseLeave={() => {
+                    editImageRef.current.style.display = "none";
+                  }}
+                >
+                  <span className="bg-blue-700 text-white font-bold rounded-full p-1">
+                    <CiEdit />
+                  </span>
+                </span>
               </div>
             </div>
 
             <div className="mt-10">
-              <h1 className="font-bold text-center text-3xl text-gray-900">
+              <h1 className="bg-gray-800 rounded-lg font-bold text-center text-3xl text-white p-2 mb-2">
                 Username : {name}
               </h1>
-              <p>
-                <span></span>
-              </p>
-              <div className="my-5 px-6">
-                <span className="text-xl font-semibold text-gray-200 block rounded-lg text-center leading-6 px-6 py-3 bg-gray-900 hover:bg-black hover:text-white">
-                  Features
-                </span>
-              </div>
               <div className="w-full">
-                <div className="mt-5 w-full flex flex-col items-center overflow-hidden text-sm">
+                <div className="w-full flex flex-col items-center overflow-hidden text-sm">
                   <a
                     className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block transition duration-150 text-lg md:text-base hover:bg-gray-300"
                     onClick={() => handleEditClick()}
