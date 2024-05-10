@@ -55,5 +55,6 @@ Route.get(
 );
 Route.post("/get-exp", userController.getExp);
 Route.put("/update-user-exp", userController.editExpUser);
+Route.get("/get-contact-list", contactController.getContactList);
 
 module.exports = Route;

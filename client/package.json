@@ -18,6 +18,7 @@
     "framer-motion": "^10.16.16",
     "preline": "^1.9.0",
     "react": "^18.2.0",
+    "react-data-table-component": "^7.6.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-intersection-observer": "^9.5.3",
