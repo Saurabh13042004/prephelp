@@ -140,7 +140,7 @@ function BlogItem() {
           if (
             year >= fromYear &&
             year <= toYear &&
-            obj.gotOffer == isSelected
+            obj.gotOffer.toLowerCase() == isSelected
           ) {
             selectedCompanyPosts.push(obj);
           }
@@ -174,7 +174,7 @@ function BlogItem() {
           year >= fromYear &&
           year <= toYear &&
           obj.company.toLowerCase() == selectedCompany.toLowerCase() &&
-          obj.gotOffer == isSelected
+          obj.gotOffer.toLowerCase() == isSelected
         ) {
           selectedCompanyPosts.push(obj);
         }
@@ -379,14 +379,14 @@ function BlogItem() {
                       <div className="ml-auto flex">
                         <p
                           className={`font-bold ${
-                            post.gotOffer === "yes"
+                            post.gotOffer.toLowerCase() === "yes"
                               ? "text-green-500"
                               : "text-red-800"
                           }`}
                         >
-                          {post.gotOffer === "yes"
+                          {post.gotOffer.toLowerCase() === "yes"
                             ? "Selected"
-                            : post.gotOffer === "no"
+                            : post.gotOffer.toLowerCase() === "no"
                             ? "Not-Selected"
                             : "in Progress"}
                         </p>
