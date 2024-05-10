@@ -26,6 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 Route.get("/", userController.Func);
+Route.get("/get-contact-list", contactController.getContactList);
 Route.post("/signup", userController.signup);
 Route.post("/login", userController.login);
 Route.post("/experience", expController.expData);
@@ -55,6 +56,5 @@ Route.get(
 );
 Route.post("/get-exp", userController.getExp);
 Route.put("/update-user-exp", userController.editExpUser);
-Route.get("/get-contact-list", contactController.getContactList);
 
 module.exports = Route;
