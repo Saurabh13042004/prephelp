@@ -16,11 +16,11 @@ import SignIn from "./pages/SignIn";
 import { useEffect, useState } from "react";
 import Contact from "./components/Contact";
 import Cookies from "universal-cookie";
-import About from "./components/About";
 import Addadmin from "./pages/Addadmin";
 import Profile from "./pages/Profile";
 import "./styles/animateText.css";
 import { decodeToken, isExpired } from "react-jwt";
+import ContactList from "./components/ContactList";
 
 function App() {
   const [isAuth, setIsAuth] = useState(null);
@@ -87,19 +87,19 @@ function App() {
         />
         <Route
           path="/admin"
-          element={isAuth && isAdmin ? <Admin /> : <SignIn />}
+          element={isAuth && isAdmin ? <Admin /> : <Login />}
         />
         <Route
           path="/add-admin"
-          element={isAuth && isAdmin ? <Addadmin /> : <SignIn />}
+          element={isAuth && isAdmin ? <Addadmin /> : <Login />}
         />
         <Route
-          path="/about"
+          path="/contact-list"
           element={
             isAuth && isAdmin ? (
-              <About isAuth={isAuth} isAdmin={isAdmin} />
+              <ContactList isAdmin={isAdmin} isAuth={isAuth} />
             ) : (
-              <SignIn />
+              <Login />
             )
           }
         />

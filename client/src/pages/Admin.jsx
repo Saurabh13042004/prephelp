@@ -5,7 +5,7 @@ import { getAuth } from "firebase/auth";
 import Loader from "../components/Loader";
 // import Navbar from "../components/Navbar";
 import { MdDeleteForever } from "react-icons/md";
-import { TiTick } from "react-icons/ti";
+// import { TiTick } from "react-icons/ti";
 import AdminNavbar from "../components/AdminNavbar";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -73,7 +73,6 @@ function Admin() {
         `${import.meta.env.VITE_SERVER}/admin-users`
       );
       setPosts(response.data.users);
-      console.log(response.data.users);
       setFilteredPosts(response.data.users);
       // console.log(response.data.users);
     } catch (error) {
@@ -83,13 +82,19 @@ function Admin() {
   const filterPosts = () => {
     switch (isSelected) {
       case "yes":
-        setFilteredPosts(posts.filter((post) => post.gotOffer === "yes"));
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "yes")
+        );
         break;
       case "no":
-        setFilteredPosts(posts.filter((post) => post.gotOffer === "no"));
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "no")
+        );
         break;
       case "progress":
-        setFilteredPosts(posts.filter((post) => post.gotOffer === "progress"));
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "progress")
+        );
         break;
       default:
         setFilteredPosts(posts);
@@ -256,11 +261,11 @@ function Admin() {
                             entry.isApproved ? "text-green-500" : "text-red-500"
                           }`}
                         >
-                          {entry.gotOffer === "yes"
+                          {entry.gotOffer.toLowerCase() === "yes"
                             ? "Selected"
-                            : entry.gotOffer === "no"
+                            : entry.gotOffer.toLowerCase() === "no"
                             ? "Not Selected"
-                            : entry.gotOffer === "progress"
+                            : entry.gotOffer.toLowerCase() === "progress"
                             ? "In Progress"
                             : " "}
                         </span>

@@ -54,7 +54,6 @@ function AdminNavbar() {
     setIsOpen(!isOpen);
   };
   const logoutUtils = () => {
-    console.log(cookies.get("token"), cookies.get("isAdmin"));
     cookies.remove("token");
     if (cookies.get("isAdmin")) {
       cookies.remove("isAdmin");
@@ -108,14 +107,6 @@ function AdminNavbar() {
                 Log in
               </Link>
             )}
-            {/* {token && (
-              <button
-                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 none hidden md:block lg:block"
-                onClick={() => logoutUtils()}
-              >
-                Log out
-              </button>
-            )} */}
             {token && (
               <div className="hidden justify-center items-center flex-wrap  md:hidden lg:flex">
                 <div className="dropdown dropdown-end">
@@ -205,10 +196,10 @@ function AdminNavbar() {
             </li>
             <li>
               <Link
-                to="/about"
+                to="/contact-list"
                 className="block py-2 px-3 md:p-0 text-gray-900 rounded  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 d:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
-                About
+                Contact List
               </Link>
             </li>
             <li>
@@ -240,26 +231,18 @@ function AdminNavbar() {
             </li>
             <li>
               <Link
-                to="/about"
+                to="/contact-list"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
               >
-                About
+                Contact List
               </Link>
             </li>
             <li>
               <Link
-                to="/add-question"
+                to="/add-admin"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
               >
-                Add Question
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/Contact"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
-              >
-                Contact
+                Add Admin
               </Link>
             </li>
             <li>
@@ -286,14 +269,6 @@ function AdminNavbar() {
                   Log in
                 </Link>
               )}
-              {/* {token && (
-                <button
-                  className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 ml-3 mb-2 dark:hover:bg-red-700 dark:focus:ring-red-800 none"
-                  onClick={() => logoutUtils()}
-                >
-                  Log out
-                </button>
-              )} */}
               {token && (
                 <div className="flex flex-wrap">
                   <div className="dropdown dropdown-end">
