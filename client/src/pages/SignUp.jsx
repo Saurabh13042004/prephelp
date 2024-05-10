@@ -9,7 +9,7 @@ import RingLoader from "react-spinners/RingLoader";
 
 function SignUp() {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("@chitkarauniversity.edu.in");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [universityId, setUniversityId] = useState("");
   const [validResponse, setValidResponse] = useState(true);
@@ -19,22 +19,17 @@ function SignUp() {
   const cookies = new Cookies();
   const signupRef = useRef(null);
   const otpRef = useRef(null);
+  const [newEmail, setNewEmail] = useState("");
+  const [emailDomain, setEmailDomain] = useState("@chitkarauniversity.edu.in");
 
   useEffect(() => {
     otpRef.current.style.display = "none";
   }, []);
 
   const handleEmailChange = (e) => {
-    const enteredEmail = e.trim();
-    const isValidEmail = enteredEmail.endsWith("@chitkarauniversity.edu.in");
-
-    if (isValidEmail) {
-      setEmail(enteredEmail);
-      return true;
-    } else {
-      setValidResponse(false);
-      return false;
-    }
+    const { value } = e.target;
+    setEmail(value);
+    setNewEmail(value.trim() + emailDomain);
   };
   const handleUidChange = (e) => {
     const enteredUid = e.trim();
@@ -52,7 +47,7 @@ function SignUp() {
     e.preventDefault();
     setLoading(true);
 
-    const isValidEmail = handleEmailChange(email);
+    const isValidEmail = true;
     if (!isValidEmail) {
       toast.error("Please enter the chitkara email", {
         position: "top-left",
@@ -82,7 +77,7 @@ function SignUp() {
     if (isValidEmail && isValidUid) {
       const obj = {
         name: name,
-        email: email,
+        email: newEmail,
         password: password,
         uid: parseInt(universityId),
         otp: Userotp,
@@ -99,7 +94,7 @@ function SignUp() {
       cookies.set("token", res.token);
       cookies.set("isAdmin", false);
 
-      cookies.set("email", email);
+      cookies.set("email", newEmail);
       cookies.set("name", name);
       cookies.set("uid", universityId);
 
@@ -138,7 +133,7 @@ function SignUp() {
   };
   const changeDisplay = async () => {
     setLoading(true);
-    const isValidEmail = handleEmailChange(email);
+    const isValidEmail = true;
     if (!isValidEmail) {
       toast.error("Please enter the chitkara email", {
         position: "top-left",
@@ -169,7 +164,7 @@ function SignUp() {
       let res = await fetch(`${import.meta.env.VITE_SERVER}/verifyEmail`, {
         method: "POST",
         body: JSON.stringify({
-          email: email,
+          email: newEmail,
         }),
         headers: {
           "Content-type": "application/json",
@@ -194,7 +189,6 @@ function SignUp() {
     }
     setLoading(false);
   };
-
   const circleStyles = [
     { top: "10%", left: "15%", backgroundColor: "indigo" },
 
@@ -279,16 +273,30 @@ function SignUp() {
                 >
                   Email Address*
                 </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  className="mt-1 p-2 w-full border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                  placeholder="Use University Email Address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                <div className="flex justify-between items-center flex-wrap">
+                  <input
+                    id="email"
+                    name="email"
+                    type="text"
+                    className="w-1/2 mt-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    required
+                  />
+                  <select
+                    className=" w-1/2 h-11 mt-2 text-lg border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                    value={emailDomain}
+                    onChange={(e) => setEmailDomain(e.target.value)}
+                  >
+                    <option value="@chitkarauniversity.edu.in">
+                      @chitkarauniversity.edu.in
+                    </option>
+                    {/* <option value="gmail.com">gmail.com</option>
+                    <option value="yahoo.com">yahoo.com</option>
+                    <option value="outlook.com">outlook.com</option> */}
+                  </select>
+                </div>
               </div>
               <div className="mb-4">
                 <label

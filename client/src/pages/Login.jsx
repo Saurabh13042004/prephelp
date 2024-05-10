@@ -11,7 +11,7 @@ import Cookies from "universal-cookie";
 import RingLoader from "react-spinners/RingLoader";
 
 function Login() {
-  const [email, setEmail] = useState("@chitkarauniversity.edu.in");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const cookies = new Cookies(null, { path: "/" });
@@ -23,7 +23,8 @@ function Login() {
   const emailRef = useRef(null);
   const otpRef = useRef(null);
   const passRef = useRef(null);
-  const [container, setContainer] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [emailDomain, setEmailDomain] = useState("@chitkarauniversity.edu.in");
 
   useEffect(() => {
     mainRef.current.style.display = "block";
@@ -32,128 +33,113 @@ function Login() {
     passRef.current.style.display = "none";
   }, []);
 
+  const handleEmailChange = (e) => {
+    const { value } = e.target;
+    setEmail(value);
+    setNewEmail(value.trim() + emailDomain);
+  };
   const handleSignUpDb = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const validateEmail = email.endsWith("@chitkarauniversity.edu.in");
-      if (validateEmail) {
-        // stores the user in session storage
-        const user = await axios.post(
-          `${import.meta.env.VITE_SERVER}/getUserDetails`,
-          {
-            method: "POST",
-            body: { email: email },
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (user.data.success) {
-          const userDetail = user.data.data;
-          cookies.set("email", userDetail.email);
-          cookies.set("name", userDetail.name);
-          cookies.set("uid", userDetail.uid);
-          cookies.set("userImage", userDetail.image);
+      const user = await axios.post(
+        `${import.meta.env.VITE_SERVER}/getUserDetails`,
+        {
+          method: "POST",
+          body: { email: newEmail },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (user.data.success) {
+        const userDetail = user.data.data;
+        cookies.set("email", userDetail.email);
+        cookies.set("name", userDetail.name);
+        cookies.set("uid", userDetail.uid);
+        cookies.set("userImage", userDetail.image);
 
-          let response = await fetch(`${import.meta.env.VITE_SERVER}/login`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }),
-          });
-          response = await response.json();
+        let response = await fetch(`${import.meta.env.VITE_SERVER}/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: newEmail, password }),
+        });
+        response = await response.json();
 
-          if (response.success) {
-            if (response.isAdmin === true) {
-              cookies.set("token", response.token);
-              cookies.set("isAdmin", response.isAdmin);
-              if (response.success) {
-                toast.success(response.message, {
-                  position: "top-left",
-                  autoClose: 1000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-                });
-                setTimeout(() => {
-                  navigate("/admin");
-                  window.location.reload();
-                }, 1000);
-              } else {
-                toast.error(response.message, {
-                  position: "top-left",
-                  autoClose: 1000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-                });
-              }
+        if (response.success) {
+          if (response.isAdmin === true) {
+            cookies.set("token", response.token);
+            cookies.set("isAdmin", response.isAdmin);
+            if (response.success) {
+              toast.success(response.message, {
+                position: "top-left",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
               setTimeout(() => {
-                navigate("/");
+                navigate("/admin");
                 window.location.reload();
               }, 1000);
             } else {
-              cookies.set("token", response.token);
-              if (response.success) {
-                toast.success(response.message, {
-                  position: "top-left",
-                  autoClose: 1000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-                });
-
-                setTimeout(() => {
-                  navigate("/home");
-                  // window.location.reload();
-                }, 1000);
-              } else {
-                toast.error(response.message, {
-                  position: "top-left",
-                  autoClose: 1000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-                });
-              }
-              setTimeout(() => {
-                navigate("/");
-                window.location.reload();
-              }, 1000);
+              toast.error(response.message, {
+                position: "top-left",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
             }
+            setTimeout(() => {
+              navigate("/");
+              window.location.reload();
+            }, 1000);
           } else {
-            toast.error(response.message, {
-              position: "top-left",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
+            cookies.set("token", response.token);
+            if (response.success) {
+              toast.success(response.message, {
+                position: "top-left",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+
+              setTimeout(() => {
+                navigate("/home");
+                // window.location.reload();
+              }, 1000);
+            } else {
+              toast.error(response.message, {
+                position: "top-left",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+            }
+            setTimeout(() => {
+              navigate("/");
+              window.location.reload();
+            }, 1000);
           }
         } else {
-          toast.error(user.data.message, {
+          toast.error(response.message, {
             position: "top-left",
             autoClose: 1000,
             hideProgressBar: false,
@@ -165,7 +151,7 @@ function Login() {
           });
         }
       } else {
-        toast.error("Please enter chitkara email id only.", {
+        toast.error(user.data.message, {
           position: "top-left",
           autoClose: 1000,
           hideProgressBar: false,
@@ -190,10 +176,8 @@ function Login() {
     }
     setLoading(false);
   };
-
   const circleStyles = [
     { top: "10%", left: "15%", backgroundColor: "indigo" },
-
     {
       top: "100%",
       left: "80%",
@@ -201,7 +185,6 @@ function Login() {
       transform: "translate(-50%, -100%)",
     },
   ];
-
   const handleForgetPass = async (e) => {
     setLoading(true);
     mainRef.current.style.display = "none";
@@ -210,7 +193,6 @@ function Login() {
     passRef.current.style.display = "none";
     setLoading(false);
   };
-
   const handleVerifyOtp = async (e) => {
     setLoading(true);
     let res = await fetch(`${import.meta.env.VITE_SERVER}/compareotp`, {
@@ -257,7 +239,6 @@ function Login() {
       setLoading(false);
     }
   };
-
   const handleNewPass = async (e) => {
     setLoading(true);
     let res = await fetch(`${import.meta.env.VITE_SERVER}/changePassword`, {
@@ -298,7 +279,6 @@ function Login() {
     }
     setLoading(false);
   };
-
   const checkUserExist = async () => {
     setLoading(true);
     let res = await fetch(`${import.meta.env.VITE_SERVER}/checkUserExists`, {
@@ -411,18 +391,32 @@ function Login() {
             <p className="text-gray-500 mt-3">Log Into Your Account.</p>
           </div>
           <form onSubmit={handleSignUpDb}>
-            <div>
+            <div className="flex flex-wrap">
               <div className="text-sm font-bold text-gray-700 tracking-wide mb-2">
                 Email Address
               </div>
-              <input
-                className="w-full text-lg border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                type="text"
-                placeholder="user@chitkarauniversity.edu.in"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <div className="flex justify-between items-center">
+                <input
+                  className="w-1/2 text-lg border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                  type="text"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  required
+                />
+                <select
+                  className=" w-1/2 text-lg border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                  value={emailDomain}
+                  onChange={(e) => setEmailDomain(e.target.value)}
+                >
+                  <option value="chitkarauniversity.edu.in">
+                    @chitkarauniversity.edu.in
+                  </option>
+                  <option value="gmail.com">@gmail.com</option>
+                  <option value="yahoo.com">@yahoo.com</option>
+                  <option value="outlook.com">@outlook.com</option>
+                </select>
+              </div>
             </div>
             <div className="mt-8">
               <div className="flex justify-between items-center">

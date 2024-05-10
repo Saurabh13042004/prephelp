@@ -135,6 +135,7 @@ const adminlogin = async (req, res) => {
 };
 const getUserDetails = async (req, res) => {
   try {
+    console.log(req.body.body.email);
     const userExit = await userModel.findOne({ email: req.body.body.email });
     if (!userExit) {
       return res.status(200).send({
@@ -312,7 +313,6 @@ const sendProfileImage = async (req, res) => {
     });
   }
 };
-
 const getExp = async (req, res) => {
   try {
     // console.log(req.body);
@@ -332,7 +332,6 @@ const getExp = async (req, res) => {
     });
   }
 };
-
 const editExpUser = async (req, res) => {
   try {
     // console.log(req.query.id);
