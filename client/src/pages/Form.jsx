@@ -267,7 +267,8 @@ function Form() {
                   className="border-2 border-gray-300 focus:outline-none  focus:border-blue-400 rounded-md py-2 px-4  appearance-none leading-5 text-gray-700 w-80"
                 >
                   <option value="Above 9">Above 9</option>
-                  <option value="Below 8">Above 8</option>
+                  <option value="Above 8">Above 8</option>
+                  <option value="Above 7">Above 7</option>
                   <option value="Others">Others</option>
                 </select>
                 {eligibility == "Others" && (
@@ -353,7 +354,7 @@ function Form() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Eg. Hyedrabad,Pune,Delhi etc."
+                  placeholder="Eg. Hyderabad,Pune,Delhi etc."
                   required
                   onChange={(e) => setLocation(e.target.value)}
                   value={location}

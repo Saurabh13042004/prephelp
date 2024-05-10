@@ -412,9 +412,9 @@ function Login() {
                   <option value="chitkarauniversity.edu.in">
                     @chitkarauniversity.edu.in
                   </option>
-                  <option value="gmail.com">@gmail.com</option>
+                  {/* <option value="gmail.com">@gmail.com</option>
                   <option value="yahoo.com">@yahoo.com</option>
-                  <option value="outlook.com">@outlook.com</option>
+                  <option value="outlook.com">@outlook.com</option> */}
                 </select>
               </div>
             </div>

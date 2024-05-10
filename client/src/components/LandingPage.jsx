@@ -35,13 +35,6 @@ function LandingPage() {
 
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
-
-  useEffect(()=>{
-    const autoStart = async() =>{
-      const res = await axios.get(`${import.meta.env.VITE_SERVER}/`)  
-    }
-    autoStart()
-  },[])
   useEffect(() => {
     if (inView) {
       controls.start({ opacity: 1, y: 0 });
@@ -94,6 +87,30 @@ function LandingPage() {
     } catch (error) {
       console.log(error);
     }
+  };
+  const handleAbout = () => {
+    window.scrollTo({
+      top: document.getElementById("about").offsetTop,
+      behavior: "smooth",
+    });
+  };
+  const handleHome = () => {
+    window.scrollTo({
+      top: document.getElementById("home").offsetTop,
+      behavior: "smooth",
+    });
+  };
+  const handleFeatures = () => {
+    window.scrollTo({
+      top: document.getElementById("features").offsetTop,
+      behavior: "smooth",
+    });
+  };
+  const handleContact = () => {
+    window.scrollTo({
+      top: document.getElementById("contact").offsetTop,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -199,37 +216,37 @@ function LandingPage() {
             >
               <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li>
-                  <a
-                    href="#home"
+                  <button
+                    onClick={handleHome}
                     className="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
                     aria-current="page"
                   >
                     Home
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#about"
+                  <button
+                    onClick={handleAbout}
                     className="block py-2 px-3 md:p-0 text-gray-900 rounded  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 d:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   >
                     About
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#features"
+                  <button
+                    onClick={handleFeatures}
                     className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   >
                     Features
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#contact"
+                  <button
+                    onClick={handleContact}
                     className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   >
                     Contact
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -243,36 +260,36 @@ function LandingPage() {
             >
               <ul className="flex flex-col font-medium mt-4 border border-gray-100 rounded-lg bg-gray-50 space-y-2 w-full ">
                 <li>
-                  <a
-                    href="#home"
+                  <button
+                    onClick={handleHome}
                     className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
                   >
                     Home
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#about"
+                  <button
+                    onClick={handleAbout}
                     className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
                   >
                     About
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#features"
+                  <button
+                    onClick={handleFeatures}
                     className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
                   >
                     Features
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#contact"
+                  <button
+                    onClick={handleContact}
                     className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
                   >
                     Contact
-                  </a>
+                  </button>
                 </li>
                 <li>
                   <Link
