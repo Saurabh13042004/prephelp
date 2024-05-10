@@ -258,7 +258,7 @@ function Admin() {
                             entry.isApproved ? "text-green-500" : "text-red-500"
                           }`}
                         >
-                         {entry.gotOffer === "yes" ? "Selected" : entry.gotOffer === "no" ? "Not Selected" :entry.gotOffer === "progress" ? "In Progress" :" "}
+                         {entry.gotOffer.toLowerCase() === "yes" ? "Selected" : entry.gotOffer.toLowerCase() === "no" ? "Not Selected" :entry.gotOffer.toLowerCase() === "progress" ? "In Progress" :" "}
 
 
                         </span>
@@ -289,10 +289,10 @@ function Admin() {
           </div>
 
           <dialog id="editModal" className="modal">
-            <div className="modal-box px-15">
+            <div className="modal-box px-10">
               <form method="dialog">
                 <button
-                  className="btn btn-sm btn-circle btn-ghost fixed right-2 top-2"
+                  className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
                   onClick={handleCloseModal}
                 >
                   ✕
