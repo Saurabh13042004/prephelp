@@ -191,6 +191,17 @@ const Profile = ({ isAuth, isAdmin }) => {
   };
   const handleSaveEdit = async (event) => {
     event.preventDefault();
+
+    if (!editname) {
+      toast.error("Please enter a name", {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
+      return;
+    }
+
     const config = {
       headers: {
         "Content-Type": "application/json",

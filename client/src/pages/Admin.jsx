@@ -83,13 +83,13 @@ function Admin() {
   const filterPosts = () => {
     switch (isSelected) {
       case "yes":
-        setFilteredPosts(posts.filter(post => post.gotOffer === "yes"));
+        setFilteredPosts(posts.filter(post => post.gotOffer.toLowerCase() === "yes"));
         break;
       case "no":
-        setFilteredPosts(posts.filter(post => post.gotOffer === "no"));
+        setFilteredPosts(posts.filter(post => post.gotOffer.toLowerCase() === "no"));
         break;
       case "progress":
-        setFilteredPosts(posts.filter(post => post.gotOffer === "progress")); 
+        setFilteredPosts(posts.filter(post => post.gotOffer.toLowerCase() === "progress")); 
         break;
       default:
         setFilteredPosts(posts);
