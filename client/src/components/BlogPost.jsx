@@ -128,7 +128,11 @@ const BlogPost = () => {
                 <p className="text-lg text-gray-800 text-justify">
                   My name is {post.name}. I am an undergraduate student at
                   Chitkara University. I am currently in my {post.batch} batch.
-                  I have been {post.gotOffer.toLowerCase()} for the role of {post.role} at{" "}
+                  I have been {post.gotOffer.toLowerCase() === "yes" ? (
+                    <span className="text-green-500">selected</span>
+                  ) : (
+                    <span className="text-red-500">not selected</span>
+                  )} for the role of {post.role} at{" "}
                   {post.company}. Chitkara University Placement Cell has played
                   a major role in my success. I would like to share my interview
                   experience with you all. I hope it will help you in your
