@@ -274,7 +274,7 @@ const BlogPost = () => {
                 </h3>
                 <p className="text-lg text-gray-800 text-justify">
                   I was{" "}
-                  {post.gotOffer === "yes" ? (
+                  {post.gotOffer.toLowerCase() === "yes" ? (
                     <span className="text-green-500">selected</span>
                   ) : (
                     <span className="text-red-500">not selected</span>
