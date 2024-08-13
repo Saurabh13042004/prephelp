@@ -71,7 +71,7 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow fixed w-full top-0 z-50">
+    <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow fixed w-full top-0 z-50 transition-all duration-300 ease-in-out">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {/* Brand */}
         <Link
@@ -93,7 +93,7 @@ function Navbar() {
           <div>
             {!token && (
               <Link
-                className={`flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500 ${
+                className={`flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500 transition-all duration-300 ease-in-out  ${
                   location.pathname === "/login" ||
                   location.pathname === "/signup"
                     ? "hidden"
@@ -168,7 +168,7 @@ function Navbar() {
               ref={ref}
               data-collapse-toggle="navbar-cta"
               type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 transition-all duration-300 ease-in-out "
               aria-controls="navbar-cta"
               aria-expanded="false"
               id="navbar-toggle"
@@ -239,12 +239,16 @@ function Navbar() {
 
         {/* Navigation Links for Small Screens */}
         <div
-          className={`items-center justify-between w-full md:hidden ${
-            isOpen ? "flex" : "hidden"
-          }`}
+          style={{
+            height: isOpen ? "auto" : "0",
+            opacity: isOpen ? "1" : "0",
+            overflow: "hidden",
+            transition: "height 0.3s ease-in-out, opacity 0.3s ease-in-out",
+          }}
+          className="items-center justify-between w-full md:hidden"
           id="navbar-cta"
         >
-          <ul className="flex flex-col font-medium mt-4 border border-gray-100 rounded-lg bg-gray-50 space-y-2 w-full ">
+          <ul className="transition-all duration-300 ease-in-out flex flex-col font-medium mt-4 border border-gray-100 rounded-lg bg-gray-50 space-y-2 w-full ">
             <li>
               <Link
                 to="/home"

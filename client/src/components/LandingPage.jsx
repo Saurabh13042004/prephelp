@@ -154,7 +154,7 @@ function LandingPage() {
             </Link>
 
             {/* Buttons for Small Screens */}
-            <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse ">
+            <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse transition-all ease-in-out duration-300">
               <div>
                 <Link
                   className={`hidden md:flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500 ${
@@ -253,7 +253,7 @@ function LandingPage() {
 
             {/* Navigation Links for Small Screens */}
             <div
-              className={`items-center justify-between w-full md:hidden ${
+              className={`items-center justify-between w-full md:hidden transition-all ease-in-out duration-300 ${
                 isOpen ? "flex" : "hidden"
               }`}
               id="navbar-cta"

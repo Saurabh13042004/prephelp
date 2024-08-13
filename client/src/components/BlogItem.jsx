@@ -213,9 +213,6 @@ function BlogItem() {
     fetchProfileImages();
   }, [searchedPosts]);
 
-  // admin@prephelp.com
-  // admin123
-
   const handleClearFilters = () => {
     setSelectedCompany("All Companies");
     setFromSearch("2016");
