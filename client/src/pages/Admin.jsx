@@ -5,7 +5,6 @@ import { getAuth } from "firebase/auth";
 import Loader from "../components/Loader";
 // import Navbar from "../components/Navbar";
 import { MdDeleteForever } from "react-icons/md";
-import { TiTick } from "react-icons/ti";
 import AdminNavbar from "../components/AdminNavbar";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -22,6 +21,7 @@ function Admin() {
   const user = auth.currentUser;
   const [isSelected, setIsSelected] = useState("all"); // Updated default value
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [searchUser, setSearchUser] = useState("");
 
   // const fetchData = async () => {  // FOR FIREBASE DATABASE
   //   setLoading(true);
@@ -66,15 +66,54 @@ function Admin() {
   //   setApprovedHRQuestions(updatedQuestions);
   // };
 
+  useEffect(() => {
+    filterPosts();
+  }, [isSelected, posts]);
+  useEffect(() => {
+    const search = searchUser.toLowerCase();
+    setFilteredPosts(
+      posts.filter((post) => {
+        return (
+          post.name.toLowerCase().includes(search) ||
+          post.company.toLowerCase().includes(search)
+        );
+      })
+    );
+  }, [searchUser]);
+  useEffect(() => {
+    document.title = "Admin Panel";
+    fetchData();
+    setInterval(() => {
+      fetchData();
+    }, 60000);
+  }, []);
+
+  const getImage = async (post) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER}/send-profile-image/${post.image}`
+      );
+      const data = await response.json();
+      post.image = "data:image/jpg;base64," + data.imagePath;
+    } catch (error) {
+      console.error("Error fetching profile image:", error);
+      // return null;
+    }
+  };
   const fetchData = async () => {
     // FOR MONGODB DATABASE
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_SERVER}/admin-users`
       );
+      for (let post of response.data.users) {
+        if (post.image) {
+          await getImage(post);
+        }
+      }
       setPosts(response.data.users);
-      console.log(response.data.users)
       setFilteredPosts(response.data.users);
+
       // console.log(response.data.users);
     } catch (error) {
       console.log("Error form the admin page get data " + error);
@@ -83,22 +122,25 @@ function Admin() {
   const filterPosts = () => {
     switch (isSelected) {
       case "yes":
-        setFilteredPosts(posts.filter(post => post.gotOffer.toLowerCase() === "yes"));
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "yes")
+        );
         break;
       case "no":
-        setFilteredPosts(posts.filter(post => post.gotOffer.toLowerCase() === "no"));
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "no")
+        );
         break;
       case "progress":
-        setFilteredPosts(posts.filter(post => post.gotOffer.toLowerCase() === "progress")); 
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "progress")
+        );
         break;
       default:
         setFilteredPosts(posts);
         break;
     }
-  }
-    useEffect(() => {
-      filterPosts(); 
-    }, [isSelected, posts]);
+  };
   const handleCheckboxChange = async (id, entry) => {
     try {
       const response = await axios.put(
@@ -110,11 +152,11 @@ function Admin() {
       console.log("Error from the approves " + error);
     }
   };
-    const handleEditClick = (entry) => {
-      setSelectedPost(entry);
-      setEditMode(true);
-      document.getElementById("editModal").showModal();
-    };
+  const handleEditClick = (entry) => {
+    setSelectedPost(entry);
+    setEditMode(true);
+    document.getElementById("editModal").showModal();
+  };
   const handleDeleteQuestion = (questionIndex, questionType) => {
     const updatedQuestions = [...selectedPost[`${questionType}Questions`]];
     updatedQuestions.splice(questionIndex, 1);
@@ -156,14 +198,36 @@ function Admin() {
     updatedQuestions[index] = !updatedQuestions[index];
     setApprovedHRQuestions(updatedQuestions);
   };
-
-  useEffect(() => {
-    document.title = "Admin Panel";
-    fetchData();
-    setInterval(() => {
-      fetchData();
-    }, 60000);
-  }, []);
+  const handleCombineSearch = () => {
+    const search = searchUser.toLowerCase();
+    setFilteredPosts(
+      posts.filter((post) => {
+        const matchesSearch =
+          post.name.toLowerCase().includes(search) ||
+          post.company.toLowerCase().includes(search);
+        const matchesFilter =
+          isSelected === "all" || post.gotOffer.toLowerCase() === isSelected;
+        return matchesSearch && matchesFilter;
+      })
+    );
+  };
+  const handleDelete = async (id) => {
+    const userSatisfy = confirm("Are you sure to delete this user?");
+    if (userSatisfy) {
+      try {
+        let response = await axios.post(
+          `${import.meta.env.VITE_SERVER}/admin-delete/${id}`
+        );
+        if (response.data.success) {
+          fetchData();
+          toast.success("User Deleted Successfully");
+        }
+      } catch (error) {
+        console.log("Error from the delete " + error);
+      }
+    }
+    return;
+  };
 
   return (
     <div>
@@ -180,38 +244,51 @@ function Admin() {
         theme="colored"
         transition:Bounce
       />
-    {/* <input type="text" /> */}
-  
       <AdminNavbar />
-      
+
       {!user === null ? (
         <Loader />
       ) : (
         <>
-       
-          <div className="overflow-x-auto m-auto mt-14 p-8">
-          <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
-            <p className="me-4 font-bold">Sort By Selection:</p>
-            <select
-              value={isSelected}
-              onChange={(e) => setIsSelected(e.target.value)}
-              className="p-2 border border-gray-300 rounded-md mr-2"
-            >
-                <option key="all" value="all">
-                All
-              </option>
-              <option key="yes" value="yes">
-                Selected
-              </option>
-              <option key="no" value="no">
-                Not Selected
-              </option>
-              <option key="progress" value="progress">
-                In Progress
-              </option>
-              
-            </select>
-          </div>
+          <div className="flex flex-col overflow-x-auto m-auto mt-14 p-8 gap-5">
+            <div className="flex  justify-center items-center gap-5 flex-wrap  mt-4">
+              <div className="flex  justify-center items-center">
+                <input
+                  type="text"
+                  placeholder="Search by user / company"
+                  className="rounded-lg"
+                  value={searchUser}
+                  onChange={(e) => setSearchUser(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col justify-center items-center md:flex-row">
+                <p className="me-4 font-bold">Sort By Selection:</p>
+                <select
+                  value={isSelected}
+                  onChange={(e) => setIsSelected(e.target.value)}
+                  className="p-2 border border-gray-300 rounded-md mr-2"
+                >
+                  <option key="all" value="all">
+                    All
+                  </option>
+                  <option key="yes" value="yes">
+                    Selected
+                  </option>
+                  <option key="no" value="no">
+                    Not Selected
+                  </option>
+                  <option key="progress" value="progress">
+                    In Progress
+                  </option>
+                </select>
+              </div>
+              <button
+                onClick={handleCombineSearch}
+                className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500"
+              >
+                Combine Search
+              </button>
+            </div>
             <table className="table">
               <thead>
                 <tr>
@@ -226,7 +303,7 @@ function Admin() {
                 {/* {console.log(posts)} */}
                 {loading ? (
                   <Loader />
-                ) : (
+                ) : filteredPosts.length > 0 ? (
                   filteredPosts.map((entry) => (
                     <tr key={entry._id}>
                       <td>
@@ -234,7 +311,11 @@ function Admin() {
                           <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
                               <img
-                                src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+                                src={
+                                  entry.image
+                                    ? entry.image
+                                    : "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+                                }
                                 alt="Avatar"
                               />
                             </div>
@@ -258,9 +339,13 @@ function Admin() {
                             entry.isApproved ? "text-green-500" : "text-red-500"
                           }`}
                         >
-                         {entry.gotOffer.toLowerCase() === "yes" ? "Selected" : entry.gotOffer.toLowerCase() === "no" ? "Not Selected" :entry.gotOffer.toLowerCase() === "progress" ? "In Progress" :" "}
-
-
+                          {entry.gotOffer.toLowerCase() === "yes"
+                            ? "Selected"
+                            : entry.gotOffer.toLowerCase() === "no"
+                            ? "Not Selected"
+                            : entry.gotOffer.toLowerCase() === "progress"
+                            ? "In Progress"
+                            : " "}
                         </span>
                       </td>
                       <td>
@@ -276,13 +361,19 @@ function Admin() {
                       <td>
                         <button
                           className="text-red-500"
-                          onClick={() => handleDelete(entry.id)}
+                          onClick={() => handleDelete(entry._id)}
                         >
                           Delete
                         </button>
                       </td>
                     </tr>
                   ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="text-center">
+                      No data found
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>

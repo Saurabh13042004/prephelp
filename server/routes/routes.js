@@ -56,5 +56,6 @@ Route.get(
 );
 Route.post("/get-exp", userController.getExp);
 Route.put("/update-user-exp", userController.editExpUser);
+Route.post("/admin-delete/:_id", adminController.deleteUser);
 
 module.exports = Route;
