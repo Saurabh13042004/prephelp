@@ -19,9 +19,8 @@ function AdminNavbar() {
     const setImage = async () => {
       let user = await axios.post(
         `${import.meta.env.VITE_SERVER}/getUserDetails`,
+        { email: email },
         {
-          method: "POST",
-          body: { email: email },
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.get("token")}`,
