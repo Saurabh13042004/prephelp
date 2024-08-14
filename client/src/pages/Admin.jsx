@@ -5,7 +5,6 @@ import { getAuth } from "firebase/auth";
 import Loader from "../components/Loader";
 // import Navbar from "../components/Navbar";
 import { MdDeleteForever } from "react-icons/md";
-import { TiTick } from "react-icons/ti";
 import AdminNavbar from "../components/AdminNavbar";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -31,6 +30,11 @@ function Admin() {
         `${import.meta.env.VITE_SERVER}/admin-users`,
         config
       );
+      for (let post of response.data.users) {
+        if (post.image) {
+          await getImage(post);
+        }
+      }
       setPosts(response.data.users);
       setFilteredPosts(response.data.users);
     } catch (error) {
@@ -43,13 +47,22 @@ function Admin() {
         setFilteredPosts(
           posts.filter((post) => post.gotOffer.toLowerCase() === "yes")
         );
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "yes")
+        );
         break;
       case "no":
         setFilteredPosts(
           posts.filter((post) => post.gotOffer.toLowerCase() === "no")
         );
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "no")
+        );
         break;
       case "progress":
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "progress")
+        );
         setFilteredPosts(
           posts.filter((post) => post.gotOffer.toLowerCase() === "progress")
         );
@@ -73,6 +86,11 @@ function Admin() {
     } catch (error) {
       console.log("Error from the approves " + error);
     }
+  };
+  const handleEditClick = (entry) => {
+    setSelectedPost(entry);
+    setEditMode(true);
+    document.getElementById("editModal").showModal();
   };
   const handleEditClick = (entry) => {
     setSelectedPost(entry);
@@ -123,14 +141,36 @@ function Admin() {
     updatedQuestions[index] = !updatedQuestions[index];
     setApprovedHRQuestions(updatedQuestions);
   };
-
-  useEffect(() => {
-    document.title = "Admin Panel";
-    fetchData();
-    setInterval(() => {
-      fetchData();
-    }, 60000);
-  }, []);
+  const handleCombineSearch = () => {
+    const search = searchUser.toLowerCase();
+    setFilteredPosts(
+      posts.filter((post) => {
+        const matchesSearch =
+          post.name.toLowerCase().includes(search) ||
+          post.company.toLowerCase().includes(search);
+        const matchesFilter =
+          isSelected === "all" || post.gotOffer.toLowerCase() === isSelected;
+        return matchesSearch && matchesFilter;
+      })
+    );
+  };
+  const handleDelete = async (id) => {
+    const userSatisfy = confirm("Are you sure to delete this user?");
+    if (userSatisfy) {
+      try {
+        let response = await axios.post(
+          `${import.meta.env.VITE_SERVER}/admin-delete/${id}`
+        );
+        if (response.data.success) {
+          fetchData();
+          toast.success("User Deleted Successfully");
+        }
+      } catch (error) {
+        console.log("Error from the delete " + error);
+      }
+    }
+    return;
+  };
 
   return (
     <div>
@@ -150,6 +190,7 @@ function Admin() {
       {/* <input type="text" /> */}
 
       <AdminNavbar />
+
 
       {!user === null ? (
         <Loader />
@@ -191,7 +232,7 @@ function Admin() {
                 {/* {console.log(posts)} */}
                 {loading ? (
                   <Loader />
-                ) : (
+                ) : filteredPosts.length > 0 ? (
                   filteredPosts.map((entry) => (
                     <tr key={entry._id}>
                       <td>
@@ -199,7 +240,11 @@ function Admin() {
                           <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
                               <img
-                                src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+                                src={
+                                  entry.image
+                                    ? entry.image
+                                    : "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+                                }
                                 alt="Avatar"
                               />
                             </div>
@@ -230,6 +275,13 @@ function Admin() {
                             : entry.gotOffer.toLowerCase() === "progress"
                             ? "In Progress"
                             : " "}
+                          {entry.gotOffer.toLowerCase() === "yes"
+                            ? "Selected"
+                            : entry.gotOffer.toLowerCase() === "no"
+                            ? "Not Selected"
+                            : entry.gotOffer.toLowerCase() === "progress"
+                            ? "In Progress"
+                            : " "}
                         </span>
                       </td>
                       <td>
@@ -245,13 +297,19 @@ function Admin() {
                       <td>
                         <button
                           className="text-red-500"
-                          onClick={() => handleDelete(entry.id)}
+                          onClick={() => handleDelete(entry._id)}
                         >
                           Delete
                         </button>
                       </td>
                     </tr>
                   ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="text-center">
+                      No data found
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>

@@ -13,6 +13,7 @@ import RingLoader from "react-spinners/RingLoader";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
   const cookies = new Cookies(null, { path: "/" });
   const [loading, setLoading] = useState(false);
@@ -63,7 +64,7 @@ function Login() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email: newEmail, password }),
+          body: JSON.stringify({ email: newEmail, password, rememberMe }),
         });
         response = await response.json();
 
@@ -440,6 +441,22 @@ function Login() {
               >
                 Forgot Password?
               </button>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                name="rememberMe"
+                id="rememberMe"
+                className="checked:bg-purple-600 checked:border-transparent"
+                value={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              <label
+                htmlFor="rememberMe"
+                className="text-md font-semibold ml-2 cursor-pointer"
+              >
+                Remember Me
+              </label>
             </div>
             <div className="mt-10">
               <button

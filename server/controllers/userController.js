@@ -40,7 +40,7 @@ const signup = async (req, res) => {
       req.body.password = hassPassword;
       const newUser = await new userModel(req.body);
       const token = jwt.sign({ userId: newUser._id }, process.env.SECRET_KEY, {
-        expiresIn: "30d",
+        expiresIn: "1d",
       });
       await newUser.save();
       return res.status(200).send({
@@ -74,16 +74,25 @@ const login = async (req, res) => {
 
     const userPass = req.body.password;
     const dbPass = userExit.password;
+    const rememberMe = req.body.rememberMe;
     const passMatch = await bcrypt.compare(userPass, dbPass);
     if (passMatch) {
       // console.log(userExit.isAdmin);
-      const token = jwt.sign(
-        { userId: userExit._id, isAdmin: userExit.isAdmin },
-        process.env.SECRET_KEY,
-        {
-          expiresIn: "1d",
-        }
-      );
+      const token = rememberMe
+        ? jwt.sign(
+            { userId: userExit._id, isAdmin: userExit.isAdmin },
+            process.env.SECRET_KEY,
+            {
+              expiresIn: "7d",
+            }
+          )
+        : jwt.sign(
+            { userId: userExit._id, isAdmin: userExit.isAdmin },
+            process.env.SECRET_KEY,
+            {
+              expiresIn: "1d",
+            }
+          );
       return res.status(200).send({
         message: "Login successfully",
         success: true,
@@ -293,7 +302,6 @@ const sendProfileImage = async (req, res) => {
       `./profileUploads/${req.params.imgName}`,
       "base64"
     );
-    // console.log(imageFile);
 
     if (!imageFile) {
       return res.status(200).send({

@@ -54,4 +54,21 @@ const updateField = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, updateApproved, updateField };
+const deleteUser = async (req, res) => {
+  try {
+    const id = req.params._id;
+    const user = await expModel.findByIdAndDelete(id);
+    return res.status(200).send({
+      message: "User Deleted",
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
+module.exports = { getUsers, updateApproved, updateField, deleteUser };

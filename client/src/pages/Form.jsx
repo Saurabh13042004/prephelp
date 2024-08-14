@@ -89,7 +89,14 @@ function Form() {
   };
 
   const handleNextClick1 = () => {
-    if (company.trim() !== "" && role.trim() !== "") {
+    if (
+      company.trim() !== "" &&
+      role.trim() !== "" &&
+      location.trim() !== "" &&
+      batch.trim() !== "" &&
+      rounds > 0 &&
+      gotOffer.trim() !== ""
+    ) {
       if (OthereligibilityCgpa) {
         setEligibility(OthereligibilityCgpa.trim());
       }
@@ -105,7 +112,12 @@ function Form() {
     setQuestions(1);
   };
   const handleNextClick2 = () => {
-    if (name.trim() !== "" && email.trim() !== "") {
+    if (
+      name.trim() !== "" &&
+      email.trim() !== "" &&
+      universityID.toString().length == 10 &&
+      cgpa.trim() !== ""
+    ) {
       if (OtherCgpa) {
         setCgpa(OtherCgpa.trim());
       }
@@ -137,6 +149,11 @@ function Form() {
   };
 
   const handleSubmit = async () => {
+    if (preparationTips.length == 0) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
     const currentDate = new Date().toDateString();
     const currentTime = new Date().toLocaleTimeString();
     const formData = {
@@ -164,7 +181,6 @@ function Form() {
       image: userImage,
       groupDiscussion: groupDiscussion,
     };
-    console.log(formData);
     try {
       const token = cookies.get("token")
       let res = await fetch(`${import.meta.env.VITE_SERVER}/experience`, {
@@ -203,6 +219,7 @@ function Form() {
                   Company you Applied to?*
                 </label>
                 <select
+                  required
                   name="company"
                   id="company"
                   value={company}
@@ -246,6 +263,7 @@ function Form() {
                     Batch*
                   </label>
                   <input
+                    required
                     type="number"
                     onChange={(e) => setBatch(e.target.value)}
                     placeholder="Eg. 2021"
@@ -262,6 +280,7 @@ function Form() {
                   Enter Cgpa required for applying*
                 </label>
                 <select
+                  required
                   name="eligibilityCriteria"
                   id="eligibilityCriteria"
                   value={eligibility}
@@ -334,6 +353,7 @@ function Form() {
                       value="no"
                       onChange={(e) => setGotOffer(e.target.value)}
                       checked={gotOffer === "no"}
+                      required
                     />
                     <span className="mx-5">No</span>
                   </label>
@@ -345,6 +365,7 @@ function Form() {
                       value="progress"
                       onChange={(e) => setGotOffer(e.target.value)}
                       checked={gotOffer === "progress"}
+                      required
                     />
                     <span className="mx-5">progress</span>
                   </label>
@@ -370,6 +391,7 @@ function Form() {
                   No. of Rounds*
                 </label>
                 <input
+                  required
                   type="number"
                   onChange={(e) => {
                     if (e.target.value < 0) {
@@ -448,6 +470,7 @@ function Form() {
                   LinkedIn Profile Link
                 </label>
                 <input
+                  required
                   type="url"
                   onChange={(e) => setLinkedin(e.target.value)}
                   value={linkedin}
@@ -461,6 +484,7 @@ function Form() {
                   Your CGPA*
                 </label>
                 <select
+                  required
                   name="eligibilityCriteria"
                   id="eligibilityCriteria"
                   value={cgpa}
@@ -741,8 +765,9 @@ function Form() {
                 </button>
               </div>
             )}
-            <label className="block font-semibold mt-4 mb-5">Summary</label>
+            <label className="block font-semibold mt-4 mb-5">Summary *</label>
             <textarea
+              required
               value={preparationTips}
               placeholder="Summarized your experience."
               className="border-2 border-gray-300 focus:outline-none focus:border-blue-400 rounded-md py-2 px-4 block appearance-none leading-5 text-gray-700 w-[80%] lg:w-[65%] h-[200px] resize-none"
@@ -755,17 +780,15 @@ function Form() {
             >
               Previous
             </button>
-            <Link
-              to="/formSubmitted"
+            <button
               onClick={handleSubmit}
               className="bg-blue-600 float-right hover:bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 transform hover:scale-105 my-12"
             >
               SUBMIT
-            </Link>
+            </button>
           </div>
         </div>
       )}
-      ;
     </div>
   );
 }
