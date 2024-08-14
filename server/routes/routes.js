@@ -65,11 +65,10 @@ Route.put("/edit-name", authMiddleware, userController.changeName);
 Route.post("/profile-image", upload.any(), userController.profileImage);
 Route.get(
   "/send-profile-image/profileUploads/:imgName",
-  authMiddleware,
   userController.sendProfileImage
 );
 Route.post("/get-exp", authMiddleware, userController.getExp);
 Route.put("/update-user-exp", authMiddleware, userController.editExpUser);
-Route.post("/admin-delete/:_id", authMiddleware,adminController.deleteUser);
+Route.post("/admin-delete/:_id", authMiddleware, adminController.deleteUser);
 
 module.exports = Route;

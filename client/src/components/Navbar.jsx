@@ -38,25 +38,26 @@ function Navbar() {
   useEffect(() => {
     const email = cookies.get("email");
     const setImage = async () => {
-      
       if (email) {
-        const config ={
+        const config = {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        };
         let user = await axios.post(
-          `${import.meta.env.VITE_SERVER}/getUserDetails`,{email:email},config
+          `${import.meta.env.VITE_SERVER}/getUserDetails`,
+          { email: email },
+          config
         );
         if (user.data.success) {
           const imagePath = user.data.data.image;
           if (imagePath) {
             let imageUrl = await fetch(
               `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`,
-              {   
-                  headers: {
-                    Authorization: `Bearer ${cookies.get("token")}`,
-                  },
+              {
+                headers: {
+                  Authorization: `Bearer ${cookies.get("token")}`,
+                },
               }
             );
             imageUrl = await imageUrl.json();
@@ -127,7 +128,7 @@ function Navbar() {
             )} */}
 
             {token && (
-              <div className="hidden justify-center items-center flex-wrap  md:hidden lg:flex">
+              <div className="hidden justify-center items-center flex-wrap md:flex">
                 <div className="dropdown dropdown-end">
                   <div
                     tabIndex={0}
@@ -241,117 +242,117 @@ function Navbar() {
         </div>
 
         {/* Navigation Links for Small Screens */}
-        <div
-          style={{
-            height: isOpen ? "auto" : "0",
-            opacity: isOpen ? "1" : "0",
-            overflow: "hidden",
-            transition: "height 0.3s ease-in-out, opacity 0.3s ease-in-out",
-          }}
-          className="items-center justify-between w-full md:hidden"
-          id="navbar-cta"
-        >
-          <ul className="transition-all duration-300 ease-in-out flex flex-col font-medium mt-4 border border-gray-100 rounded-lg bg-gray-50 space-y-2 w-full ">
-            <li>
-              <Link
-                to="/home"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/questions"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
-              >
-                Questions
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/form"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
-              >
-                Experience Sharing
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/Contact"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
-              >
-                Contact
-              </Link>
-            </li>
-            <li>
-              {!token && (
+        {isOpen && (
+          <div
+            className="items-center justify-between w-full md:hidden"
+            id="navbar-cta"
+          >
+            <ul className="transition-all duration-300 ease-in-out flex flex-col font-medium mt-4 border border-gray-100 rounded-lg bg-gray-50 space-y-2 w-full ">
+              <li>
                 <Link
-                  className={`flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500 ml-3 mb-2 ${
-                    location.pathname === "/login" ||
-                    location.pathname === "/signup"
-                      ? "hidden"
-                      : ""
-                  }`}
-                  to="/login"
+                  to="/home"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
                 >
-                  <svg
-                    className="flex-shrink-0 w-4 h-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
-                  </svg>
-                  Log in
+                  Home
                 </Link>
-              )}
-              {token && (
-                <div className="flex flex-wrap">
-                  <div className="dropdown dropdown-end">
-                    <div
-                      tabIndex={0}
-                      role="button"
-                      className="btn btn-ghost btn-circle avatar"
+              </li>
+              <li>
+                <Link
+                  to="/questions"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
+                >
+                  Questions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/form"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
+                >
+                  Experience Sharing
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/Contact"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
+                >
+                  Contact
+                </Link>
+              </li>
+              <li>
+                {!token && (
+                  <Link
+                    className={`flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500 ml-3 mb-2 ${
+                      location.pathname === "/login" ||
+                      location.pathname === "/signup"
+                        ? "hidden"
+                        : ""
+                    }`}
+                    to="/login"
+                  >
+                    <svg
+                      className="flex-shrink-0 w-4 h-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      viewBox="0 0 16 16"
                     >
-                      <div className="w-10 rounded-full">
-                        <img
-                          alt="Profile image"
-                          src={ProfileImage == "" ? defaultImage : ProfileImage}
-                          ref={imageRef}
-                        />
+                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                    </svg>
+                    Log in
+                  </Link>
+                )}
+                {token && (
+                  <div className="flex flex-wrap">
+                    <div className="dropdown dropdown-end">
+                      <div
+                        tabIndex={0}
+                        role="button"
+                        className="btn btn-ghost btn-circle avatar"
+                      >
+                        <div className="w-10 rounded-full">
+                          <img
+                            alt="Profile image"
+                            src={
+                              ProfileImage == "" ? defaultImage : ProfileImage
+                            }
+                            ref={imageRef}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="menu menu-sm left-1 dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                    >
-                      <li>
-                        {token && (
-                          <Link className="justify-between" to="/profile">
-                            Profile
-                          </Link>
-                        )}
-                      </li>
-                      {token && (
+                      <ul
+                        tabIndex={0}
+                        className="menu menu-sm left-1 dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                      >
                         <li>
-                          <button onClick={() => logoutUtils()}>Logout</button>
+                          {token && (
+                            <Link className="justify-between" to="/profile">
+                              Profile
+                            </Link>
+                          )}
                         </li>
-                      )}
-                    </ul>
+                        {token && (
+                          <li>
+                            <button onClick={() => logoutUtils()}>
+                              Logout
+                            </button>
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                    <span className="font-bold bg-gradient-to-r from-red-700 via-blue-700 to-green-900 text-transparent bg-clip-text animate-gradient flex justify-center items-center text-center">
+                      {userName && userName.length > 20
+                        ? userName.slice(0, 20) + "..."
+                        : userName}
+                    </span>
                   </div>
-                  <span className="font-bold bg-gradient-to-r from-red-700 via-blue-700 to-green-900 text-transparent bg-clip-text animate-gradient flex justify-center items-center text-center">
-                    {userName && userName.length > 20
-                      ? userName.slice(0, 20) + "..."
-                      : userName}
-                  </span>
-                </div>
-              )}
-            </li>
-          </ul>
-        </div>
+                )}
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </nav>
   );
