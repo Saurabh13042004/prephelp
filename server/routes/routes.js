@@ -33,7 +33,7 @@ Route.get(
 Route.post("/signup", userController.signup);
 Route.post("/login", userController.login);
 Route.post("/experience", authMiddleware, expController.expData);
-Route.get("/get-experience", authMiddleware, expController.getExp);
+Route.get("/get-experience", expController.getExp);
 Route.post("/adminlogin", authMiddleware, userController.adminlogin);
 Route.get("/get-experience-question", authMiddleware, expController.getQues);
 Route.get("/admin-users", authMiddleware, adminController.getUsers);

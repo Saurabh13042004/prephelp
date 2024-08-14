@@ -87,7 +87,6 @@ function BlogItem() {
       try {
         const data = await axios.get(
           `${import.meta.env.VITE_SERVER}/get-experience`,
-          config
         );
 
         const sortedPosts = data.data.exp.sort((a, b) => {

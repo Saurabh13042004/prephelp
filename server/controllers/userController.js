@@ -63,7 +63,6 @@ const signup = async (req, res) => {
 };
 const login = async (req, res) => {
   try {
-    console.log(req.body)
     const userExit = await userModel.findOne({ email: req.body.email });
     if (!userExit) {
       return res.status(400).send({
@@ -145,7 +144,6 @@ const adminlogin = async (req, res) => {
 };
 const getUserDetails = async (req, res) => {
   try {
-    console.log(req.body)
     const userExit = await userModel.findOne({ email: req.body.email });
     if (!userExit) {
       return res.status(200).send({
