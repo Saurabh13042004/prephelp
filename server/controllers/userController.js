@@ -8,7 +8,7 @@ const fs = require("fs");
 const expModel = require("../models/expModel.js");
 
 const Func = (req, res) => {
-  res.send("hii");
+  res.send("Server is up and running");
 };
 const generateOtpFunc = async (req, res) => {
   const userExist = await userModel.findOne({ email: req.body.email });

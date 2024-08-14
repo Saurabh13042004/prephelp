@@ -186,7 +186,8 @@ function Form() {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.get("token")}`,
         },
       });
       res = await res.json();

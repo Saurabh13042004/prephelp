@@ -9,6 +9,7 @@ import AdminNavbar from "../components/AdminNavbar";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "universal-cookie";
 
 function Admin() {
   const [posts, setPosts] = useState([]);
@@ -22,6 +23,7 @@ function Admin() {
   const [isSelected, setIsSelected] = useState("all"); // Updated default value
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchUser, setSearchUser] = useState("");
+  const cookies = new Cookies();
 
   // const fetchData = async () => {  // FOR FIREBASE DATABASE
   //   setLoading(true);
@@ -91,7 +93,13 @@ function Admin() {
   const getImage = async (post) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER}/send-profile-image/${post.image}`
+        `${import.meta.env.VITE_SERVER}/send-profile-image/${post.image}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.get("token")}`,
+          },
+        }
       );
       const data = await response.json();
       post.image = "data:image/jpg;base64," + data.imagePath;
@@ -104,7 +112,13 @@ function Admin() {
     // FOR MONGODB DATABASE
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER}/admin-users`
+        `${import.meta.env.VITE_SERVER}/admin-users`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.get("token")}`,
+          },
+        }
       );
       for (let post of response.data.users) {
         if (post.image) {
@@ -116,7 +130,8 @@ function Admin() {
 
       // console.log(response.data.users);
     } catch (error) {
-      console.log("Error form the admin page get data " + error);
+      toast.error(error.response.data.message);
+      // console.log("Error form the admin page get data " + error);
     }
   };
   const filterPosts = () => {
@@ -145,7 +160,13 @@ function Admin() {
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_SERVER}/admin-update-approved`,
-        { id, isApproved: !entry.isApproved }
+        { id, isApproved: !entry.isApproved },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.get("token")}`,
+          },
+        }
       );
       fetchData();
     } catch (error) {
@@ -171,6 +192,7 @@ function Admin() {
       const config = {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.get("token")}`,
         },
       };
       const response = await axios.put(
@@ -216,7 +238,13 @@ function Admin() {
     if (userSatisfy) {
       try {
         let response = await axios.post(
-          `${import.meta.env.VITE_SERVER}/admin-delete/${id}`
+          `${import.meta.env.VITE_SERVER}/admin-delete/${id}`,
+          null, // No data to send for a delete operation
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.get("token")}`,
+            },
+          }
         );
         if (response.data.success) {
           fetchData();

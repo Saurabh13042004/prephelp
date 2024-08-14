@@ -53,6 +53,7 @@ const Profile = ({ isAuth, isAdmin }) => {
       const config = {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.get("token")}`,
         },
       };
       const res = await axios.put(
@@ -75,6 +76,7 @@ const Profile = ({ isAuth, isAdmin }) => {
       const config = {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.get("token")}`,
         },
       };
       const res = await axios.post(
@@ -141,6 +143,9 @@ const Profile = ({ isAuth, isAdmin }) => {
       let res = await fetch(`${import.meta.env.VITE_SERVER}/profile-image`, {
         method: "POST",
         body: formData,
+        headers: {
+          Authorization: `Bearer ${cookies.get("token")}`,
+        },
       });
       res = await res.json();
       if (res) {
@@ -205,6 +210,7 @@ const Profile = ({ isAuth, isAdmin }) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.get("token")}`,
       },
     };
     const res = await axios.put(
@@ -250,7 +256,8 @@ const Profile = ({ isAuth, isAdmin }) => {
           password: newPass,
         }),
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.get("token")}`,
         },
       }
     );
@@ -306,7 +313,8 @@ const Profile = ({ isAuth, isAdmin }) => {
         email: email,
       }),
       headers: {
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.get("token")}`,
       },
     });
     res = await res.json();
@@ -386,7 +394,12 @@ const Profile = ({ isAuth, isAdmin }) => {
         if (post.image) {
           try {
             const response = await fetch(
-              `${import.meta.env.VITE_SERVER}/send-profile-image/${post.image}`
+              `${import.meta.env.VITE_SERVER}/send-profile-image/${post.image}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${cookies.get("token")}`,
+                },
+              }
             );
             const data = await response.json();
             return "data:image/jpg;base64," + data.imagePath;

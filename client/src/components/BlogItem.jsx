@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 // import { collection, getDocs } from "firebase/firestore";
 import Loader from "./Loader";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 const getCompanyLogo = (company) => {
   switch (company) {
@@ -78,13 +79,19 @@ function BlogItem() {
   let [approvedPost, setApprovedPost] = useState(0);
   let [presentPostImg, setPresentPostImg] = useState("");
   const [profileImageSrc, setProfileImageSrc] = useState([]);
+  const cookies = new Cookies();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         let response = await fetch(
-          `${import.meta.env.VITE_SERVER}/get-experience`
+          `${import.meta.env.VITE_SERVER}/get-experience`,
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.get("token")}`,
+            },
+          }
         );
         response = await response.json();
         // Sort the fetched posts by date in descending order

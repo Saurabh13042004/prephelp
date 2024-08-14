@@ -3,18 +3,26 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import AdminNavbar from "./AdminNavbar";
 import DataTable from "react-data-table-component";
+import Cookies from "universal-cookie";
 
 const ContactList = ({ isAuth, isAdmin }) => {
   const [contacts, setContacts] = useState([]);
   const tableRef = useRef();
+  const cookies = new Cookies();
 
   useEffect(() => {
     const getContacts = async () => {
       let response = await fetch(
-        `${import.meta.env.VITE_SERVER}/get-contact-list`
+        `${import.meta.env.VITE_SERVER}/get-contact-list`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.get("token")}`,
+          },
+        }
       );
       response = await response.json();
-      console.log(response)
+      // console.log(response);
       setContacts(response?.data);
     };
 

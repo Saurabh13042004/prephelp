@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
+import Cookies from "universal-cookie";
 
 const Contact = ({ isAuth, isAdmin }) => {
   const [name, setName] = useState("");
@@ -13,6 +14,7 @@ const Contact = ({ isAuth, isAdmin }) => {
   const [uid, setUid] = useState("");
   const navigate = useNavigate();
   const [validResponse, setValidResponse] = useState(true);
+  const cookies = new Cookies();
 
   const handleEmailChange = (e) => {
     const enteredEmail = e.trim();
@@ -81,6 +83,7 @@ const Contact = ({ isAuth, isAdmin }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.get("token")}`,
         },
         body: JSON.stringify(obj),
       });

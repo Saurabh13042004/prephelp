@@ -12,7 +12,7 @@ const storeContact = async (req, res) => {
 const getContactList = async (req, res) => {
   try {
     const contact = await Contact.find();
-    console.log(contact)
+    // console.log(contact)
     res.status(200).json({ status: 200, data: contact });
   } catch (err) {
     res.status(500).json({ status: 500, message: err.message });

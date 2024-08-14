@@ -11,6 +11,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import axios from "axios";
+import Cookies from "universal-cookie";
+
 function LandingPage() {
   const controls = useAnimation();
   const [ref, inView] = useInView();
@@ -19,6 +21,7 @@ function LandingPage() {
   const [email, setEmail] = useState("");
   const [query, setQuery] = useState("");
   const [uid, setuid] = useState("");
+  const cookies = new Cookies();
 
   useEffect(() => {
     const scrollHandler = () => {
@@ -64,6 +67,7 @@ function LandingPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.get("token")}`,
         },
         body: JSON.stringify(obj),
       });

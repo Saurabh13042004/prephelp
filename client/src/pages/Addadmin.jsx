@@ -62,6 +62,7 @@ function Addadmin() {
       body: JSON.stringify({ email }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.get("token")}`,
       },
     });
     response = await response.json();
