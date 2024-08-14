@@ -44,19 +44,21 @@ function Login() {
     setLoading(true);
     try {
       const config = {
-  headers: {
-            "Content-Type": "application/json",
-          },
-      }
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
       const user = await axios.post(
-        `${import.meta.env.VITE_SERVER}/getUserDetails`,{email:newEmail},config
+        `${import.meta.env.VITE_SERVER}/getUserDetails`,
+        { email: newEmail },
+        config
       );
       if (user.data.success) {
         const userDetail = user.data.data;
         cookies.set("email", userDetail.email);
         cookies.set("name", userDetail.name);
         cookies.set("uid", userDetail.uid);
-        
+
         cookies.set("userImage", userDetail.image);
 
         let response = await fetch(`${import.meta.env.VITE_SERVER}/login`, {

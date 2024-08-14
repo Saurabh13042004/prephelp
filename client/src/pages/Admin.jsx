@@ -22,7 +22,13 @@ function Admin() {
   const user = auth.currentUser;
   const [isSelected, setIsSelected] = useState("all"); // Updated default value
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [searchUser, setSearchUser] = useState("");
   const cookie = new Cookies();
+
+
+
+
+  
   const fetchData = async () => {
     // FOR MONGODB DATABASE
     try {
@@ -86,11 +92,6 @@ function Admin() {
     } catch (error) {
       console.log("Error from the approves " + error);
     }
-  };
-  const handleEditClick = (entry) => {
-    setSelectedPost(entry);
-    setEditMode(true);
-    document.getElementById("editModal").showModal();
   };
   const handleEditClick = (entry) => {
     setSelectedPost(entry);
