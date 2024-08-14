@@ -74,15 +74,12 @@ function BlogItem() {
   const [otherCompany, setOtherCompany] = useState("");
   const [isSelected, setIsSelected] = useState("both");
   const companyRef = useRef();
-  const postImageRef = useRef();
   let [approvedPost, setApprovedPost] = useState(0);
-  let [presentPostImg, setPresentPostImg] = useState("");
   const [profileImageSrc, setProfileImageSrc] = useState([]);
   const cookies = new Cookies();
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = cookies.get("token");
       setLoading(true);
       try {
         let response = await fetch(
@@ -93,10 +90,8 @@ function BlogItem() {
             },
           }
         );
-
-        console.log(response)
-
-        const sortedPosts = response.data.exp.sort((a, b) => {
+        const data = await response.json();
+        const sortedPosts = data.exp.sort((a, b) => {
           const timeA = new Date(`${a.date[0]} ${a.date[1]}`);
           const timeB = new Date(`${b.date[0]} ${b.date[1]}`);
 

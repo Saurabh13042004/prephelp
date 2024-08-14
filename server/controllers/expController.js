@@ -16,7 +16,7 @@ const expData = async (req, res) => {
 };
 const getExp = async (req, res) => {
   try {
-    const exp = await expModel.find();
+    const exp = await expModel.find({});
     return res.status(200).send({
       success: true,
       exp: exp,

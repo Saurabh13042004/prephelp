@@ -48,7 +48,6 @@ function Navbar() {
         let user = await axios.post(
           `${import.meta.env.VITE_SERVER}/getUserDetails`,{email:email},config
         );
-        console.log(user.data.data)
         if (user.data.success) {
           const imagePath = user.data.data.image;
           if (imagePath) {
