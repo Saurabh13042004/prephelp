@@ -14,34 +14,9 @@ function SignIn() {
   const navigate = useNavigate();
   const cookies = new Cookies();
 
-  //   const handleLogin = async (e) => {
-  //     e.preventDefault();
 
-  //     try {
-  //       const q = query(collection(db, "admin"), where("email", "==", email));
-
-  //       const querySnapshot = await getDocs(q);
-
-  //       if (querySnapshot.empty) {
-  //         toast.error("Invalid email or password");
-  //         return;
-  //       }
-
-  //       querySnapshot.forEach((doc) => {
-  //         if (doc.data().password === password) {
-  //           navigate("/admin");
-  //         } else {
-  //           toast.error("Invalid email or password");
-  //         }
-  //       });
-  //     } catch (error) {
-  //       console.error("Error signing in: ", error);
-  //       toast.error("Error signing in");
-  //     }
-  //   };
   const handleSignInDb = async (e) => {
     e.preventDefault();
-
     const obj = {
       email: email,
       password: password,

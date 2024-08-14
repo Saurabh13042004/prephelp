@@ -166,11 +166,13 @@ function Form() {
     };
     console.log(formData);
     try {
+      const token = cookies.get("token")
       let res = await fetch(`${import.meta.env.VITE_SERVER}/experience`, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
           "Content-type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
       });
       res = await res.json();

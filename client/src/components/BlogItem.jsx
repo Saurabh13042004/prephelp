@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 // import { collection, getDocs } from "firebase/firestore";
 import Loader from "./Loader";
 import axios from "axios";
-
+import Cookies from "universal-cookie";
+import config from "../authIndex/header";
 const getCompanyLogo = (company) => {
   switch (company) {
     case "Microsoft":
@@ -78,17 +79,18 @@ function BlogItem() {
   let [approvedPost, setApprovedPost] = useState(0);
   let [presentPostImg, setPresentPostImg] = useState("");
   const [profileImageSrc, setProfileImageSrc] = useState([]);
-
+  const cookie = new Cookies();
   useEffect(() => {
     const fetchData = async () => {
+      const token = cookie.get("token");
       setLoading(true);
       try {
-        let response = await fetch(
-          `${import.meta.env.VITE_SERVER}/get-experience`
+        const data = await axios.get(
+          `${import.meta.env.VITE_SERVER}/get-experience`,
+          config
         );
-        response = await response.json();
-        // Sort the fetched posts by date in descending order
-        const sortedPosts = response.exp.sort((a, b) => {
+
+        const sortedPosts = data.data.exp.sort((a, b) => {
           const timeA = new Date(`${a.date[0]} ${a.date[1]}`);
           const timeB = new Date(`${b.date[0]} ${b.date[1]}`);
 

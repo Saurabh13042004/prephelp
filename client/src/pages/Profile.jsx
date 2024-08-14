@@ -10,7 +10,7 @@ import { CiEdit } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
 import Cookies from "universal-cookie";
-
+import config from "../authIndex/header";
 const Profile = ({ isAuth, isAdmin }) => {
   const [name, setName] = useState("");
   const mainRef = useRef(null);
@@ -48,17 +48,19 @@ const Profile = ({ isAuth, isAdmin }) => {
     document.getElementById("editModal1").showModal();
   };
   const editFieldSave = async (id) => {
+    const token = cookies.get("token")
     try {
       handleCloseModal1();
-      const config = {
+      const config1 = {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       };
       const res = await axios.put(
         `${import.meta.env.VITE_SERVER}/update-user-exp?id=${id}`,
         { selectedPost },
-        config
+        config1
       );
       if (res.data.success) {
         fetchExp();
@@ -71,10 +73,12 @@ const Profile = ({ isAuth, isAdmin }) => {
   };
   const fetchExp = async () => {
     const email = cookies.get("email");
+    const token = cookies.get("token")
     try {
       const config = {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       };
       const res = await axios.post(
@@ -146,7 +150,7 @@ const Profile = ({ isAuth, isAdmin }) => {
       if (res) {
         const imagePath = res.imagePath;
         let imageUrl = await fetch(
-          `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`
+          `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`,
         );
         imageUrl = await imageUrl.json();
 

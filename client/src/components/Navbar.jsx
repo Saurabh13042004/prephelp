@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 import defaultImage from "../assets/image.png";
 import axios from "axios";
 import "../styles/animateText.css";
-
+import config from "../authIndex/header";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [token, setToken] = useState("");
@@ -38,20 +38,18 @@ function Navbar() {
   useEffect(() => {
     const email = cookies.get("email");
     const setImage = async () => {
+      
       if (email) {
+        const config ={
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
         let user = await axios.post(
-          `${import.meta.env.VITE_SERVER}/getUserDetails`,
-          {
-            method: "POST",
-            body: { email: email },
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
+          `${import.meta.env.VITE_SERVER}/getUserDetails`,config,{email:email}
         );
         if (user.data.success) {
           const imagePath = user.data.data.image;
-          // console.log(imagePath);
           if (imagePath) {
             let imageUrl = await fetch(
               `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`

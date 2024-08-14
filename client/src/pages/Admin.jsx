@@ -10,7 +10,8 @@ import AdminNavbar from "../components/AdminNavbar";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import config from "../authIndex/header";
+import Cookies from "universal-cookie";
 function Admin() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,60 +23,16 @@ function Admin() {
   const user = auth.currentUser;
   const [isSelected, setIsSelected] = useState("all"); // Updated default value
   const [filteredPosts, setFilteredPosts] = useState([]);
-
-  // const fetchData = async () => {  // FOR FIREBASE DATABASE
-  //   setLoading(true);
-  //   try {
-  //     const response = await getDocs(collection(db, "formResponses"));
-  //     const data = response.docs.map((doc) => ({ _id: doc._id, ...doc.data() }));
-  //     setPosts(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setLoading(false);
-  // };
-
-  // const handleCheckboxChange = async (e, _id) => {
-  //   const docRef = doc(db, "formResponses", _id);
-  //   const docSnap = await getDoc(docRef);
-  //   const data = docSnap.data();
-  //   const newData = { ...data, isApproved: !e.target.checked };
-  //   await setDoc(docRef, newData);
-  //   fetchData();
-  // };
-
-  // const handleSaveEdit = async () => {
-  //   alert("hello")
-  //   console.log(selectedPost)
-  //   const docRef = doc(db, "formResponses", selectedPost.id);
-  //   await setDoc(docRef, selectedPost);
-  //   fetchData();
-  //   setEditMode(false);
-  //   document.getElementBy_id("editModal").close();
-  // };
-
-  // const handleApproveTechQuestion = (index) => {
-  //   const updatedQuestions = [...approvedTechQuestions];
-  //   updatedQuestions[index] = !updatedQuestions[index];
-  //   setApprovedTechQuestions(updatedQuestions);
-  // };
-
-  // const handleApproveHRQuestion = (index) => {
-  //   const updatedQuestions = [...approvedHRQuestions];
-  //   updatedQuestions[index] = !updatedQuestions[index];
-  //   setApprovedHRQuestions(updatedQuestions);
-  // };
-
+  const cookie = new Cookies();
   const fetchData = async () => {
     // FOR MONGODB DATABASE
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER}/admin-users`
+        `${import.meta.env.VITE_SERVER}/admin-users`,
+        config
       );
       setPosts(response.data.users);
-      console.log(response.data.users)
       setFilteredPosts(response.data.users);
-      // console.log(response.data.users);
     } catch (error) {
       console.log("Error form the admin page get data " + error);
     }
@@ -83,26 +40,33 @@ function Admin() {
   const filterPosts = () => {
     switch (isSelected) {
       case "yes":
-        setFilteredPosts(posts.filter(post => post.gotOffer.toLowerCase() === "yes"));
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "yes")
+        );
         break;
       case "no":
-        setFilteredPosts(posts.filter(post => post.gotOffer.toLowerCase() === "no"));
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "no")
+        );
         break;
       case "progress":
-        setFilteredPosts(posts.filter(post => post.gotOffer.toLowerCase() === "progress")); 
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "progress")
+        );
         break;
       default:
         setFilteredPosts(posts);
         break;
     }
-  }
-    useEffect(() => {
-      filterPosts(); 
-    }, [isSelected, posts]);
+  };
+  useEffect(() => {
+    filterPosts();
+  }, [isSelected, posts]);
   const handleCheckboxChange = async (id, entry) => {
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_SERVER}/admin-update-approved`,
+        config,
         { id, isApproved: !entry.isApproved }
       );
       fetchData();
@@ -110,11 +74,11 @@ function Admin() {
       console.log("Error from the approves " + error);
     }
   };
-    const handleEditClick = (entry) => {
-      setSelectedPost(entry);
-      setEditMode(true);
-      document.getElementById("editModal").showModal();
-    };
+  const handleEditClick = (entry) => {
+    setSelectedPost(entry);
+    setEditMode(true);
+    document.getElementById("editModal").showModal();
+  };
   const handleDeleteQuestion = (questionIndex, questionType) => {
     const updatedQuestions = [...selectedPost[`${questionType}Questions`]];
     updatedQuestions.splice(questionIndex, 1);
@@ -124,15 +88,18 @@ function Admin() {
     });
   };
   const handleSaveEdit = async (id) => {
+    const token = cookie.get("token");
     handleCloseModal();
     try {
-      const config = {
+      const config1 = {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       };
       const response = await axios.put(
         `${import.meta.env.VITE_SERVER}/admin-update-allfield`,
+        config1,
         { id, selectedPost },
         config
       );
@@ -180,38 +147,36 @@ function Admin() {
         theme="colored"
         transition:Bounce
       />
-    {/* <input type="text" /> */}
-  
+      {/* <input type="text" /> */}
+
       <AdminNavbar />
-      
+
       {!user === null ? (
         <Loader />
       ) : (
         <>
-       
           <div className="overflow-x-auto m-auto mt-14 p-8">
-          <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
-            <p className="me-4 font-bold">Sort By Selection:</p>
-            <select
-              value={isSelected}
-              onChange={(e) => setIsSelected(e.target.value)}
-              className="p-2 border border-gray-300 rounded-md mr-2"
-            >
+            <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
+              <p className="me-4 font-bold">Sort By Selection:</p>
+              <select
+                value={isSelected}
+                onChange={(e) => setIsSelected(e.target.value)}
+                className="p-2 border border-gray-300 rounded-md mr-2"
+              >
                 <option key="all" value="all">
-                All
-              </option>
-              <option key="yes" value="yes">
-                Selected
-              </option>
-              <option key="no" value="no">
-                Not Selected
-              </option>
-              <option key="progress" value="progress">
-                In Progress
-              </option>
-              
-            </select>
-          </div>
+                  All
+                </option>
+                <option key="yes" value="yes">
+                  Selected
+                </option>
+                <option key="no" value="no">
+                  Not Selected
+                </option>
+                <option key="progress" value="progress">
+                  In Progress
+                </option>
+              </select>
+            </div>
             <table className="table">
               <thead>
                 <tr>
@@ -258,9 +223,13 @@ function Admin() {
                             entry.isApproved ? "text-green-500" : "text-red-500"
                           }`}
                         >
-                         {entry.gotOffer.toLowerCase() === "yes" ? "Selected" : entry.gotOffer.toLowerCase() === "no" ? "Not Selected" :entry.gotOffer.toLowerCase() === "progress" ? "In Progress" :" "}
-
-
+                          {entry.gotOffer.toLowerCase() === "yes"
+                            ? "Selected"
+                            : entry.gotOffer.toLowerCase() === "no"
+                            ? "Not Selected"
+                            : entry.gotOffer.toLowerCase() === "progress"
+                            ? "In Progress"
+                            : " "}
                         </span>
                       </td>
                       <td>

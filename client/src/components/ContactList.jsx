@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import AdminNavbar from "./AdminNavbar";
 import DataTable from "react-data-table-component";
-
+import config from "../authIndex/header";
 const ContactList = ({ isAuth, isAdmin }) => {
   const [contacts, setContacts] = useState([]);
   const tableRef = useRef();
@@ -11,7 +11,7 @@ const ContactList = ({ isAuth, isAdmin }) => {
   useEffect(() => {
     const getContacts = async () => {
       let response = await fetch(
-        `${import.meta.env.VITE_SERVER}/get-contact-list`
+        `${import.meta.env.VITE_SERVER}/get-contact-list`,config
       );
       response = await response.json();
       console.log(response)

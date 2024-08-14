@@ -4,9 +4,6 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { collection, getDocs, query, where } from "firebase/firestore";
-// import { db } from "../firebase";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AdminNavbar from "../components/AdminNavbar";
 function Addadmin() {
@@ -15,53 +12,15 @@ function Addadmin() {
   const navigate = useNavigate();
   const cookies = new Cookies();
 
-  //   const handleLogin = async (e) => {
-  //     e.preventDefault();
-
-  //     try {
-  //       const q = query(collection(db, "admin"), where("email", "==", email));
-
-  //       const querySnapshot = await getDocs(q);
-
-  //       if (querySnapshot.empty) {
-  //         toast.error("Invalid email or password");
-  //         return;
-  //       }
-
-  //       querySnapshot.forEach((doc) => {
-  //         if (doc.data().password === password) {
-  //           navigate("/admin");
-  //         } else {
-  //           toast.error("Invalid email or password");
-  //         }
-  //       });
-  //     } catch (error) {
-  //       console.error("Error signing in: ", error);
-  //       toast.error("Error signing in");
-  //     }
-  //   };
   const handleSignInDb = async (e) => {
+    const token = cookies.get("token");
     e.preventDefault();
-
-    // const obj = {
-    //   email: email,
-    //   password: password,
-    // };
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    // const response = await axios.put(
-    //   `${import.meta.env.VITE_SERVER}/add-admin`,
-    //   { email },
-    //   config
-    // );
     let response = await fetch(`${import.meta.env.VITE_SERVER}/add-admin`, {
       method: "PUT",
       body: JSON.stringify({ email }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
     response = await response.json();

@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import defaultImage from "../assets/image.png";
 import axios from "axios";
-
+import config from "../authIndex/header";
 function AdminNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [token, setToken] = useState("");
@@ -24,6 +24,7 @@ function AdminNavbar() {
           body: { email: email },
           headers: {
             "Content-Type": "application/json",
+            config,
           },
         }
       );
@@ -31,7 +32,12 @@ function AdminNavbar() {
         const imagePath = user.data.data.image;
         if (imagePath) {
           let imageUrl = await fetch(
-            `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`
+            `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`,
+            {
+              headers: {
+                config,
+              },
+            }
           );
           imageUrl = await imageUrl.json();
 

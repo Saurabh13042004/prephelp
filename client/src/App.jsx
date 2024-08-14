@@ -40,6 +40,7 @@ function App() {
   }, []);
   useEffect(() => {
     const validate = cookies.get("token");
+    console.log(validate)
     const decoded = decodeToken(validate);
     const expired = isExpired(validate);
     if (!expired) {
