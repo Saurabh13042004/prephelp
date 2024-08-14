@@ -214,6 +214,17 @@ function Admin() {
       })
     );
   };
+  const handleSingleSearch = () => {
+    const search = searchUser.toLowerCase();
+    setFilteredPosts(
+      posts.filter((post) => {
+        const matchesSearch =
+          post.name.toLowerCase().includes(search) ||
+          post.company.toLowerCase().includes(search);
+        return matchesSearch;
+      })
+    );
+  };
   const handleDelete = async (id) => {
     const userSatisfy = confirm("Are you sure to delete this user?");
     if (userSatisfy) {
@@ -253,35 +264,51 @@ function Admin() {
         theme="colored"
         transition:Bounce
       />
-      {/* <input type="text" /> */}
-
       <AdminNavbar />
 
       {!user === null ? (
         <Loader />
       ) : (
         <>
-          <div className="overflow-x-auto m-auto mt-14 p-8">
-            <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
-              <p className="me-4 font-bold">Sort By Selection:</p>
-              <select
-                value={isSelected}
-                onChange={(e) => setIsSelected(e.target.value)}
-                className="p-2 border border-gray-300 rounded-md mr-2"
+          <div className="overflow-x-auto m-auto mt-20 p-8">
+            <div className="flex flex-col justify-center items-center gap-6 md:flex-row mb-6">
+              <input
+                type="text"
+                className="rounded-lg"
+                placeholder="Enter name / company"
+                value={searchUser}
+                onChange={(e) => {
+                  setSearchUser(e.target.value);
+                  handleSingleSearch();
+                }}
+              />
+              <div className="flex justify-center items-center">
+                <p className="me-4 font-bold">Sort By Selection:</p>
+                <select
+                  value={isSelected}
+                  onChange={(e) => setIsSelected(e.target.value)}
+                  className="p-2 border border-gray-300 rounded-md mr-2"
+                >
+                  <option key="all" value="all">
+                    All
+                  </option>
+                  <option key="yes" value="yes">
+                    Selected
+                  </option>
+                  <option key="no" value="no">
+                    Not Selected
+                  </option>
+                  <option key="progress" value="progress">
+                    In Progress
+                  </option>
+                </select>
+              </div>
+              <button
+                onClick={handleCombineSearch}
+                className="p-2 bg-blue-500 hover:bg-blue-400 text-white rounded-lg"
               >
-                <option key="all" value="all">
-                  All
-                </option>
-                <option key="yes" value="yes">
-                  Selected
-                </option>
-                <option key="no" value="no">
-                  Not Selected
-                </option>
-                <option key="progress" value="progress">
-                  In Progress
-                </option>
-              </select>
+                Combine Search
+              </button>
             </div>
             <table className="table">
               <thead>
@@ -333,13 +360,6 @@ function Admin() {
                             entry.isApproved ? "text-green-500" : "text-red-500"
                           }`}
                         >
-                          {entry.gotOffer.toLowerCase() === "yes"
-                            ? "Selected"
-                            : entry.gotOffer.toLowerCase() === "no"
-                            ? "Not Selected"
-                            : entry.gotOffer.toLowerCase() === "progress"
-                            ? "In Progress"
-                            : " "}
                           {entry.gotOffer.toLowerCase() === "yes"
                             ? "Selected"
                             : entry.gotOffer.toLowerCase() === "no"

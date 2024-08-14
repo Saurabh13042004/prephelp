@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import defaultImage from "../assets/image.png";
 import axios from "axios";
-import config from "../authIndex/header";
+
 function AdminNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [token, setToken] = useState("");
@@ -24,7 +24,7 @@ function AdminNavbar() {
           body: { email: email },
           headers: {
             "Content-Type": "application/json",
-            config,
+            Authorization: `Bearer ${cookies.get("token")}`,
           },
         }
       );
@@ -35,7 +35,7 @@ function AdminNavbar() {
             `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`,
             {
               headers: {
-                config,
+                Authorization: `Bearer ${cookies.get("token")}`,
               },
             }
           );

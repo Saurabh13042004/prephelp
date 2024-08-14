@@ -10,7 +10,7 @@ import { CiEdit } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
 import Cookies from "universal-cookie";
-import config from "../authIndex/header";
+
 const Profile = ({ isAuth, isAdmin }) => {
   const [name, setName] = useState("");
   const mainRef = useRef(null);
@@ -120,7 +120,12 @@ const Profile = ({ isAuth, isAdmin }) => {
         const imagePath = user.data.data.image;
         if (imagePath) {
           let imageUrl = await fetch(
-            `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`
+            `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`,
+            {
+              headers: {
+                Authorization: `Bearer ${cookies.get("token")}`,
+              },
+            }
           );
           imageUrl = await imageUrl.json();
 
