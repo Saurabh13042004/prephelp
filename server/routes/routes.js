@@ -70,6 +70,6 @@ Route.get(
 );
 Route.post("/get-exp", authMiddleware, userController.getExp);
 Route.put("/update-user-exp", authMiddleware, userController.editExpUser);
-Route.post("/admin-delete/:_id", authMiddleware, adminController.deleteUser);
+Route.post("/admin-delete/:_id", authMiddleware,adminController.deleteUser);
 
 module.exports = Route;
