@@ -108,9 +108,8 @@ const Profile = ({ isAuth, isAdmin }) => {
     const setImage = async () => {
       let user = await axios.post(
         `${import.meta.env.VITE_SERVER}/getUserDetails`,
+        { email: email },
         {
-          method: "POST",
-          body: { email: email },
           headers: {
             "Content-Type": "application/json",
           },
@@ -128,7 +127,6 @@ const Profile = ({ isAuth, isAdmin }) => {
             }
           );
           imageUrl = await imageUrl.json();
-
           imageRef.current.src = "data:image/jpg;base64," + imageUrl.imagePath;
           setProfileImage("data:image/jpg;base64," + imageUrl.imagePath);
         }

@@ -46,13 +46,19 @@ function Navbar() {
           },
         }
         let user = await axios.post(
-          `${import.meta.env.VITE_SERVER}/getUserDetails`,config,{email:email}
+          `${import.meta.env.VITE_SERVER}/getUserDetails`,{email:email},config
         );
+        console.log(user.data.data)
         if (user.data.success) {
           const imagePath = user.data.data.image;
           if (imagePath) {
             let imageUrl = await fetch(
-              `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`
+              `${import.meta.env.VITE_SERVER}/send-profile-image/${imagePath}`,
+              {   
+                  headers: {
+                    Authorization: `Bearer ${cookies.get("token")}`,
+                  },
+              }
             );
             imageUrl = await imageUrl.json();
 

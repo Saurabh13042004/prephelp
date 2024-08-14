@@ -94,7 +94,9 @@ function BlogItem() {
           }
         );
 
-        const sortedPosts = data.data.exp.sort((a, b) => {
+        console.log(response)
+
+        const sortedPosts = response.data.exp.sort((a, b) => {
           const timeA = new Date(`${a.date[0]} ${a.date[1]}`);
           const timeB = new Date(`${b.date[0]} ${b.date[1]}`);
 

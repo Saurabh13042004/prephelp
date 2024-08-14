@@ -296,6 +296,7 @@ const profileImage = async (req, res) => {
 };
 const sendProfileImage = async (req, res) => {
   try {
+    console.log("Cpme")
     const imageFile = fs.readFileSync(
       `./profileUploads/${req.params.imgName}`,
       "base64"
