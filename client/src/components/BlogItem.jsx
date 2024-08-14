@@ -82,7 +82,7 @@ function BlogItem() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = cookie.get("token");
+      const token = cookies.get("token");
       setLoading(true);
       try {
         let response = await fetch(
