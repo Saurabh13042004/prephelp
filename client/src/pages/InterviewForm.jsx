@@ -4,7 +4,8 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Contact from "../components/Contact";
+import Cookies from "universal-cookie";
 const InterviewForm = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
@@ -17,7 +18,7 @@ const InterviewForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   // ... (Other state variables)
-
+  const cookie = new Cookies();
   const addRoundDetail = () => {
     setRoundDetails([
       ...roundDetails,
@@ -66,7 +67,7 @@ const InterviewForm = () => {
       roundDetails,
       // ... (Other form fields)
     };
-
+    const token = cookie.get("token");
     console.log(formData);
     try {
       const res = await fetch(`${import.meta.env.VITE_SERVER}/experience`, {
@@ -74,6 +75,7 @@ const InterviewForm = () => {
         body: JSON.stringify(formData),
         headers: {
           "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       if (res.success) {

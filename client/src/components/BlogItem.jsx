@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Loader from "./Loader";
 import axios from "axios";
 import Cookies from "universal-cookie";
-
 const getCompanyLogo = (company) => {
   switch (company) {
     case "Microsoft":
@@ -83,6 +82,7 @@ function BlogItem() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = cookie.get("token");
       setLoading(true);
       try {
         let response = await fetch(
@@ -93,9 +93,8 @@ function BlogItem() {
             },
           }
         );
-        response = await response.json();
-        // Sort the fetched posts by date in descending order
-        const sortedPosts = response.exp.sort((a, b) => {
+
+        const sortedPosts = data.data.exp.sort((a, b) => {
           const timeA = new Date(`${a.date[0]} ${a.date[1]}`);
           const timeB = new Date(`${b.date[0]} ${b.date[1]}`);
 

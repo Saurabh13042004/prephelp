@@ -182,6 +182,7 @@ function Form() {
       groupDiscussion: groupDiscussion,
     };
     try {
+      const token = cookies.get("token");
       let res = await fetch(`${import.meta.env.VITE_SERVER}/experience`, {
         method: "POST",
         body: JSON.stringify(formData),

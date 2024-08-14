@@ -65,6 +65,7 @@ Route.put("/edit-name", authMiddleware, userController.changeName);
 Route.post("/profile-image", upload.any(), userController.profileImage);
 Route.get(
   "/send-profile-image/profileUploads/:imgName",
+  authMiddleware,
   userController.sendProfileImage
 );
 Route.post("/get-exp", authMiddleware, userController.getExp);

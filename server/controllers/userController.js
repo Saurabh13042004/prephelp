@@ -144,7 +144,7 @@ const adminlogin = async (req, res) => {
 };
 const getUserDetails = async (req, res) => {
   try {
-    const userExit = await userModel.findOne({ email: req.body.body.email });
+    const userExit = await userModel.findOne({ email: req.body.email });
     if (!userExit) {
       return res.status(200).send({
         message: "User not exit",

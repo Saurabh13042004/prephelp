@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-// import { db } from "../firebase";
 import Loader from "./Loader";
-// import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { FaLinkedin, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -33,7 +31,6 @@ const BlogPost = () => {
           },
         }
       );
-      // console.log(response.data);
       setPost(response.data.data);
       setHrques(response.data.hrques);
       setTechques(response.data.techques);

@@ -25,37 +25,6 @@ function Admin() {
   const [searchUser, setSearchUser] = useState("");
   const cookies = new Cookies();
 
-  // const fetchData = async () => {  // FOR FIREBASE DATABASE
-  //   setLoading(true);
-  //   try {
-  //     const response = await getDocs(collection(db, "formResponses"));
-  //     const data = response.docs.map((doc) => ({ _id: doc._id, ...doc.data() }));
-  //     setPosts(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setLoading(false);
-  // };
-
-  // const handleCheckboxChange = async (e, _id) => {
-  //   const docRef = doc(db, "formResponses", _id);
-  //   const docSnap = await getDoc(docRef);
-  //   const data = docSnap.data();
-  //   const newData = { ...data, isApproved: !e.target.checked };
-  //   await setDoc(docRef, newData);
-  //   fetchData();
-  // };
-
-  // const handleSaveEdit = async () => {
-  //   alert("hello")
-  //   console.log(selectedPost)
-  //   const docRef = doc(db, "formResponses", selectedPost.id);
-  //   await setDoc(docRef, selectedPost);
-  //   fetchData();
-  //   setEditMode(false);
-  //   document.getElementBy_id("editModal").close();
-  // };
-
   // const handleApproveTechQuestion = (index) => {
   //   const updatedQuestions = [...approvedTechQuestions];
   //   updatedQuestions[index] = !updatedQuestions[index];
@@ -127,8 +96,6 @@ function Admin() {
       }
       setPosts(response.data.users);
       setFilteredPosts(response.data.users);
-
-      // console.log(response.data.users);
     } catch (error) {
       toast.error(error.response.data.message);
       // console.log("Error form the admin page get data " + error);
@@ -140,13 +107,22 @@ function Admin() {
         setFilteredPosts(
           posts.filter((post) => post.gotOffer.toLowerCase() === "yes")
         );
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "yes")
+        );
         break;
       case "no":
         setFilteredPosts(
           posts.filter((post) => post.gotOffer.toLowerCase() === "no")
         );
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "no")
+        );
         break;
       case "progress":
+        setFilteredPosts(
+          posts.filter((post) => post.gotOffer.toLowerCase() === "progress")
+        );
         setFilteredPosts(
           posts.filter((post) => post.gotOffer.toLowerCase() === "progress")
         );
@@ -156,6 +132,9 @@ function Admin() {
         break;
     }
   };
+  useEffect(() => {
+    filterPosts();
+  }, [isSelected, posts]);
   const handleCheckboxChange = async (id, entry) => {
     try {
       const response = await axios.put(
@@ -187,9 +166,10 @@ function Admin() {
     });
   };
   const handleSaveEdit = async (id) => {
+    const token = cookie.get("token");
     handleCloseModal();
     try {
-      const config = {
+      const config1 = {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${cookies.get("token")}`,
@@ -197,6 +177,7 @@ function Admin() {
       };
       const response = await axios.put(
         `${import.meta.env.VITE_SERVER}/admin-update-allfield`,
+        config1,
         { id, selectedPost },
         config
       );
@@ -272,50 +253,35 @@ function Admin() {
         theme="colored"
         transition:Bounce
       />
+      {/* <input type="text" /> */}
+
       <AdminNavbar />
 
       {!user === null ? (
         <Loader />
       ) : (
         <>
-          <div className="flex flex-col overflow-x-auto m-auto mt-14 p-8 gap-5">
-            <div className="flex  justify-center items-center gap-5 flex-wrap  mt-4">
-              <div className="flex  justify-center items-center">
-                <input
-                  type="text"
-                  placeholder="Search by user / company"
-                  className="rounded-lg"
-                  value={searchUser}
-                  onChange={(e) => setSearchUser(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col justify-center items-center md:flex-row">
-                <p className="me-4 font-bold">Sort By Selection:</p>
-                <select
-                  value={isSelected}
-                  onChange={(e) => setIsSelected(e.target.value)}
-                  className="p-2 border border-gray-300 rounded-md mr-2"
-                >
-                  <option key="all" value="all">
-                    All
-                  </option>
-                  <option key="yes" value="yes">
-                    Selected
-                  </option>
-                  <option key="no" value="no">
-                    Not Selected
-                  </option>
-                  <option key="progress" value="progress">
-                    In Progress
-                  </option>
-                </select>
-              </div>
-              <button
-                onClick={handleCombineSearch}
-                className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500"
+          <div className="overflow-x-auto m-auto mt-14 p-8">
+            <div className="flex flex-col justify-center items-center gap-3 md:gap-2 md:flex-row">
+              <p className="me-4 font-bold">Sort By Selection:</p>
+              <select
+                value={isSelected}
+                onChange={(e) => setIsSelected(e.target.value)}
+                className="p-2 border border-gray-300 rounded-md mr-2"
               >
-                Combine Search
-              </button>
+                <option key="all" value="all">
+                  All
+                </option>
+                <option key="yes" value="yes">
+                  Selected
+                </option>
+                <option key="no" value="no">
+                  Not Selected
+                </option>
+                <option key="progress" value="progress">
+                  In Progress
+                </option>
+              </select>
             </div>
             <table className="table">
               <thead>
@@ -367,6 +333,13 @@ function Admin() {
                             entry.isApproved ? "text-green-500" : "text-red-500"
                           }`}
                         >
+                          {entry.gotOffer.toLowerCase() === "yes"
+                            ? "Selected"
+                            : entry.gotOffer.toLowerCase() === "no"
+                            ? "Not Selected"
+                            : entry.gotOffer.toLowerCase() === "progress"
+                            ? "In Progress"
+                            : " "}
                           {entry.gotOffer.toLowerCase() === "yes"
                             ? "Selected"
                             : entry.gotOffer.toLowerCase() === "no"
