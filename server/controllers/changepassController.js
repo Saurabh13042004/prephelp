@@ -11,15 +11,14 @@ const otpGenerate = async (userEmail) => {
       port: 465,
       secure: true,
       auth: {
-        user: "arshdeeprooprai@gmail.com",
-        pass: "guzk pmxt pusy oloc",
+        user: "uprep@chitkarauniversity.edu.in",
+        pass: "rjqs djto ojrb mvdt",
       },
     });
     const mailOptions = {
-      from: 
-      {
-        name:"uprep-team",
-        address:"arshdeeprooprai@gmail.com"
+      from: {
+        name: "uprep-team",
+        address: "uprep@chitkarauniversity.edu.in",
       },
       to: userEmail,
       subject: "Verification Email OTP",
