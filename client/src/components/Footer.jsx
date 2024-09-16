@@ -38,6 +38,11 @@ function Footer() {
                     Practice Questions
                   </a>
                 </li>
+                <li className="mb-4">
+                  <a href="/dev-team" className="hover:underline">
+                    Developer Team
+                  </a>
+                </li>
               </ul>
             </div>
             <div>

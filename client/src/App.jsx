@@ -21,6 +21,7 @@ import Profile from "./pages/Profile";
 import "./styles/animateText.css";
 import { decodeToken, isExpired } from "react-jwt";
 import ContactList from "./components/ContactList";
+import DevTeamPage from "./pages/Devteam";
 
 function App() {
   const [isAuth, setIsAuth] = useState(null);
@@ -67,6 +68,7 @@ function App() {
         </div>
       )}
       <Routes>
+        <Route path="/dev-team" element={<DevTeamPage/>} />
         <Route
           path="/"
           element={
