@@ -1,7 +1,7 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import ArijitGhosh from "../assets/devTeam/Arijit.jpg";
- import ArshdeepRooprai from "../assets/devTeam/Arshdeep.png";
+import ArshdeepRooprai from "../assets/devTeam/Arshdeep.png";
 import saurabh from "../assets/devTeam/saurabh.jpg";
 
 export default function DevTeamPage() {
@@ -55,8 +55,9 @@ export default function DevTeamPage() {
       role: "Project Lead & Full Stack Developer",
       image: saurabh,
       github: "https://github.com/Saurabh13042004h",
-      linkedin: "https://www.linkedin.com/in/devain-sharma-5a80402b4/",
-      mail: "officialdevain25@gmail.com",
+      linkedin:
+        "https://www.linkedin.com/in/sv176734?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      mail: "sv176734@gmail.com",
     },
     {
       name: "ARSHDEEP ROOPRAI",
