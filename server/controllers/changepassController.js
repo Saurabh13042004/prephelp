@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const otpGenerate = async (userEmail) => {
   try {
-    const otp = Math.floor(100000 + Math.random() * 900000);
+    const otp = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit OTP
     const transporter = await nodemailer.createTransport({
       service: "Gmail",
       host: "smtp.gmail.com",
@@ -15,15 +15,27 @@ const otpGenerate = async (userEmail) => {
         pass: "rjqs djto ojrb mvdt",
       },
     });
+
+    // Create the email body with HTML
     const mailOptions = {
       from: {
         name: "uprep-team",
         address: "uprep@chitkarauniversity.edu.in",
       },
       to: userEmail,
-      subject: "Verification Email OTP",
-      text: `Your OTP for email verification is: ${otp}`,
+      subject: "Verify Your Login",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 10px; border: 1px solid #dcdcdc; border-radius: 10px;">
+          <h2 style="text-align: center; color: #333;">Verify Your Login - ${userEmail}</h2>
+          <p style="color: #333;">Dear ${userEmail},</p>
+          <p>Use OTP <strong>${otp}</strong> to log in to your account.</p>
+          <p>OTP valid for 15 minutes from the time of generation.</p>
+          <p style="text-align: center; color: #555;">Powered by Chitkara</p>
+          <p style="text-align: center;"><a href="https://www.chitkara.edu.in" style="color: #ff0000; text-decoration: none;">www.chitkara.edu.in</a></p>
+        </div>
+      `,
     };
+
     await transporter.sendMail(mailOptions);
     return otp;
   } catch (error) {
