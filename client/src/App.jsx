@@ -8,11 +8,9 @@ import Home from "./pages/Home";
 import Form from "./pages/Form";
 import BlogPost from "./components/BlogPost";
 import Questions from "./pages/Questions";
-import InterviewForm from "./pages/InterviewForm";
 import Error404 from "./pages/Error404";
 import LandingPage from "./components/LandingPage";
 import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
 import { useEffect, useState } from "react";
 import Contact from "./components/Contact";
 import Cookies from "universal-cookie";
@@ -68,7 +66,7 @@ function App() {
         </div>
       )}
       <Routes>
-        <Route path="/dev-team" element={<DevTeamPage/>} />
+        <Route path="/dev-team" element={<DevTeamPage />} />
         <Route
           path="/"
           element={

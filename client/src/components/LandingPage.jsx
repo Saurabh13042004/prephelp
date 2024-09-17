@@ -6,12 +6,10 @@ import { RiLoginCircleLine } from "react-icons/ri";
 import { FaCode, FaAccusoft } from "react-icons/fa";
 import { IoMdMailUnread } from "react-icons/io";
 import { Link } from "react-router-dom";
-import video from "../assets/video.mp4";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GiHamburgerMenu } from "react-icons/gi";
-import axios from "axios";
 import Cookies from "universal-cookie";
+import Testimonial from "./Testimonial";
 
 function LandingPage() {
   const controls = useAnimation();
@@ -341,7 +339,7 @@ function LandingPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Explore the Capital Product
+                Explore Your Potential
                 <span className="flex items-center gap-x-1">
                   <span className="border-s border-gray-200 text-blue-600 ps-2 dark:text-blue-500">
                     Explore
@@ -601,9 +599,8 @@ function LandingPage() {
                           Customizable Rules for Your Successs
                         </span>
                         <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">
-                          Use ailor your interview preparation journey with
-                          advanced tools designed to manage every aspect of your
-                          career readiness.
+                          Tailor your preparation with resources specifically
+                          designed to maximize your career success.
                         </span>
                       </span>
                     </span>
@@ -638,9 +635,8 @@ function LandingPage() {
                           Empower Your Preparation
                         </span>
                         <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">
-                          Our platform is equipped with advanced tools to ensure
-                          you are well-prepared for every opportunity that comes
-                          your way.
+                          Empower your journey with our modern solutions
+                          designed to give you a competitive edge in interviews.
                         </span>
                       </span>
                     </span>
@@ -698,7 +694,7 @@ function LandingPage() {
                     >
                       <img
                         className="shadow-xl shadow-gray-200 rounded-xl dark:shadow-gray-900/[.2]"
-                        src="https://images.unsplash.com/photo-1605629921711-2f6b00c6bbf4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&h=1220&q=80"
+                        src="https://images.pexels.com/photos/1557251/pexels-photo-1557251.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                         alt="Image Description"
                       />
                     </div>
@@ -711,8 +707,7 @@ function LandingPage() {
                     >
                       <img
                         className="shadow-xl shadow-gray-200 rounded-xl dark:shadow-gray-900/[.2]"
-                        src="https://images.unsplash.com/photo-1665686306574-1ace09918530?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&h=1220&q=80"
-                        alt="Image Description"
+                        src="https://images.pexels.com/photos/6632371/pexels-photo-6632371.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                       />
                     </div>
 
@@ -774,65 +769,10 @@ function LandingPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="bg-[#ECF0F5] dark:bg-gray-900 mx-auto items-center justify-center flex"
+        className="bg-white dark:bg-gray-900 mx-auto items-center justify-center flex"
         id="about"
       >
-        <div className="relative overflow-hidden">
-          <div className="max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8 lg:py-16 mx-auto">
-            <div aria-hidden="true" className="flex absolute start-0 -z-[1]">
-              <div className="bg-purple-200 opacity-20 blur-3xl w-[1036px] h-[300px] dark:bg-purple-900 dark:opacity-20"></div>
-            </div>
-
-            <div className="lg:grid lg:grid-cols-6 lg:gap-8 lg:items-center">
-              <div className="hidden lg:block lg:col-span-2">
-                <video className="rounded-lg" autoPlay muted loop>
-                  <source src={video} type="video/mp4" />
-                </video>
-              </div>
-
-              <div className="lg:col-span-4">
-                <blockquote>
-                  <motion.img
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="w-24 h-auto mb-4"
-                    src="https://assets-global.website-files.com/63e3db0853d16fd219ecdb33/6410c12087e0984729244c1a_Prophecy%20Dark%20Logo.svg"
-                    alt="Logo"
-                    viewBox="-0.3 0 320.3999999999999 99.9"
-                  />
-
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="text-xl font-medium text-gray-800 lg:text-2xl lg:leading-normal dark:text-gray-200"
-                  >
-                    “PrepHelp is a platform that helps you prepare for your
-                    on-campus interviews by providing you with the interview
-                    experiences of your seniors, the most frequently asked
-                    questions, and the best resources.”
-                  </motion.p>
-
-                  <footer className="mt-6">
-                    <div className="flex items-center">
-                      <div className="lg:hidden flex-shrink-0">
-                        <motion.img
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.8 }}
-                          className="h-12 w-12 rounded-full"
-                          src="https://images.unsplash.com/photo-1671726203390-cdc4354ee2eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
-                          alt="Image Description"
-                        />
-                      </div>
-                    </div>
-                  </footer>
-                </blockquote>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Testimonial />
       </motion.section>
 
       <motion.section
@@ -977,9 +917,9 @@ function LandingPage() {
                     </p>
                     <a
                       className="mt-2 inline-flex items-center gap-x-2 text-sm font-medium text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      href="#"
+                      href="mailto:uprep@chitkarauniversity.edu.in"
                     >
-                      contact@prephelp.in
+                      uprep@chitkarauniversity.edu.in
                       <svg
                         className="flex-shrink-0 w-2.5 h-2.5 transition ease-in-out group-hover:translate-x-1"
                         width="16"
@@ -1050,22 +990,22 @@ function LandingPage() {
                     <div className="mt-3 space-x-2">
                       <a
                         className="inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800"
-                        href="#"
+                        href="https://www.instagram.com/chitkarau/?hl=en"
+                        target="_blank"
                       >
                         <svg
-                          className="flex-shrink-0 w-3.5 h-3.5"
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
                           height="16"
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
+                          viewBox="0 0 48 48"
                         >
-                          <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                          <path d="M 16.5 5 C 10.16639 5 5 10.16639 5 16.5 L 5 31.5 C 5 37.832757 10.166209 43 16.5 43 L 31.5 43 C 37.832938 43 43 37.832938 43 31.5 L 43 16.5 C 43 10.166209 37.832757 5 31.5 5 L 16.5 5 z M 16.5 8 L 31.5 8 C 36.211243 8 40 11.787791 40 16.5 L 40 31.5 C 40 36.211062 36.211062 40 31.5 40 L 16.5 40 C 11.787791 40 8 36.211243 8 31.5 L 8 16.5 C 8 11.78761 11.78761 8 16.5 8 z M 34 12 C 32.895 12 32 12.895 32 14 C 32 15.105 32.895 16 34 16 C 35.105 16 36 15.105 36 14 C 36 12.895 35.105 12 34 12 z M 24 14 C 18.495178 14 14 18.495178 14 24 C 14 29.504822 18.495178 34 24 34 C 29.504822 34 34 29.504822 34 24 C 34 18.495178 29.504822 14 24 14 z M 24 17 C 27.883178 17 31 20.116822 31 24 C 31 27.883178 27.883178 31 24 31 C 20.116822 31 17 27.883178 17 24 C 17 20.116822 20.116822 17 24 17 z"></path>
                         </svg>
                       </a>
                       <a
                         className="inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800"
-                        href="#"
+                        href="https://x.com/ChitkaraU"
+                        target="_blank"
                       >
                         <svg
                           className="flex-shrink-0 w-3.5 h-3.5"
@@ -1080,22 +1020,8 @@ function LandingPage() {
                       </a>
                       <a
                         className="inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800"
-                        href="#"
-                      >
-                        <svg
-                          className="flex-shrink-0 w-3.5 h-3.5"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-                        </svg>
-                      </a>
-                      <a
-                        className="inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800"
-                        href="#"
+                        href="https://www.chitkarauniversity.edu.in/"
+                        target="_blank"
                       >
                         <svg
                           className="flex-shrink-0 w-3.5 h-3.5"
@@ -1150,22 +1076,22 @@ function LandingPage() {
             <div className="mt-3 space-x-2">
               <a
                 className="inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800"
-                href="#"
+                href="https://www.instagram.com/chitkarau/?hl=en"
+                target="_blank"
               >
                 <svg
-                  className="flex-shrink-0 w-3.5 h-3.5"
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
-                  fill="currentColor"
-                  viewBox="0 0 16 16"
+                  viewBox="0 0 48 48"
                 >
-                  <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                  <path d="M 16.5 5 C 10.16639 5 5 10.16639 5 16.5 L 5 31.5 C 5 37.832757 10.166209 43 16.5 43 L 31.5 43 C 37.832938 43 43 37.832938 43 31.5 L 43 16.5 C 43 10.166209 37.832757 5 31.5 5 L 16.5 5 z M 16.5 8 L 31.5 8 C 36.211243 8 40 11.787791 40 16.5 L 40 31.5 C 40 36.211062 36.211062 40 31.5 40 L 16.5 40 C 11.787791 40 8 36.211243 8 31.5 L 8 16.5 C 8 11.78761 11.78761 8 16.5 8 z M 34 12 C 32.895 12 32 12.895 32 14 C 32 15.105 32.895 16 34 16 C 35.105 16 36 15.105 36 14 C 36 12.895 35.105 12 34 12 z M 24 14 C 18.495178 14 14 18.495178 14 24 C 14 29.504822 18.495178 34 24 34 C 29.504822 34 34 29.504822 34 24 C 34 18.495178 29.504822 14 24 14 z M 24 17 C 27.883178 17 31 20.116822 31 24 C 31 27.883178 27.883178 31 24 31 C 20.116822 31 17 27.883178 17 24 C 17 20.116822 20.116822 17 24 17 z"></path>
                 </svg>
               </a>
               <a
                 className="inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800"
-                href="#"
+                href="https://x.com/ChitkaraU"
+                target="_blank"
               >
                 <svg
                   className="flex-shrink-0 w-3.5 h-3.5"
@@ -1180,22 +1106,8 @@ function LandingPage() {
               </a>
               <a
                 className="inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800"
-                href="#"
-              >
-                <svg
-                  className="flex-shrink-0 w-3.5 h-3.5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-                </svg>
-              </a>
-              <a
-                className="inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800"
-                href="#"
+                href="https://www.chitkarauniversity.edu.in/"
+                target="_blank"
               >
                 <svg
                   className="flex-shrink-0 w-3.5 h-3.5"
