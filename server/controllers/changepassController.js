@@ -11,8 +11,8 @@ const otpGenerate = async (userEmail) => {
       port: 465,
       secure: true,
       auth: {
-        user: "uprep@chitkarauniversity.edu.in",
-        pass: "rjqs djto ojrb mvdt",
+        user:process.env.USER,
+        pass:process.env.PASS,
       },
     });
 

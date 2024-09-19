@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-// import { db } from "../firebase";
-// import { collection, getDocs } from "firebase/firestore";
 import Loader from "./Loader";
 import axios from "axios";
 import Cookies from "universal-cookie";

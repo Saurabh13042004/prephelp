@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { db } from "../firebase";
-// import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
 import Loader from "../components/Loader";
 // import Navbar from "../components/Navbar";
 import { MdDeleteForever } from "react-icons/md";
@@ -18,8 +15,6 @@ function Admin() {
   const [editMode, setEditMode] = useState(false);
   const [approvedTechQuestions, setApprovedTechQuestions] = useState([]);
   const [approvedHRQuestions, setApprovedHRQuestions] = useState([]);
-  const auth = getAuth();
-  const user = auth.currentUser;
   const [isSelected, setIsSelected] = useState("all"); // Updated default value
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchUser, setSearchUser] = useState("");
@@ -266,9 +261,6 @@ function Admin() {
       />
       <AdminNavbar />
 
-      {!user === null ? (
-        <Loader />
-      ) : (
         <>
           <div className="overflow-x-auto m-auto mt-20 p-8">
             <div className="flex flex-col justify-center items-center gap-6 md:flex-row mb-6">
@@ -712,7 +704,6 @@ function Admin() {
             </div>
           </dialog>
         </>
-      )}
     </div>
   );
 }
