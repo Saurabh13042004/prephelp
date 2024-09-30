@@ -74,7 +74,7 @@ function Login() {
           body: JSON.stringify({ email: newEmail, password, rememberMe }),
         });
         response = await response.json();
-
+        console.log(response)
         if (response.success) {
           if (response.isAdmin === true) {
             cookies.set("token", response.token);

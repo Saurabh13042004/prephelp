@@ -20,6 +20,8 @@ import "./styles/animateText.css";
 import { decodeToken, isExpired } from "react-jwt";
 import ContactList from "./components/ContactList";
 import DevTeamPage from "./pages/Devteam";
+import Review from "./pages/Review";
+import BackupPage from "./pages/BackupPage";
 
 function App() {
   const [isAuth, setIsAuth] = useState(null);
@@ -88,6 +90,14 @@ function App() {
         <Route
           path="/admin"
           element={isAuth && isAdmin ? <Admin /> : <Login />}
+        />
+          <Route
+          path="/reviews"
+          element={isAuth && isAdmin ? <Review /> : <Login />}
+        />
+        <Route
+          path="/backup"
+          element={isAuth && isAdmin ? <BackupPage /> : <Login />}
         />
         <Route
           path="/add-admin"

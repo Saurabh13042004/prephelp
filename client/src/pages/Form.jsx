@@ -277,7 +277,7 @@ function Form() {
             <div className="flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52">
               <div className="w-80">
                 <label className="block font-semibold mt-8 mb-5">
-                  Enter Cgpa required for applying*
+                 Minimum Cgpa required for applying*
                 </label>
                 <select
                   required
@@ -373,7 +373,7 @@ function Form() {
               </div>
               <div className="w-80">
                 <label className="block font-semibold my-12">
-                  Location Of company?*
+                  Location Of Company?*
                 </label>
                 <input
                   type="text"
@@ -388,7 +388,8 @@ function Form() {
             <div className="flex flex-col lg:flex-row md:flex-row lg:space-x-64 md:space-x-52">
               <div className="w-80">
                 <label className="block font-semibold mt-8 mb-5">
-                  No. of Rounds*
+                  No. of Rounds Attempted*
+
                 </label>
                 <input
                   required

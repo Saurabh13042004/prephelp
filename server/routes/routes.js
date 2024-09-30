@@ -5,7 +5,10 @@ const adminController = require("../controllers/adminController.js");
 const authMiddleware = require("../middleware/authMiddleware.js");
 const contactController = require("../controllers/contactController.js");
 const changepassController = require("../controllers/changepassController.js");
+const reviewController = require("../controllers/reviewController.js");
+const backUpController = require("../controllers/backUpController.js");
 const multer = require("multer");
+const fs = require("fs")
 const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const uniqueSuffix = file.mimetype.split("/");
@@ -24,6 +27,22 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+const uploadBackUpdata = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      const dir = "backupModal/";
+
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+      }
+      cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + "_" + file.originalname);
+    },
+  }),
+});
 
 Route.get("/", userController.Func);
 Route.get(
@@ -70,5 +89,15 @@ Route.get(
 Route.post("/get-exp", authMiddleware, userController.getExp);
 Route.put("/update-user-exp", authMiddleware, userController.editExpUser);
 Route.post("/admin-delete/:_id", authMiddleware, adminController.deleteUser);
+Route.post("/upload-review", reviewController.uploadReview);
+Route.put("/update-review", reviewController.updateReview);
+Route.get("/get-reviews-admin", reviewController.getReviewAdmin);
+Route.get("/get-reviews-user", reviewController.getReviewuser);
+Route.get("/take-backup", backUpController.getBackUp);
+Route.post(
+  "/upload-backup",
+  uploadBackUpdata.single("file"),
+  backUpController.uploadBackUp
+);
 
 module.exports = Route;

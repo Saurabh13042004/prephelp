@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import ArijitGhosh from "../assets/devTeam/Arijit.jpg";
 import ArshdeepRooprai from "../assets/devTeam/Arshdeep.png";
 import saurabh from "../assets/devTeam/saurabh.jpg";
+import shankar from "../assets/devTeam/sankar_sir.jpg";
 
 export default function DevTeamPage() {
   // Avatar components
@@ -50,6 +51,14 @@ export default function DevTeamPage() {
   );
 
   const developers = [
+    {
+      name: "Dr. Shankar S Aggarwal",
+      role: "Project Leader",
+      image: shankar,
+      linkedin:
+        "https://www.linkedin.com/in/dr-shankar-s-aggarwal-8bb0319?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    },
+
     {
       name: "SAURABH SHUKLA",
       role: "Project Lead & Full Stack Developer",
