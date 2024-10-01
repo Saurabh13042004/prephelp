@@ -1,6 +1,6 @@
 const expModel = require("../models/expModel");
 const xlsx = require("xlsx");
-const fs = require("fs")
+const fs = require("fs");
 const getBackUp = async (req, res) => {
   try {
     const data = await expModel.find({});
@@ -65,14 +65,11 @@ const uploadBackUp = async (req, res) => {
       }
     });
 
-    res
-      .status(200)
-      .json({
-        message:
-          "Data successfully uploaded, saved to database, and file deleted",
-      });
+    res.status(200).json({
+      message: "Data uploaded successfully",
+    });
   } catch (error) {
-    console.log("Error" + error)
+    console.log("Error" + error);
     res.status(500).json({ message: "Error uploading and saving data", error });
   }
 };

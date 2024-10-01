@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "universal-cookie";
 import Testimonial from "./Testimonial";
+import bgVideo from "../assets/chitkara_bg_video.mp4";
 
 function LandingPage() {
   const controls = useAnimation();
@@ -330,7 +331,17 @@ function LandingPage() {
         transition={{ duration: 0.5 }}
         id="home"
       >
-        <div className="relative overflow-hidden before:absolute before:top-0 before:start-1/2 bg-[url('https://preline.co/assets/svg/component/squared-bg-element.svg')] before:bg-no-repeat before:bg-top before:w-full before:h-full before:-z-[1] before:transform before:-translate-x-1/2 dark:before:bg-[url('https://preline.co/assets/svg/component/squared-bg-element-dark.svg')]">
+        <video
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-50"
+          autoPlay
+          muted
+          loop
+        >
+          <source src={bgVideo} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black opacity-50 z-1"></div>
+
+        <div className="relative overflow-hidden before:absolute before:top-0 before:start-1/2 before:bg-no-repeat before:bg-top before:w-full before:h-full before:-z-[1] before:transform before:-translate-x-1/2">
           <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10">
             <div className="flex justify-center">
               <motion.a
@@ -363,13 +374,13 @@ function LandingPage() {
             </div>
 
             <div className="mt-5 max-w-xl text-center mx-auto">
-              <h1 className="block font-bold text-gray-800 text-4xl md:text-5xl lg:text-6xl dark:text-gray-200">
+              <h1 className="block font-bold text-white text-4xl md:text-5xl lg:text-6xl dark:text-gray-200">
                 Welcome to PrepHelp
               </h1>
             </div>
 
             <div className="mt-5 max-w-3xl text-center mx-auto">
-              <p className="text-lg text-gray-600 dark:text-gray-400">
+              <p className="text-lg text-white dark:text-gray-400">
                 PrepHelp is a platform that helps you prepare for your
                 interviews by providing you with the best resources and
                 guidance.

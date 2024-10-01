@@ -23,28 +23,43 @@ const FileUpload = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const data = await axios.post("http://localhost:8000/upload-backup", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const data = await axios.post(
+        "http://localhost:8000/upload-backup",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      console.log(data);
-      toast.success("File uploaded successfully!", {
-        position: "top-right",
+      // console.log(data);
+      toast.success(data.data.message, {
+        position: "top-left",
       });
       fileInputRef.current.value = "";
     } catch (error) {
       fileInputRef.current.value = "";
       toast.error("Error uploading file. Please try again.", {
-        position: "top-right",
+        position: "top-left",
       });
     }
   };
 
   return (
     <div className="flex flex-col items-center p-6 bg-white rounded-md shadow-md w-full md:w-1/2">
-      <ToastContainer />
+      <ToastContainer
+        position="top-left"
+        autoClose={1100}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <h2 className="text-xl font-semibold mb-4">Upload Backup File</h2>
       <input
         type="file"
