@@ -4,6 +4,7 @@ import ArijitGhosh from "../assets/devTeam/Arijit.jpg";
 import ArshdeepRooprai from "../assets/devTeam/Arshdeep.png";
 import saurabh from "../assets/devTeam/saurabh.jpg";
 import shankar from "../assets/devTeam/sankar_sir.jpg";
+import aniket from "../assets/devTeam/Aniket.jpeg";
 
 export default function DevTeamPage() {
   // Avatar components
@@ -67,6 +68,15 @@ export default function DevTeamPage() {
       linkedin:
         "https://www.linkedin.com/in/sv176734?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       mail: "sv176734@gmail.com",
+    },
+    {
+      name: "ANIKET KUMAR",
+      role: "Project Lead & Full Stack Developer",
+      image: aniket,
+      github: "https://github.com",
+      linkedin:
+        "https://www.linkedin.com/in/aniket-kumar-62a177224?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      mail: "",
     },
     {
       name: "ARSHDEEP ROOPRAI",
