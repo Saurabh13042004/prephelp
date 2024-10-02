@@ -67,7 +67,7 @@ Route.put(
   authMiddleware,
   adminController.updateField
 );
-Route.post("/contact", authMiddleware, contactController.storeContact);
+Route.post("/contact", contactController.storeContact);
 Route.post("/verifyEmail", userController.generateOtpFunc);
 Route.post("/getUserDetails", userController.getUserDetails);
 Route.post("/changePassword", authMiddleware, changepassController.changePass);

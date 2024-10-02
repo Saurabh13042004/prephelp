@@ -13,10 +13,6 @@ function Home() {
     position: ""
   }); 
 
-  useEffect(() => {
-    setIsModalOpen(true);
-  }, []);
-
   const handleChange = (e) => {
     setReviewData({
       ...reviewData,

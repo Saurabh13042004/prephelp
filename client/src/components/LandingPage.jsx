@@ -71,6 +71,7 @@ function LandingPage() {
         body: JSON.stringify(obj),
       });
       const data = await response.json();
+      console.log(data)
       if (data.status === 201) {
         toast.success(data.message, {
           position: "top-left",
@@ -87,7 +88,12 @@ function LandingPage() {
         setQuery("");
         setuid("");
       }
+      else
+      {
+        toast.error(data.message)
+      }
     } catch (error) {
+      toast.error('Something Went wrong')
       console.log(error);
     }
   };
