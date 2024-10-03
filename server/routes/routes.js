@@ -8,7 +8,7 @@ const changepassController = require("../controllers/changepassController.js");
 const reviewController = require("../controllers/reviewController.js");
 const backUpController = require("../controllers/backUpController.js");
 const multer = require("multer");
-const fs = require("fs")
+const fs = require("fs");
 const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const uniqueSuffix = file.mimetype.split("/");
@@ -70,7 +70,7 @@ Route.put(
 Route.post("/contact", contactController.storeContact);
 Route.post("/verifyEmail", userController.generateOtpFunc);
 Route.post("/getUserDetails", userController.getUserDetails);
-Route.post("/changePassword", authMiddleware, changepassController.changePass);
+Route.post("/changePassword", changepassController.changePass);
 Route.post("/checkUserExists", userController.checkUserExists);
 Route.post("/compareotp", userController.compareotp);
 Route.post(
