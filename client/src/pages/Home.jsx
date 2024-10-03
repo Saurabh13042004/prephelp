@@ -4,14 +4,20 @@ import Top from "../components/Top";
 import BlogItem from "../components/BlogItem";
 import Footer from "../components/Footer";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 function Home() {
+  const cookie = new Cookies()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewData, setReviewData] = useState({
     review: "",
     name: "",
     position: "",
   });
+  useEffect(()=>{
+    console.log(cookie.get("name"))
+    setReviewData({...reviewData,name:cookie.get("name")})
+  },[])
 
   const handleChange = (e) => {
     setReviewData({
@@ -56,7 +62,6 @@ function Home() {
                   id="name"
                   name="name"
                   value={reviewData.name}
-                  onChange={handleChange}
                   type="text"
                   className="mt-1 block w-full border border-gray-300 rounded-md p-2"
                   placeholder="Enter your name"
