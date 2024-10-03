@@ -74,7 +74,7 @@ function Login() {
           body: JSON.stringify({ email: newEmail, password, rememberMe }),
         });
         response = await response.json();
-        console.log(response)
+        // console.log(response)
         if (response.success) {
           if (response.isAdmin === true) {
             cookies.set("token", response.token);
@@ -431,7 +431,7 @@ function Login() {
                   Password
                 </div>
               </div>
-             <div className="relative">
+              <div className="relative">
                 <input
                   className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
                   type={passshow ? "text" : "password"}

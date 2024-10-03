@@ -68,7 +68,7 @@ const InterviewForm = () => {
       // ... (Other form fields)
     };
     const token = cookie.get("token");
-    console.log(formData);
+    // console.log(formData);
     try {
       const res = await fetch(`${import.meta.env.VITE_SERVER}/experience`, {
         method: "POST",

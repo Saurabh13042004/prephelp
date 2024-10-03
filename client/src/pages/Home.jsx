@@ -3,15 +3,15 @@ import Navbar from "../components/Navbar";
 import Top from "../components/Top";
 import BlogItem from "../components/BlogItem";
 import Footer from "../components/Footer";
-import axios from "axios"; 
+import axios from "axios";
 
 function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewData, setReviewData] = useState({
     review: "",
     name: "",
-    position: ""
-  }); 
+    position: "",
+  });
 
   const handleChange = (e) => {
     setReviewData({
@@ -23,11 +23,14 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(reviewData);
-      const response = await axios.post("http://localhost:8000/upload-review", reviewData);
+      // console.log(reviewData);
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER}/upload-review`,
+        reviewData
+      );
       if (response.status === 200) {
         alert("Review submitted successfully");
-        setIsModalOpen(false); 
+        setIsModalOpen(false);
       }
     } catch (error) {
       console.error("Error submitting review:", error);
@@ -43,7 +46,10 @@ function Home() {
 
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700 font-medium">
+                <label
+                  htmlFor="name"
+                  className="block text-gray-700 font-medium"
+                >
                   Your Name
                 </label>
                 <input
@@ -59,7 +65,10 @@ function Home() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="position" className="block text-gray-700 font-medium">
+                <label
+                  htmlFor="position"
+                  className="block text-gray-700 font-medium"
+                >
                   Your Position
                 </label>
                 <input
@@ -75,7 +84,10 @@ function Home() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="review" className="block text-gray-700 font-medium">
+                <label
+                  htmlFor="review"
+                  className="block text-gray-700 font-medium"
+                >
                   Your Review
                 </label>
                 <textarea

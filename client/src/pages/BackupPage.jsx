@@ -24,7 +24,7 @@ const FileUpload = () => {
       formData.append("file", file);
 
       const data = await axios.post(
-        "http://localhost:8000/upload-backup",
+        `${import.meta.env.VITE_SERVER}/upload-backup`,
         formData,
         {
           headers: {
@@ -79,8 +79,10 @@ const FileUpload = () => {
 const BackupDownload = () => {
   const handleBackupDownload = async () => {
     try {
-      const data = await axios.get("http://localhost:8000/take-backup");
-      console.log(data.data.data);
+      const data = await axios.get(
+        `${import.meta.env.VITE_SERVER}/take-backup`
+      );
+      // console.log(data.data.data);
 
       const worksheet = XLSX.utils.json_to_sheet(data.data.data);
       const workbook = XLSX.utils.book_new();

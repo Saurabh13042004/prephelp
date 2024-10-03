@@ -203,7 +203,6 @@ function Form() {
     }
   };
 
-
   return (
     <div>
       <Navbar />
@@ -515,94 +514,89 @@ function Form() {
                 )}
               </div>
 
-
-
               <div className="w-80">
                 <label className="block font-semibold mt-8 mb-5">
-                  Select This round
+                  Choose the round in which you appeared
                 </label>
-                <div className="flex flex-col lg:flex-row justify-center items-center text-lg mt-4 gap-6">
-                <div>
-                  <input
-                    type="checkbox"
-                    checked={onlineTestToggle}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setOnlineTestToggle(true);
-                      } else {
-                        setOnlineTestToggle(false);
-                      }
-                    }}
-                    className="rounded-full"
-                    name="onlineTest"
-                    id="onlineTest"
-                  />
-                  <label className="ml-2" htmlFor="onlineTest">
-                    Online/Offline
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    className="rounded-full"
-                    checked={technicalQuesToggle}
-                    name="TechnicalQues"
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setTechnicalQuesToggle(true);
-                      } else {
-                        setTechnicalQuesToggle(false);
-                      }
-                    }}
-                    id="TechnicalQues"
-                  />
-                  <label className="ml-2" htmlFor="TechnicalQues">
-                    Technical 
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    className="rounded-full"
-                    checked={hrQuesToggle}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setHrQuesToggle(true);
-                      } else {
-                        setHrQuesToggle(false);
-                      }
-                    }}
-                    name="HrQues"
-                    id="HrQues"
-                  />
-                  <label className="ml-2" htmlFor="HrQues">
-                    HR 
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    className="rounded-full"
-                    checked={groupDiscussionToogle}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setGroupDiscussionToogle(true);
-                      } else {
-                        setGroupDiscussionToogle(false);
-                      }
-                    }}
-                    name="groupDiscussion"
-                    id="groupDiscussion"
-                  />
-                  <label className="ml-2" htmlFor="groupDiscussion">
-                    Group Discussion
-                  </label>
+                <div className="flex flex-wrap flex-col lg:flex-row justify-center items-center text-lg mt-4 gap-6">
+                  <div className="flex justify-center items-center">
+                    <input
+                      type="checkbox"
+                      checked={onlineTestToggle}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setOnlineTestToggle(true);
+                        } else {
+                          setOnlineTestToggle(false);
+                        }
+                      }}
+                      className="rounded-full"
+                      name="onlineTest"
+                      id="onlineTest"
+                    />
+                    <label className="ml-2" htmlFor="onlineTest">
+                      Online/Offline
+                    </label>
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <input
+                      type="checkbox"
+                      className="rounded-full"
+                      checked={technicalQuesToggle}
+                      name="TechnicalQues"
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setTechnicalQuesToggle(true);
+                        } else {
+                          setTechnicalQuesToggle(false);
+                        }
+                      }}
+                      id="TechnicalQues"
+                    />
+                    <label className="ml-2" htmlFor="TechnicalQues">
+                      Technical
+                    </label>
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <input
+                      type="checkbox"
+                      className="rounded-full"
+                      checked={hrQuesToggle}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setHrQuesToggle(true);
+                        } else {
+                          setHrQuesToggle(false);
+                        }
+                      }}
+                      name="HrQues"
+                      id="HrQues"
+                    />
+                    <label className="ml-2" htmlFor="HrQues">
+                      HR
+                    </label>
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <input
+                      type="checkbox"
+                      className="rounded-full"
+                      checked={groupDiscussionToogle}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setGroupDiscussionToogle(true);
+                        } else {
+                          setGroupDiscussionToogle(false);
+                        }
+                      }}
+                      name="groupDiscussion"
+                      id="groupDiscussion"
+                    />
+                    <label className="ml-2" htmlFor="groupDiscussion">
+                      Group Discussion
+                    </label>
+                  </div>
                 </div>
               </div>
-              </div>
-
-
-
             </div>
             <button
               onClick={handlePrevClick1}
@@ -628,7 +622,84 @@ function Form() {
               <span className="flex justify-center items-center text-2xl mt-2 font-semibold">
                 Select the type of rounds in your interview :-
               </span>
-             
+              <div className="flex flex-wrap flex-col lg:flex-row justify-center items-center text-lg mt-4 gap-6">
+                <div className="flex justify-center items-center">
+                  <input
+                    type="checkbox"
+                    checked={onlineTestToggle}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setOnlineTestToggle(true);
+                      } else {
+                        setOnlineTestToggle(false);
+                      }
+                    }}
+                    className="rounded-full"
+                    name="onlineTest"
+                    id="onlineTest"
+                  />
+                  <label className="ml-2" htmlFor="onlineTest">
+                    Online/Offline
+                  </label>
+                </div>
+                <div className="flex justify-center items-center">
+                  <input
+                    type="checkbox"
+                    className="rounded-full"
+                    checked={technicalQuesToggle}
+                    name="TechnicalQues"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setTechnicalQuesToggle(true);
+                      } else {
+                        setTechnicalQuesToggle(false);
+                      }
+                    }}
+                    id="TechnicalQues"
+                  />
+                  <label className="ml-2" htmlFor="TechnicalQues">
+                    Technical
+                  </label>
+                </div>
+                <div className="flex justify-center items-center">
+                  <input
+                    type="checkbox"
+                    className="rounded-full"
+                    checked={hrQuesToggle}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setHrQuesToggle(true);
+                      } else {
+                        setHrQuesToggle(false);
+                      }
+                    }}
+                    name="HrQues"
+                    id="HrQues"
+                  />
+                  <label className="ml-2" htmlFor="HrQues">
+                    HR
+                  </label>
+                </div>
+                <div className="flex justify-center items-center">
+                  <input
+                    type="checkbox"
+                    className="rounded-full"
+                    checked={groupDiscussionToogle}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setGroupDiscussionToogle(true);
+                      } else {
+                        setGroupDiscussionToogle(false);
+                      }
+                    }}
+                    name="groupDiscussion"
+                    id="groupDiscussion"
+                  />
+                  <label className="ml-2" htmlFor="groupDiscussion">
+                    Group Discussion
+                  </label>
+                </div>
+              </div>
             </div>
             {onlineTestToggle && (
               <div>

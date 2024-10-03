@@ -10,7 +10,9 @@ const Review = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/get-reviews-admin");
+        const response = await axios.get(
+          `${import.meta.env.VITE_SERVER}/get-reviews-admin`
+        );
         setReviews(response.data.data);
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -21,7 +23,7 @@ const Review = () => {
 
   const toggleApproval = async (id, currentStatus) => {
     try {
-      await axios.put("http://localhost:8000/update-review", null, {
+      await axios.put(`${import.meta.env.VITE_SERVER}/update-review`, null, {
         params: { id },
       });
       setReviews(
@@ -69,9 +71,11 @@ const Review = () => {
               <tbody>
                 {currentReviews.map((review) => (
                   <tr key={review._id} className="border-b">
-                     <td className="px-4 py-2 text-gray-700">{review.name}</td>
+                    <td className="px-4 py-2 text-gray-700">{review.name}</td>
                     <td className="px-4 py-2 text-gray-700">{review.review}</td>
-                    <td className="px-4 py-2 text-gray-700">{review.position}</td>
+                    <td className="px-4 py-2 text-gray-700">
+                      {review.position}
+                    </td>
                     <td
                       className={`px-4 py-2 font-bold ${
                         review.isApproved ? "text-green-500" : "text-red-500"
@@ -119,7 +123,9 @@ const Review = () => {
               <button
                 onClick={handleNextPage}
                 className={`py-2 px-4 font-semibold rounded-md shadow-md bg-blue-500 hover:bg-blue-700 text-white ${
-                  currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+                  currentPage === totalPages
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
                 }`}
                 disabled={currentPage === totalPages}
               >

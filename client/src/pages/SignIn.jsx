@@ -15,7 +15,6 @@ function SignIn() {
   const [visiblePass, setVisiblePass] = useState(false);
 
   const handlePassVisible = () => {
-    console.log("Cpome")
     setVisiblePass(!visiblePass);
   };
   const handleSignInDb = async (e) => {
