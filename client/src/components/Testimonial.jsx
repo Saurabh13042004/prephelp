@@ -64,7 +64,54 @@ const Testimonial = () => {
 
   return (
     <>
-      {testimonials.length > 0 && (
+      {testimonials.length == 1 && (
+        <section className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8 flex justify-center items-center">
+          <h1 className="text-black md:text-4xl text-2xl text-center font-bold absolute top-5 mx-auto">
+            Testimonials
+          </h1>
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20"></div>
+          <div className="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center"></div>
+
+          <div className="mx-auto w-full lg:max-w-4xl px-4">
+            <div className="text-center px-4">
+              {/* Company Logo */}
+              {/* <img
+      className="mx-auto h-12 mb-6"
+      src="https://tailwindui.com/img/logos/workcation-logo-indigo-600.svg"
+      alt="company logo"
+    /> */}
+
+              {/* Testimonial Review */}
+              <blockquote className="mt-4 text-base font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
+                <p className="text-gray-700 italic">
+                  "{testimonials[0].review}"
+                </p>
+              </blockquote>
+
+              {/* Testimonial Author Information */}
+              <figcaption className="mt-10">
+                {/* Author Image */}
+                {/* <img
+        className="mx-auto h-14 w-14 rounded-full object-cover"
+        src={image}
+        alt={name}
+      /> */}
+
+                {/* Author Name and Position */}
+                <div className="mt-4 flex flex-col items-center space-y-1 text-base">
+                  <div className="font-semibold text-gray-900">
+                    {testimonials[0].name}
+                  </div>
+                  <div className="text-gray-500 text-sm">
+                    {testimonials[0].position}
+                  </div>
+                </div>
+              </figcaption>
+            </div>
+          </div>
+        </section>
+      )}
+      {testimonials.length > 1 && (
         <section className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8 flex justify-center items-center">
           <h1 className="text-black md:text-4xl text-2xl text-center font-bold absolute top-5 mx-auto">
             Testimonials
