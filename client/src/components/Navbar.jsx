@@ -4,7 +4,8 @@ import Cookies from "universal-cookie";
 import defaultImage from "../assets/image.png";
 import axios from "axios";
 import "../styles/animateText.css";
-import config from "../authIndex/header";
+import logo from "../assets/logo.jpeg";
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [token, setToken] = useState("");
@@ -33,6 +34,7 @@ function Navbar() {
     cookies.remove("userImage");
     navigate("/");
     window.location.reload();
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -82,11 +84,7 @@ function Navbar() {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-          />
+          <img src={logo} className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             PrepHelp
           </span>

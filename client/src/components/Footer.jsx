@@ -1,6 +1,7 @@
 // Footer.js
 
 import React from "react";
+import logo from "../assets/logo.jpeg";
 
 function Footer() {
   return (
@@ -9,11 +10,7 @@ function Footer() {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <a href="/" className="flex items-center">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8 me-3"
-                alt="PrepHelp Logo"
-              />
+              <img src={logo} className="h-8 me-3" alt="PrepHelp Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 PrepHelp
               </span>

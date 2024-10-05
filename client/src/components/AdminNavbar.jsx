@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import defaultImage from "../assets/image.png";
 import axios from "axios";
+import logo from "../assets/logo.jpeg";
 
 function AdminNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,11 +77,7 @@ function AdminNavbar() {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-          />
+          <img src={logo} className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             PrepHelp
           </span>
@@ -220,7 +217,7 @@ function AdminNavbar() {
                 to="/reviews"
                 className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
-              Reviews
+                Reviews
               </Link>
             </li>
             <li>
@@ -228,7 +225,7 @@ function AdminNavbar() {
                 to="/backup"
                 className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
-              BackUp
+                BackUp
               </Link>
             </li>
           </ul>
@@ -265,16 +262,14 @@ function AdminNavbar() {
               >
                 Add Admin
               </Link>
-              
             </li>
             <li>
               <Link
                 to="/reviews"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
               >
-               Reviews
+                Reviews
               </Link>
-              
             </li>
             <li>
               {!token && (

@@ -104,6 +104,7 @@ function Form() {
     } else {
       toast.error("Please fill in all required fields.");
     }
+    window.scrollTo(0, 0);
   };
   const handlePrevClick1 = () => {
     setQuestions(0);
@@ -116,7 +117,11 @@ function Form() {
       name.trim() !== "" &&
       email.trim() !== "" &&
       universityID.toString().length == 10 &&
-      cgpa.trim() !== ""
+      cgpa.trim() !== "" &&
+      (onlineTestToggle ||
+        technicalQuesToggle ||
+        hrQuesToggle ||
+        groupDiscussionToogle)
     ) {
       if (OtherCgpa) {
         setCgpa(OtherCgpa.trim());
@@ -125,6 +130,7 @@ function Form() {
     } else {
       toast.error("Please fill in all required fields.");
     }
+    window.scrollTo(0, 0);
   };
 
   const deleteHRQuestion = (index) => {
@@ -206,7 +212,18 @@ function Form() {
   return (
     <div>
       <Navbar />
-      <ToastContainer />
+      <ToastContainer
+        position="top-left"
+        autoClose={1100}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       {questions === 0 && (
         <div>
           <div className="lg:mx-[12%] my-16 p-10">
@@ -530,7 +547,6 @@ function Form() {
                           setOnlineTestToggle(false);
                         }
                       }}
-                
                       name="onlineTest"
                       id="onlineTest"
                     />
@@ -541,7 +557,6 @@ function Form() {
                   <div className="flex justify-center items-center">
                     <input
                       type="checkbox"
-                  
                       checked={technicalQuesToggle}
                       name="TechnicalQues"
                       onChange={(e) => {
@@ -560,7 +575,6 @@ function Form() {
                   <div className="flex justify-center items-center">
                     <input
                       type="checkbox"
-                   
                       checked={hrQuesToggle}
                       onChange={(e) => {
                         if (e.target.checked) {
@@ -579,7 +593,6 @@ function Form() {
                   <div className="flex justify-center items-center">
                     <input
                       type="checkbox"
-           
                       checked={groupDiscussionToogle}
                       onChange={(e) => {
                         if (e.target.checked) {

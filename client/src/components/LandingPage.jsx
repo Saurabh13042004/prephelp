@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "universal-cookie";
 import Testimonial from "./Testimonial";
 import bgVideo from "../assets/chitkara_bg_video.mp4";
+import logo from "../assets/logo.jpeg";
 
 function LandingPage() {
   const controls = useAnimation();
@@ -150,11 +151,7 @@ function LandingPage() {
               to="/"
               className="flex items-center space-x-3 rtl:space-x-reverse"
             >
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8"
-                alt="Flowbite Logo"
-              />
+              <img src={logo} className="h-8" alt="Flowbite Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 PrepHelp
               </span>
