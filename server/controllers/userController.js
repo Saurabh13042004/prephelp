@@ -168,6 +168,13 @@ const checkUserExists = async (req, res) => {
     const userExist = await userModel.findOne({
       email: req.body.email,
     });
+    if(!userExist)
+    {
+      return res.status(401).send({
+        message: "User dont exist",
+        success: false,
+      });
+    }
     if (userExist) {
       generateOtp = await otpGenerate(req.body.email);
       return res.status(200).send({

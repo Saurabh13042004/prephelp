@@ -308,7 +308,7 @@ function Login() {
           "Content-type": "application/json",
         },
       });
-      toast.success(res.message, {
+      toast.success('OTP Send Successfully on your register email', {
         position: "top-left",
         autoClose: 1000,
         hideProgressBar: false,

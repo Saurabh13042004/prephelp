@@ -516,7 +516,7 @@ function Form() {
 
               <div className="w-80">
                 <label className="block font-semibold mt-8 mb-5">
-                  Choose the round in which you appeared
+                  Choose the round in which you appeared*
                 </label>
                 <div className="flex flex-wrap flex-col lg:flex-row justify-center items-center text-lg mt-4 gap-6">
                   <div className="flex justify-center items-center">
@@ -530,7 +530,7 @@ function Form() {
                           setOnlineTestToggle(false);
                         }
                       }}
-                      className="rounded-full"
+                
                       name="onlineTest"
                       id="onlineTest"
                     />
@@ -541,7 +541,7 @@ function Form() {
                   <div className="flex justify-center items-center">
                     <input
                       type="checkbox"
-                      className="rounded-full"
+                  
                       checked={technicalQuesToggle}
                       name="TechnicalQues"
                       onChange={(e) => {
@@ -560,7 +560,7 @@ function Form() {
                   <div className="flex justify-center items-center">
                     <input
                       type="checkbox"
-                      className="rounded-full"
+                   
                       checked={hrQuesToggle}
                       onChange={(e) => {
                         if (e.target.checked) {
@@ -579,7 +579,7 @@ function Form() {
                   <div className="flex justify-center items-center">
                     <input
                       type="checkbox"
-                      className="rounded-full"
+           
                       checked={groupDiscussionToogle}
                       onChange={(e) => {
                         if (e.target.checked) {

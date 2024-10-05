@@ -13,7 +13,9 @@ const getContactList = async (req, res) => {
   try {
     const contact = await Contact.find();
     // console.log(contact)
-    res.status(200).json({ status: 200, data: contact });
+    const reversedContact = contact.reverse();
+    
+    res.status(200).json({ status: 200, data: reversedContact });
   } catch (err) {
     res.status(500).json({ status: 500, message: err.message });
   }
