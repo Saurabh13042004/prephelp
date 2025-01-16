@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export default function Login() {
+export default function Register() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -18,10 +21,30 @@ export default function Login() {
     }
   };
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    if (confirmPassword && value !== confirmPassword) {
+      setPasswordError('Passwords do not match');
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+    if (password && value !== password) {
+      setPasswordError('Passwords do not match');
+    } else {
+      setPasswordError('');
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!emailError && email && password) {
-      console.log('Form submitted:', { email, password });
+    if (!emailError && !passwordError && name && email && password && confirmPassword) {
+      console.log('Form submitted:', { name, email, password });
     }
   };
 
@@ -41,8 +64,8 @@ export default function Login() {
           <div className="relative">
             <div className="w-full max-w-xl xl:w-full xl:mx-auto xl:pr-24 xl:max-w-xl">
               <h3 className="text-4xl font-bold text-white">
-                Prepare Smarter, <br className="hidden xl:block" />
-                Interview Better
+                Join the Community, <br className="hidden xl:block" />
+                Elevate Your Career
               </h3>
               <ul className="grid grid-cols-1 mt-10 sm:grid-cols-2 gap-x-8 gap-y-4">
                 {[
@@ -67,16 +90,39 @@ export default function Login() {
 
         <div className="flex items-center justify-center px-4 py-10 bg-white sm:px-6 lg:px-8 sm:py-16 lg:py-24">
           <div className="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
-            <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">Welcome Back</h2>
+            <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">Create Your Account</h2>
             <p className="mt-2 text-base text-gray-600">
-              Don't have an account?{' '}
-              <Link to='/register' className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 transition-all duration-200 hover:opacity-80">
-                Create a free account
+              Already have an account?{' '}
+              <Link to="/login" className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 transition-all duration-200 hover:opacity-80">
+                Sign in here
               </Link>
             </p>
 
             <form onSubmit={handleSubmit} className="mt-8">
               <div className="space-y-5">
+                <div>
+                  <label htmlFor="name" className="text-base font-medium text-gray-900">
+                    Full Name
+                  </label>
+                  <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <User className="w-5 h-5" />
+                    </div>
+
+                    <input
+                      type="text"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Enter your full name"
+                      className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 
+                        border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-indigo-600 
+                        focus:bg-white caret-indigo-600"
+                      required
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label htmlFor="email" className="text-base font-medium text-gray-900">
                     Email address
@@ -95,6 +141,7 @@ export default function Login() {
                       className={`block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 
                         border rounded-md bg-gray-50 focus:outline-none focus:bg-white caret-indigo-600
                         ${emailError ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-indigo-600'}`}
+                      required
                     />
                   </div>
                   {emailError && (
@@ -103,14 +150,9 @@ export default function Login() {
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="password" className="text-base font-medium text-gray-900">
-                      Password
-                    </label>
-                    <a href="#" className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-80">
-                      Forgot password?
-                    </a>
-                  </div>
+                  <label htmlFor="password" className="text-base font-medium text-gray-900">
+                    Password
+                  </label>
                   <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <Lock className="w-5 h-5" />
@@ -120,13 +162,40 @@ export default function Login() {
                       type="password"
                       id="password"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={handlePasswordChange}
                       placeholder="Enter your password"
                       className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 
                         border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-indigo-600 
                         focus:bg-white caret-indigo-600"
+                      required
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label htmlFor="confirmPassword" className="text-base font-medium text-gray-900">
+                    Confirm Password
+                  </label>
+                  <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <Lock className="w-5 h-5" />
+                    </div>
+
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      value={confirmPassword}
+                      onChange={handleConfirmPasswordChange}
+                      placeholder="Confirm your password"
+                      className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 
+                        border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-indigo-600 
+                        focus:bg-white caret-indigo-600"
+                      required
+                    />
+                  </div>
+                  {passwordError && (
+                    <p className="mt-2 text-sm text-red-500">{passwordError}</p>
+                  )}
                 </div>
 
                 <div>
@@ -136,7 +205,7 @@ export default function Login() {
                       transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-indigo-600 
                       to-purple-600 focus:outline-none hover:opacity-80 focus:opacity-80"
                   >
-                    Sign in
+                    Create Account
                   </button>
                 </div>
               </div>
@@ -156,7 +225,7 @@ export default function Login() {
                     ></path>
                   </svg>
                 </div>
-                Sign in with Google
+                Sign up with Google
               </button>
 
             </div>
@@ -166,3 +235,4 @@ export default function Login() {
     </section>
   );
 }
+
