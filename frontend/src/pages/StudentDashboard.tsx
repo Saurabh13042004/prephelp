@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import DashboardLayout from '../components/DashboardLayout';
-import { Briefcase, Trophy, Target, Code2, Brain, TrendingUp, Calendar, CheckCircle2, Clock } from 'lucide-react';
+import { Briefcase, Trophy, Target, Code2, Brain, TrendingUp, CheckCircle2, Clock, Calendar1 } from 'lucide-react';
+import Calendar from 'react-calendar'
 
 export default function Dashboard() {
     const stats = [
@@ -79,7 +80,7 @@ export default function Dashboard() {
                     <div className="bg-white rounded-xl shadow-sm p-6">
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-xl font-semibold">Upcoming Interviews</h2>
-                            <Calendar className="h-5 w-5 text-gray-400" />
+                            <Calendar1 className="h-5 w-5 text-gray-400" />
                         </div>
                         <div className="space-y-4">
                             {upcomingInterviews.map((interview) => (
