@@ -5,6 +5,11 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/StudentDashboard';
 import Profile from './pages/Profile';
+import InterviewExperience from './pages/InterviewExperience';
+import ExperienceDetails from './pages/ExperienceDetails';
+import ShareExperience from './pages/ShareExperience';
+import CodeEditorPage from './pages/CodeEditorPage';
+
 
 function App() {
   return (
@@ -15,6 +20,10 @@ function App() {
         <Route path="/register" element={<Register/>} />
         <Route path="/student/dashboard" element={<Dashboard/>} />
         <Route path='/student/profile' element={<Profile/>}/>
+        <Route path='/student/experiences' element={<InterviewExperience/>}/>
+        <Route path='/experiences/:id' element={<ExperienceDetails/>}/>
+        <Route path='/student/experience/share' element={<ShareExperience/>}/>
+        <Route path='/code-editor' element={<CodeEditorPage/>}/>
       </Routes>
     </Router>
   );

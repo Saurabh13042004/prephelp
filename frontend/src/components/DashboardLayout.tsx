@@ -24,9 +24,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const navigate = useNavigate();
 
   const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Dashboard', href: '/student/dashboard', icon: LayoutDashboard },
     { name: 'Code Editor', href: '/code-editor', icon: Code2 },
-    { name: 'Interview Experiences', href: '/experiences', icon: MessagesSquare },
+    { name: 'Interview Experiences', href: '/student/experiences', icon: MessagesSquare },
     { name: 'AI Mock Interview', href: '/mock-interview', icon: Brain },
     { name: 'Practice Questions', href: '/questions', icon: FileQuestion },
   ];
