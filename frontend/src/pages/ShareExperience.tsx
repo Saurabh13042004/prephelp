@@ -7,6 +7,8 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react"
+import DashboardLayout from "../components/DashboardLayout"
+import { Navigate, useNavigate } from "react-router-dom"
 
 interface FormData {
   company: string
@@ -26,6 +28,7 @@ const steps = [
 
 export default function ShareExperience() {
   // Track current step and form data
+  const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState<FormData>({
     company: "",
@@ -93,6 +96,7 @@ export default function ShareExperience() {
     console.log("Submitting:", formData)
     alert("Experience Shared! Thank you for submitting.")
     // Example navigation - replace with your own router logic or React Router
+    navigate('/student/dashboard')
     console.log("Navigate to /experiences")
   }
 
@@ -217,11 +221,10 @@ export default function ShareExperience() {
                     <span
                       key={tag}
                       onClick={() => handleTagToggle(tag)}
-                      className={`cursor-pointer inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors ${
-                        isSelected
+                      className={`cursor-pointer inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors ${isSelected
                           ? "bg-blue-600 text-white"
                           : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                      }`}
+                        }`}
                     >
                       {tag}
                     </span>
@@ -267,83 +270,82 @@ export default function ShareExperience() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Share Your Interview Experience</h1>
+    <DashboardLayout>
+      <div className="max-w-2xl mx-auto p-4">
+        <h1 className="text-3xl font-bold mb-6">Share Your Interview Experience</h1>
 
-      {/* Stepper */}
-      <div className="mb-8">
-        {/* Icons + Titles */}
-        <div className="flex justify-between">
-          {steps.map((step, index) => (
-            <div key={step.title} className="flex flex-col items-center">
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  index <= currentStep
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-500"
-                }`}
-              >
-                <step.icon className="w-5 h-5" />
+        {/* Stepper */}
+        <div className="mb-8">
+          {/* Icons + Titles */}
+          <div className="flex justify-between">
+            {steps.map((step, index) => (
+              <div key={step.title} className="flex flex-col items-center">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center ${index <= currentStep
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-500"
+                    }`}
+                >
+                  <step.icon className="w-5 h-5" />
+                </div>
+                <span className="text-xs mt-2">{step.title}</span>
               </div>
-              <span className="text-xs mt-2">{step.title}</span>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* Progress Bar */}
+          <div className="mt-2 h-2 bg-gray-200 rounded-full">
+            <div
+              className="h-full bg-blue-500 rounded-full transition-all duration-500 ease-in-out"
+              style={{
+                width: `${((currentStep + 1) / steps.length) * 100}%`,
+              }}
+            />
+          </div>
         </div>
 
-        {/* Progress Bar */}
-        <div className="mt-2 h-2 bg-gray-200 rounded-full">
-          <div
-            className="h-full bg-blue-500 rounded-full transition-all duration-500 ease-in-out"
-            style={{
-              width: `${((currentStep + 1) / steps.length) * 100}%`,
-            }}
-          />
+        {/* Animated Step Content */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {renderStep()}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Navigation Buttons */}
+        <div className="mt-8 flex justify-between">
+          <button
+            onClick={handleBack}
+            disabled={currentStep === 0}
+            className={`inline-flex items-center px-4 py-2 rounded-md border 
+          ${currentStep === 0
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-white border-gray-300 text-gray-700 hover:bg-gray-100"
+              }`}
+          >
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Back
+          </button>
+
+          <button
+            onClick={handleNext}
+            disabled={!isStepComplete()}
+            className={`inline-flex items-center px-4 py-2 rounded-md 
+          ${isStepComplete()
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+          >
+            {currentStep === steps.length - 1 ? "Submit" : "Next"}
+            <ChevronRight className="ml-2 h-4 w-4" />
+          </button>
         </div>
       </div>
-
-      {/* Animated Step Content */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentStep}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-        >
-          {renderStep()}
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Navigation Buttons */}
-      <div className="mt-8 flex justify-between">
-        <button
-          onClick={handleBack}
-          disabled={currentStep === 0}
-          className={`inline-flex items-center px-4 py-2 rounded-md border 
-          ${
-            currentStep === 0
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-white border-gray-300 text-gray-700 hover:bg-gray-100"
-          }`}
-        >
-          <ChevronLeft className="mr-2 h-4 w-4" />
-          Back
-        </button>
-
-        <button
-          onClick={handleNext}
-          disabled={!isStepComplete()}
-          className={`inline-flex items-center px-4 py-2 rounded-md 
-          ${
-            isStepComplete()
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
-        >
-          {currentStep === steps.length - 1 ? "Submit" : "Next"}
-          <ChevronRight className="ml-2 h-4 w-4" />
-        </button>
-      </div>
-    </div>
+    </DashboardLayout>
   )
 }
