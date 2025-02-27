@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import DashboardLayout from '../components/DashboardLayout';
 import { Camera, Save, Lock, Brain, FileText, User } from 'lucide-react';
 

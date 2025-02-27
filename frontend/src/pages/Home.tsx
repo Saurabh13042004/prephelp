@@ -5,7 +5,7 @@ import StatCard from '../components/StatCard';
 import ContactForm from '../components/ContactForm';
 import TestimonialCard from '../components/TestimonialCard';
 import ContactInfo from '../components/ContactInfo';
-import Footer from '../components/Footer'
+
 function App() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">

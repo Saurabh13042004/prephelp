@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react"
+import  { useRef, useState, useEffect } from "react"
 import * as monaco from "monaco-editor"
 import { Loader2 } from "lucide-react"
 
